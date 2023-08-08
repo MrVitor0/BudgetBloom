@@ -18,11 +18,15 @@
     <!-- Links -->
     <ul :class="linksClasses">
       <li v-for="link in navLinks" :key="link.to">
-        <router-link :to="link.to" class="flex items-center p-2 rounded" :class="{ 'bg-white': link.to === currentRoute }">
-          <div class="rounded-md shadow p-3 mr-2 w-12 items-center text-center" :class="{ 'items-center text-center rounded-md shadow p-3 mr-2 bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-600': link.to === currentRoute }" >
+        <router-link :to="link.to" class="flex items-center p-2 rounded " :class="{ 'bg-white': link.to === currentRoute }">
+          <div class="flex items-center">
+            <div class="flex-shrink-0 rounded-md shadow p-3 mr-2 w-12 items-center text-center" :class="{ 'items-center text-center rounded-md shadow p-3 mr-2 bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-600': link.to === currentRoute }">
               <font-awesome-icon :icon="link.icon" class="text-gray-500 font-medium" :class="{ 'text-white font-medium': link.to === currentRoute }" />
-          </div> 
-          <p class="text-gray-500 font-medium" ><span :class="{ 'text-gray-800 font-bold': link.to === currentRoute }">{{ link.text }}</span></p>
+            </div> 
+            <div class="flex-grow">
+              <p class="text-gray-500 font-medium" ><span :class="{ 'text-gray-800 font-bold': link.to === currentRoute }">{{ link.text }}</span></p>
+            </div>
+          </div>
         </router-link>
       </li>
     </ul>
@@ -44,7 +48,7 @@ export default {
     return {
       navLinks: [
         { to: '/', icon: 'home', text: 'Dashboard' },
-        { to: '/dashboard', icon: 'chart-bar', text: 'Sample Page' },
+        { to: '/profile', icon: 'chart-bar', text: 'My Profile' },
         // Add more links here
       ],
     };

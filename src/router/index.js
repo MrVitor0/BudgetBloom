@@ -9,7 +9,7 @@ const routes = [
     component: Layout, // Use o Layout aqui
     children: [
       { path: '', name:"Home", component: DashboardHome },
-      { path: 'dashboard', name:"Profile", component: DashboardProfile }
+      { path: 'profile', name:"Profile", component: DashboardProfile }
       // Adicione mais rotas conforme necessário
     ]
   }

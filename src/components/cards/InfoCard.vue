@@ -9,7 +9,7 @@
           {{ linkText }}
         </a>
       </div>
-      <div class="pl-10">
+      <div class="pl-10 hidden md:block">
         <div class="w-44 h-44 bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-600 flex items-center justify-center rounded-full">
           <img src="@/assets/rocket-white.png" alt="Rocket" class="rounded-full w-20 h-20 object-cover">
         </div>

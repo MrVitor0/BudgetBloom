@@ -48,9 +48,9 @@
 </template>
 
 <script>
-import PriceCard from '@/components/common/PriceCard.vue';
-import InfoCard from '@/components/common/InfoCard.vue';
-import StockChartCard from '@/components/common/charts/StockChartCard.vue';
+import PriceCard from '@/components/cards/PriceCard.vue';
+import InfoCard from '@/components/cards/InfoCard.vue';
+import StockChartCard from '@/components/charts/StockChartCard.vue';
 export default {
   name: 'DashboardHome',
   components: {

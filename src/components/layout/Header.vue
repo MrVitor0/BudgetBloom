@@ -14,7 +14,7 @@
         <div class="mr-4">
             <font-awesome-icon icon="user" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openUserSettings" />
             <font-awesome-icon icon="bell" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openNotifications" />
-            <font-awesome-icon icon="cog" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openAppSettings" />
+            <font-awesome-icon icon="gear" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openAppSettings" />
         </div>
         </div>
     </nav>
