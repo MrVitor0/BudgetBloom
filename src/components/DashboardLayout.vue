@@ -1,12 +1,17 @@
 <template>
-  <div>
+  <div>  
     <div class="md:flex h-screen bg-gray-100">
     <!-- Add a div to create a space for the navbar -->
     <div class="md:w-15 bg-gray-800 text-white md:fixed md:h-full top-0 left-0"> 
-      <navbar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar"></navbar>
+      <Navbar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar"></Navbar>
     </div>
-    <div class="md:flex-1 md:pl-20 md:pt-10 overflow-y-auto md:ml-24">
-      <router-view></router-view>
+    <div class="md:flex-1 md:pl-20  overflow-y-auto md:ml-24 md:mr-5">
+      <div class="rounded-lg text-white top-0 left-0"> 
+        <Header :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar"></Header>
+      </div>
+      <div class="md:pt-5">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
   </div>
@@ -14,10 +19,11 @@
 
 <script>
 import Navbar from './Navbar.vue';
-
+import Header from './Header.vue';
 export default {
   components: {
-    Navbar
+    Navbar,
+    Header
   },
   data() {
     return {

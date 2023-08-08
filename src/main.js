@@ -5,10 +5,10 @@ import './styles.css';
 
 // Importe os ícones que você deseja usar
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faHome, faChartBar } from '@fortawesome/free-solid-svg-icons';
-import { faFontAwesomeLogoFull } from '@fortawesome/free-brands-svg-icons';
-
+import { fas } from '@fortawesome/free-solid-svg-icons';
+// Importe todos os ícones de marcas
+import { fab } from '@fortawesome/free-brands-svg-icons';
 // Adicione os ícones à biblioteca
-library.add(faHome, faChartBar, faFontAwesomeLogoFull);
+library.add(fas, fab);
 
 createApp(App).use(router).mount('#app');
