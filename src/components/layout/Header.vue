@@ -1,8 +1,8 @@
 <template>
-    <nav class=" text-white w-full shadow flex justify-between items-center px-4 py-2">
+    <nav class=" text-white w-full  flex justify-between items-center px-4 py-2">
       <div class="flex flex-col ">
         <!-- Nome da página atual -->
-        <p class="font-semibold text-black opacity-70">{{ currentRoute }}</p>
+        <p class="font-semibold text-black opacity-70"><span class="opacity-50">Pages / </span>{{ currentRoute }}</p>
         <!-- Rota atual com opacidade menor -->
         <p class="font-bold text-xl text-gray-700">{{ currentPageName  }}</p>
       </div>
@@ -12,9 +12,9 @@
             <font-awesome-icon icon="search" class="text-gray-500 absolute left-2 top-1/2 transform -translate-y-1/2" />
         </div>
         <div class="mr-4">
-            <font-awesome-icon icon="user" class="text-xl text-gray-700 cursor-pointer pl-4" @click="openUserSettings" />
-            <font-awesome-icon icon="bell" class="text-xl text-gray-700 cursor-pointer pl-4" @click="openNotifications" />
-            <font-awesome-icon icon="cog" class="text-xl text-gray-700 cursor-pointer pl-4" @click="openAppSettings" />
+            <font-awesome-icon icon="user" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openUserSettings" />
+            <font-awesome-icon icon="bell" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openNotifications" />
+            <font-awesome-icon icon="cog" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openAppSettings" />
         </div>
         </div>
     </nav>
@@ -38,7 +38,7 @@
       },
       currentRoute() {
         // Replace with logic to get the current route
-        return 'Pages /' + ' dashboard';
+        return 'Dashboard';
       }
     },
     methods: {

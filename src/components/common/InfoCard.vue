@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white shadow-md rounded-lg p-6 flex items-center justify-between">
+    <div class="bg-white shadow-md rounded-3xl w-full h-full  p-6 flex items-center justify-between">
       <div>
         <h2 class="text-xl font-semibold mb-1">{{ heading }}</h2>
         <h3 class="my-4 text-3xl">{{ subheading }}</h3>

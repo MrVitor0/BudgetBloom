@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-lg bg-white shadow-md p-6">
+  <div class="rounded-3xl bg-white shadow-md p-6">
     <h2 class="text-xl font-semibold mb-4">Profits Overview</h2>
     <h1 class="text-gray-500 mb-2"> 
       <font-awesome-icon icon="arrow-up" class="text-md pr-1 text-green-500" /> <b>7% more</b> in 2023</h1>
@@ -33,7 +33,7 @@ export default {
             {
               label: 'Ações',
               data: Array.from({ length: 12 }, () => Math.random() * (100 - 80) + 80),
-              borderColor: '#3498db',
+              borderColor: '#a855f7',
               fill: false,
             },
           ],

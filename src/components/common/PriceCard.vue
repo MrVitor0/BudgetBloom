@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white shadow-md rounded-lg p-6 flex items-center justify-between">
+    <div class="bg-white shadow-md rounded-3xl p-6 flex items-center justify-between">
       <div>
         <h2 class="text-xl font-semibold mb-1">{{ title }}</h2>
         <p class="text-gray-600 text-3xl">{{ amount }} <span class="text-green-500 text-sm ml-1">{{ percentage }}</span></p>

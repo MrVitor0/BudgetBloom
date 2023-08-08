@@ -15,7 +15,7 @@
     </div>
     <!-- Info cards -->
     <div class="flex flex-wrap -mx-4">
-      <div class="w-full md:w-1/2 lg:w-1/2 px-4 mb-5">
+      <div class="w-full md:w-1/2 lg:w-2/3 px-4 mb-5">
         <InfoCard
           heading="Built by developers"
           subheading="BudgetBloom"
@@ -25,7 +25,7 @@
           imageSrc="@/assets/rocket-white.png"
         />
       </div>
-      <div class="w-full md:w-1/2 lg:w-1/2 px-4 mb-5">
+      <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-5">
         <InfoCard
           heading="Built by developers"
           subheading="BudgetBloom"
