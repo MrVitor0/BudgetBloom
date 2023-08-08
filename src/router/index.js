@@ -1,25 +1,23 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import DashboardLayout from '@/components/DashboardLayout.vue'; // Importe o novo componente
+import HomeView from '@/views/HomeView.vue';
+import DashboardPage from '@/views/DashboardPage.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: DashboardLayout, // Use o componente Layout como pai
+    children: [
+      { path: '', component: HomeView },
+      { path: 'dashboard', component: DashboardPage }
+      // Adicione mais rotas conforme necessário
+    ]
   }
-]
+];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes
-})
+});
 
-export default router
+export default router;

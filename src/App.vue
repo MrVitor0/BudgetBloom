@@ -1,13 +1,22 @@
 <template>
-  <router-view/>
+  <div>
+    <dashboard-layout>
+      <!-- Page content will be inserted here -->
+      <router-view></router-view>
+    </dashboard-layout>
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<script>
+import DashboardLayout from './components/DashboardLayout'; // Update the import
+
+export default {
+  components: {
+    DashboardLayout // Register the updated component name
+  }
 }
+</script>
 
-
+<style>
+/* Add specific styles if necessary */
 </style>
