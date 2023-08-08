@@ -12,16 +12,67 @@
       <div class="w-full md:w-1/2 lg:w-1/4 px-4 mb-5">
         <price-card title="Stock Apllications" amount="R$0.000,00" percentage="+20%"  icon="money-bill"  />
       </div>
-     
+    </div>
+    <!-- Info cards -->
+    <div class="flex flex-wrap -mx-4">
+      <div class="w-full md:w-1/2 lg:w-1/2 px-4 mb-5">
+        <InfoCard
+          heading="Built by developers"
+          subheading="BudgetBloom"
+          content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus incidunt ut officiis explicabo inventore."
+          linkText="View More"
+          icon="arrow-right"
+          imageSrc="@/assets/rocket-white.png"
+        />
+      </div>
+      <div class="w-full md:w-1/2 lg:w-1/2 px-4 mb-5">
+        <InfoCard
+          heading="Built by developers"
+          subheading="BudgetBloom"
+          content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus incidunt ut officiis explicabo inventore."
+          linkText="View More"
+          icon="arrow-right"
+          imageSrc="@/assets/rocket-white.png"
+        />
+      </div>
+    </div>
+    <!-- Graphics cards -->
+    <div class="flex flex-wrap -mx-4">
+      <div class="w-full md:w-1/2 lg:w-1/2 px-4 mb-5">
+        <StockChartCard cardTitle="2023 Overview" />
+      </div>
+      <div class="w-full md:w-1/2 lg:w-1/2 px-4 mb-5">
+        <StockChartCard cardTitle="CDB Overview" />
+      </div>
     </div>
 </template>
 
 <script>
 import PriceCard from '@/components/common/PriceCard.vue';
+import InfoCard from '@/components/common/InfoCard.vue';
+import StockChartCard from '@/components/common/charts/StockChartCard.vue';
 export default {
   name: 'DashboardHome',
   components: {
-    PriceCard
+    PriceCard,
+    InfoCard,
+    StockChartCard
+  },
+  data() {
+    return {
+      chartData: {
+        labels: ['Label 1', 'Label 2', 'Label 3'],
+        datasets: [{
+          data: [30, 45, 25],
+          backgroundColor: ['#7E57C2', '#FF7043', '#4DB6AC'],
+        }],
+      },
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+        // Outras configurações do gráfico
+      },
+    };
   },
   // ... Outras configurações
 }
