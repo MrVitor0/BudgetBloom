@@ -1,5 +1,5 @@
 <template>
-    <nav class=" text-white w-full  flex justify-between items-center px-4 py-2">
+    <nav class=" text-white w-full  flex justify-between items-center py-2">
       <div class="flex flex-col ">
         <!-- Nome da página atual -->
         <p class="font-semibold text-black opacity-70"><span class="opacity-50">BudgetBloom / </span>{{ currentRoute }}</p>
