@@ -2,9 +2,9 @@
   <nav class="h-full text-white w-full shadow text-center">
     <!-- Project Name-->
     <div class="flex justify-between items-center flex-grow pr-3 pt-5 md:pt-3">
-      <div class="flex items-center  ml-5">
-        <img src="@/assets/logo.png" class="w-5 h-5 mr-1">
-        <h1 class="text-2xl my-4 font-medium text-black">Budget<span class="text-purple-300">Bloom</span></h1>
+      <div class="flex items-center  ml-4">
+        <img src="@/assets/logo.png" class="w-7 h-7 mr-1">
+        <h1 class="text-2xl my-4 font-medium text-black">Budget<span class="text-purple-600">Bloom</span></h1>
       </div>
       <!-- Div que ficará à extrema direita -->
       <div class="flex items-center">

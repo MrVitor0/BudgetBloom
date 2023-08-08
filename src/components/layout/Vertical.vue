@@ -1,11 +1,11 @@
 <template>
   <div>  
-    <div class="md:flex h-screen bg-gray-100  overflow-x-hidden">
+    <div class="md:flex h-screen bg-gray-100 ">
     <!-- Add a div to create a space for the navbar -->
     <div class="md:w-56 text-white md:fixed md:h-full top-0 left-0"> 
       <Navbar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar"></Navbar>
     </div>
-    <div class="md:flex-1 md:pl-36  overflow-y-auto md:ml-24 md:mr-5">
+    <div class="md:flex-1 md:pl-36  md:ml-24 md:mr-5 ">
       <div class="hidden md:block rounded-lg text-white top-0 left-0"> 
         <Header :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar"></Header>
       </div>
@@ -40,5 +40,17 @@ export default {
 </script>
 
 <style>
- 
+/* Personalize a barra de rolagem */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #9c19c1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #dfc0f5;
+}
 </style>
