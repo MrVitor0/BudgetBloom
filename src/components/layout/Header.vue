@@ -2,31 +2,31 @@
     <nav class=" text-white w-full  flex justify-between items-center py-2">
       <div class="flex flex-col ">
         <!-- Nome da página atual -->
-        <p class="font-semibold text-black opacity-70"><span class="opacity-50">BudgetBloom / </span>{{ currentRoute }}</p>
+        <p class="font-semibold text-BBPurple opacity-70"><span class="opacity-50">BudgetBloom / </span>{{ currentRoute }}</p>
         <!-- Rota atual com opacidade menor -->
         <p class="font-bold text-xl text-gray-700">{{ currentPageName  }}</p>
       </div>
-      <div class="flex items-center">
+      <div class="flex items-center text-BBPurple">
         <div class="relative">
-            <input type="text" class="text-black border rounded px-2 py-1 pl-8" placeholder="Search...">
-            <font-awesome-icon icon="search" class="text-gray-500 absolute left-2 top-1/2 transform -translate-y-1/2" />
+          <BBTextInput icon="search" placeholder="Search..." />
         </div>
         <div class="mr-4">
             <font-awesome-icon icon="user" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openUserSettings" />
             <font-awesome-icon icon="bell" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openNotifications" />
             <font-awesome-icon icon="gear" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openAppSettings" />
         </div>
-        </div>
+      </div>
     </nav>
   </template>
   
   <script>
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-  
+  import BBTextInput from '@/components/form/BBTextInput.vue';
   export default {
     name: 'DashboardHeader',
     components: {
       FontAwesomeIcon,
+      BBTextInput
     },
     props: {
       isSidebarOpen: Boolean
