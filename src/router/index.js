@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import DashboardLayout from '@/components/DashboardLayout.vue';
-import DashboardHome from '@/views/DashboardHome.vue';
-import DashboardPage from '@/views/DashboardPage.vue';
+import Layout from '@/components/layout/Vertical.vue';
+import DashboardHome from '@/views/Home.vue';
+import DashboardPage from '@/views/Sample.vue';
 
 const routes = [
   {
     path: '/',
-    component: DashboardLayout, // Use o DashboardLayout aqui
+    component: Layout, // Use o Layout aqui
     children: [
       { path: '', component: DashboardHome },
       { path: 'dashboard', component: DashboardPage }

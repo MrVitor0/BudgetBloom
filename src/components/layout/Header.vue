@@ -12,9 +12,9 @@
             <font-awesome-icon icon="search" class="text-gray-500 absolute left-2 top-1/2 transform -translate-y-1/2" />
         </div>
         <div class="mr-4">
-            <font-awesome-icon icon="user" class="text-xl text-gray-600 cursor-pointer pl-4" @click="openUserSettings" />
-            <font-awesome-icon icon="bell" class="text-xl text-gray-600 cursor-pointer pl-4" @click="openNotifications" />
-            <font-awesome-icon icon="cog" class="text-xl text-gray-600 cursor-pointer pl-4" @click="openAppSettings" />
+            <font-awesome-icon icon="user" class="text-xl text-gray-700 cursor-pointer pl-4" @click="openUserSettings" />
+            <font-awesome-icon icon="bell" class="text-xl text-gray-700 cursor-pointer pl-4" @click="openNotifications" />
+            <font-awesome-icon icon="cog" class="text-xl text-gray-700 cursor-pointer pl-4" @click="openAppSettings" />
         </div>
         </div>
     </nav>

@@ -1,13 +1,18 @@
 <template>
-  <nav class="bg-gray-800 text-white w-full shadow text-center">
-    <button @click="toggleSidebar" class="block md:hidden px-6 pt-4 pb-3">
-      <font-awesome-icon icon="home" /> 
-      <span class="pl-2 text-white">Menu</span>
-    </button>
+  <nav class="bg-gray-800 h-full text-white w-full shadow text-center">
     <!-- Project Name-->
-    <div class="flex align-center items-center pl-3 ">
-        <img src="@/assets/logo.png" class="w-5 h-5" style="margin-right: 10px;">
+    <div class="flex justify-between items-center flex-grow pr-3 pt-5 md:pt-3">
+      <div class="flex items-center ml-3">
+        <img src="@/assets/logo.png" class="w-5 h-5 mr-1" >
         <h1 class="my-4 font-medium">Budget<span class="text-purple-300">Bloom</span></h1>
+      </div>
+      <!-- Div que ficará à extrema direita -->
+      <div>
+        <button @click="toggleSidebar" class="block md:hidden pr-3 my-4">
+          <font-awesome-icon icon="home" /> 
+          <span class="pl-2 text-white">Menu</span>
+        </button>
+      </div>
     </div>
 
     <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
