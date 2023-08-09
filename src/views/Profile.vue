@@ -25,7 +25,6 @@
         </div>
         
         <div class="md:flex flex-end md:px-5 ">
-          <BasicPill clickable active text="Plannings" icon="bars" @click="togglePlanningsArea" />
           <BasicPill clickable active text="Information" icon="user" @click="toggleInformationArea" />
           <BasicPill clickable active text="Settings" icon="gear" @click="toggleSettingsArea" />
         </div>
@@ -120,7 +119,7 @@
               <div class="text-xs font-light text-gray-500 mb-5 mt-5">
                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque vel sapiente ducimus exercitationem voluptas!
               </div>
-              <div class="flex capitalize mb-6 pb-5">
+              <div class="flex capitalize mb-3">
                   <BasicCheckbox text="enable push notifications" :initialValue="true" @change="handleToggle1" />
               </div>
               <div class="flex capitalize mb-3">
@@ -138,81 +137,11 @@
     </div>
   </div>
   <!-- PROFILE SETTINGS AREA -->
-
-
-  <!-- PROFILE PLANNINGS AREA -->
-  <div class="mt-2" v-if="showPlanningsArea">  
-    <div class="flex flex-wrap md:-mx-4">
-      <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-9">
-        <PlanningCard 
-          title="Nubank RDB"
-          subtitle="Fixed Income"
-          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus."
-
-          fromBudget="1.000,00"
-          toBudget="10.000,00"
-
-          fromAport="1"
-          toAport="25"
-
-          fromDate="01/01/2021"
-          toDate="01/01/2021"
-
-          fromMounth="1"
-          toMounth="10"
-        />
-      </div>
-      <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-5">
-        <PlanningCard 
-          title="C6 Bank CDB"
-          subtitle="Fixed Income"
-          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus."
-
-          fromBudget="3.220,00"
-          toBudget="10.000,00"
-
-          fromAport="1"
-          toAport="25"
-
-          fromDate="01/01/2021"
-          toDate="01/01/2021"
-
-          fromMounth="1"
-          toMounth="10"
-        />
-      </div>
-      <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-5">
-        <PlanningCard 
-          title="Apple Inc. (AAPL34)"
-          subtitle="Stocks"
-          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus."
-
-          fromBudget="500,00"
-          toBudget="2.000,00"
-
-          fromAport="1"
-          toAport="25"
-
-          fromDate="01/01/2021"
-          toDate="01/01/2021"
-
-          fromMounth="1"
-          toMounth="10"
-        />
-      </div>
-    </div>
-  </div>
-  <!-- PROFILE PLANNINGS AREA -->
-
-
-
-  
 </template>
 
 <script>
 import BasicPill from '@/components/pills/BasicPill.vue';
 import BasicCheckbox from '@/components/checkbox/BasicCheckbox.vue';
-import PlanningCard from '@/components/cards/PlanningCard.vue';
 import BBTextInput from '@/components/form/BBTextInput.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 export default {
@@ -220,7 +149,6 @@ export default {
   components: {
     BasicPill,
     BasicCheckbox,
-    PlanningCard,
     BBTextInput,
     FontAwesomeIcon,
   },
@@ -229,7 +157,6 @@ export default {
       progress: 95,
       showInformationArea: true,
       showSettingsArea: true,
-      showPlanningsArea: true,
     };
   },
   methods: {
@@ -238,9 +165,6 @@ export default {
     },
     toggleSettingsArea() {
       this.showSettingsArea = !this.showSettingsArea;
-    },
-    togglePlanningsArea() {
-      this.showPlanningsArea = !this.showPlanningsArea;
     },
     handleToggle1(isChecked) {
       console.log('Toggle 1:', isChecked);

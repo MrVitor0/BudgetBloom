@@ -44,7 +44,7 @@
           <!-- ProgressBar -->
           <div class="flex mt-1">
             <div class="w-full bg-gray-200 rounded-lg overflow-hidden">
-                <div class="bg-blue-500 h-2" :style="{ width: progress + '%' }"> 35</div>
+                <div class="bg-purple-500 h-2" :style="{ width: progress + '%' }"> 35</div>
             </div>
           </div>
               
