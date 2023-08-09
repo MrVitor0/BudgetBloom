@@ -34,12 +34,19 @@
           icon="arrow-right"
           imageSrc="@/assets/rocket-white.png"
         />
-      </div>
+        </div>
     </div>
     <!-- Graphics cards -->
     <div class="flex flex-wrap -mx-4">
       <div class="w-full md:w-1/2 lg:w-1/2 px-4 mb-5">
-        <StockChartCard cardTitle="2023 Overview" />
+        <div class="rounded-3xl bg-white shadow-md p-6">
+          <h2 class="text-xl font-semibold mb-4">Your Investments</h2>
+          <h1 class="text-gray-500 mb-2 items-center"> 
+            <font-awesome-icon icon="arrow-up" class="text-md pr-1 text-green-500" /> <b>7% more</b> in 2023</h1>
+            <div class="">
+                    <BarChartCard />
+            </div>
+        </div>
       </div>
       <div class="w-full md:w-1/2 lg:w-1/2 px-4 mb-5">
         <StockChartCard cardTitle="CDB Overview" />
@@ -49,6 +56,7 @@
 
 <script>
 import PriceCard from '@/components/cards/PriceCard.vue';
+ import BarChartCard from '@/components/charts/BarChartCard.vue';
 import InfoCard from '@/components/cards/InfoCard.vue';
 import StockChartCard from '@/components/charts/StockChartCard.vue';
 export default {
@@ -56,6 +64,7 @@ export default {
   components: {
     PriceCard,
     InfoCard,
+    BarChartCard,
     StockChartCard
   },
   data() {

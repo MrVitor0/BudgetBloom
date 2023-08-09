@@ -35,6 +35,8 @@
             return 'bg-gradient-to-tr from-red-900 to-red-500 hover:from-red-800 hover:to-red-600';
             case 'green':
             return 'bg-gradient-to-tr from-green-900 to-green-500 hover:from-green-800 hover:to-green-600';
+            case 'purple':
+            return 'bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-600';
             default:
             if (this.color && this.color.startsWith('bg-gradient-to-tr')) {
                 return this.color;

@@ -1,4 +1,66 @@
 <template >
+
+
+
+
+   <!-- ADD NEW INVESTMENT AREA -->
+   <div class="mt-2">
+        <div class="flex flex-wrap md:-mx-4">
+         <!-- OVERVIEW AREA -->
+        <div class="w-full md:w-2/2 lg:w-1/3 px-4 mb-5">
+            <price-card class="mb-5" title="Investment Balance" amount="R$0.000,00" percentage="+20%" icon="vault" color="purple" />
+            <price-card class="mb-5" title="Account balance" amount="R$0.000,00" percentage="+20%" icon="money-check-dollar" color="purple" />
+            <price-card title="Passive Incoming" amount="R$0.000,00" percentage="+20%" icon="piggy-bank" color="purple" />
+        </div>
+
+         <!-- OVERVIEW AREA -->
+        <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-5">
+          <div class="bg-white rounded-lg shadow p-4 h-full">
+            <div class="flex flex-col items-center  text-center  m-12">
+                <div
+                  class="rounded-md bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-500 transition duration-500 ease-in-out shadow"
+                >
+                <font-awesome-icon icon="money-bill-trend-up" class="text-white text-5xl p-6" />
+                </div>
+                <div class="text-md text-gray-700 font-medium mt-2">
+                  Add New Investment
+                </div>
+                <div class="text-xs font-light text-gray-500 mb-5 mt-1">
+                  Want to add a new investment to track? Click the button below.
+                </div>
+                <div class="w-64">
+                    <BasicButton  active="true" text="Add New Investment" icon="plus" />
+                </div>  
+            </div>
+          </div>
+        </div>
+          <!-- OVERVIEW AREA -->
+        <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-5">
+          <div class="bg-white rounded-lg shadow p-4 h-full">
+            <div class="flex flex-col items-center  text-center  m-12">
+                <div
+                  class="rounded-md bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-500 transition duration-500 ease-in-out shadow"
+                >
+                <font-awesome-icon icon="money-bill-transfer" class="text-white text-5xl p-6" />
+                </div>
+                <div class="text-md text-gray-700 font-medium mt-2">
+                  Update Apport
+                </div>
+                <div class="text-xs font-light text-gray-500 mb-5 mt-1">
+                  Want to update your apport? Click the button below.
+                </div>
+                <div class="w-64">
+                    <BasicButton  text="Update Investment" icon="pen-to-square" />
+                </div> 
+            </div>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+    <!-- PROFILE SETTINGS AREA -->
+
+
     <div class="rounded-lg scroll-container mb-5">
         <div class="flex flex-wrap scroll-row cursor-grabbing md:cursor-auto">
             <div class="md:w-1/2 lg:w-1/3 px-3">
@@ -70,100 +132,7 @@
             <!-- Repeat similar blocks for other PlanningCard components -->
         </div>
     </div>
-    
-   <!-- ADD NEW INVESTMENT AREA -->
-    <div class="mt-2">
-        <div class="flex flex-wrap md:-mx-4">
-         <!-- OVERVIEW AREA -->
-         <div class="w-full md:w-2/2 lg:w-1/3 px-4 mb-5">
-            <div class="bg-white rounded-lg shadow p-4 h-full">
-                <div class="flex flex-col items-center"> <!-- Adicionada a classe "items-center" para centralizar verticalmente -->
-                <div class="text-md text-gray-700 font-medium text-center mb-2"> <!-- Adicionada classe "mb-2" para espaçamento inferior -->
-                    Bank Overview
-                </div>
-                <div class="text-xs font-light text-gray-500 mb-5 text-center">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque vel sapiente ducimus exercitationem voluptas!
-                </div>
-                <div class="flex flex-col items-center"> <!-- Adicionada a classe "items-center" para centralizar verticalmente -->
-                    <div class="flex capitalize mb-2"> <!-- Adicionada classe "mb-2" para espaçamento inferior -->
-                    <font-awesome-icon icon="money-bill-trend-up" class="text-xl text-purple-700 mt-1 mr-2" />
-                    <p class="font-medium text-gray-700 text-xl">Investment Balance:</p>
-                    <span class="text-gray-500 ml-2 text-xl">R$00,00</span>
-                    </div>
-                    <div class="flex capitalize mb-2"> <!-- Adicionada classe "mb-2" para espaçamento inferior -->
-                    <font-awesome-icon icon="money-check-dollar" class="text-xl text-purple-700 mt-1 mr-2" />
-                    <p class="font-medium text-gray-700 text-xl">Account balance:</p>
-                    <span class="text-gray-500 ml-2 text-xl">R$00,00</span>
-                    </div>
-                    <div class="flex capitalize mb-2"> <!-- Adicionada classe "mb-2" para espaçamento inferior -->
-                    <font-awesome-icon icon="credit-card" class="text-xl text-purple-700 mt-1 mr-2" />
-                    <p class="font-medium text-gray-700 text-xl">Total debts:</p>
-                    <span class="text-gray-500 ml-2 text-xl">R$00,00</span>
-                    </div>
-                    <div class="flex capitalize">
-                    <font-awesome-icon icon="fa-solid fa-person-circle-check" class="text-xl text-purple-700 mt-1 mr-2" />
-                    <p class="font-medium text-gray-700 text-xl">Status:</p>
-                    <span class="text-gray-500 ml-2 text-xl">Positive</span>
-                    </div>
-                </div>
-                </div>
-            </div>
-          </div>
-
-
-         <!-- OVERVIEW AREA -->
-        <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-5">
-          <div class="bg-white rounded-lg shadow p-4 h-full">
-            <div class="flex flex-col items-center  text-center">
-                <div class="text-md text-gray-700 font-medium">
-                  Add New Investment
-                </div>
-                <div class="text-xs font-light text-gray-500 mb-5 mt-1">
-                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque vel sapiente ducimus exercitationem voluptas!
-                </div>
-                <div class="w-64">
-                    <BBSelectInput   
-                        :options="selectOptions"
-                        v-model="selectedValue"
-                      />
-                </div>  
-                <div class="w-64 pt-5">
-                    <BBSelectInput   
-                        :options="selectOptions"
-                        v-model="selectedValue"
-                      />
-                </div>  
-            </div>
-          </div>
-        </div>
-
-
-       
-
-         
-        <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-5">
-          <div class="bg-white rounded-lg shadow p-4 h-full">
-            <div class="flex flex-col items-center  text-center">
-                <div class="text-md text-gray-700 font-medium">
-                  Your Investments
-                </div>
-                <div class="text-xs font-light text-gray-500 mb-5 mt-1">
-                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque vel sapiente ducimus exercitationem voluptas!
-                </div>
-                <div class="w-64">
-                    <DoughnutChartCard />
-                </div>
-            </div>
-          </div>
-        </div>
-
-        
-
-        
-      </div>
-    </div>
-    <!-- PROFILE SETTINGS AREA -->
-  
+ 
    
 
     
@@ -174,15 +143,15 @@
   
   <script>
   import PlanningCard from '@/components/cards/PlanningCard.vue';
-  import DoughnutChartCard from '@/components/charts/DoughnutChartCard.vue';
-  import BBSelectInput from '@/components/form/BBSelectInput.vue';
+  import BasicButton from '@/components/button/BasicButton.vue';
+  import PriceCard from '@/components/cards/PriceCard.vue';
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   export default {
     name: 'DashboardInvestments',
     components: {
       PlanningCard,
-      DoughnutChartCard,
-      BBSelectInput,
+      PriceCard,
+      BasicButton,
       FontAwesomeIcon,
     },
     data() {

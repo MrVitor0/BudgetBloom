@@ -16,7 +16,7 @@ export default {
     onMounted(() => {
       const ctx = chartCanvas.value.getContext('2d');
       stockChart = new Chart(ctx, {
-        type: 'doughnut',
+        type: 'bar',
         data: {
           labels: ['Fixed Income', 'Stock Market', 'FIIS'],
           datasets: [
@@ -47,8 +47,8 @@ export default {
             },
           },
           elements: {
-            arc: {
-              borderWidth: 0,
+            bar: {
+              borderRadius: 20, // Valor de raio para as bordas arredondadas
             },
           },
         },
