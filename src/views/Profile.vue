@@ -1,7 +1,6 @@
 <template >
-
-  <img src="@/assets/bgvector.png" class="rounded-2xl w-screen h-72 hidden md:block"> 
-  <div class="md:relative flex flex-col flex-auto min-w-0 md:p-4 md:mx-6 md:-mt-16 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/70 bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
+  <img src="@/assets/bgvector.png" class="rounded-2xl w-screen h-72 hidden md:block "> 
+  <div class="hidden md:relative md:flex flex-col flex-auto min-w-0 md:p-4 md:mx-6 md:-mt-16 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/70 bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
     <div class="md:flex md:flex-col">
       <div class="md:flex md:items-center text-center md:text-start">
         <div class="flex-shrink-0 rounded-3xl shadow p-1 bg-white mr-2 w-32 items-center text-center hidden md:block">
@@ -9,23 +8,34 @@
         </div> 
         <div class="flex-grow ml-5 mt-10 md:mt-0">
           <h2 class="text-xl font-semibold mb-2">John Doe</h2>
-           <p class="text-gray-600">Software Enginner</p>
+           <div class="md:flex hidden">
+            <p class="text-gray-600">
+                <font-awesome-icon icon="suitcase" class="text-sm text-purple-700 mt-1" />
+                Software Enginner
+              </p>
+              <p class="text-gray-600 pl-3">
+                <font-awesome-icon icon="location-dot" class="text-sm text-purple-700 mt-1" />
+                Rio de Janeiro
+              </p>
+              <p class="text-gray-600 pl-3 hidden md:block">
+                <font-awesome-icon icon="calendar" class="text-sm text-purple-700 mt-1" />
+                01/01/2023
+              </p>
+          </div>
         </div>
+        
         <div class="md:flex flex-end md:px-5 ">
           <BasicPill clickable active text="Plannings" icon="bars" @click="togglePlanningsArea" />
           <BasicPill clickable active text="Information" icon="user" @click="toggleInformationArea" />
           <BasicPill clickable active text="Settings" icon="gear" @click="toggleSettingsArea" />
         </div>
-        
       </div>
     </div>
   </div>
 
-
-
  <!-- PROFILE INFORMATION AREA -->
- <div class="mt-8" v-if="showInformationArea">
-    <div class="flex flex-wrap -mx-4">
+ <div class="md:mt-8" v-if="showInformationArea">
+    <div class="flex flex-wrap md:-mx-4">
       <div class="w-full px-4 mb-5">
         <div class="bg-white rounded-lg shadow p-4 h-full">
           <div class="flex flex-col">
@@ -35,7 +45,8 @@
                 </div>
                 <div class="flex-grow" />
                 <div class="flex-col flex-end text-md text-gray-700 font-medium cursor-pointer" title="Save Data">
-                   <font-awesome-icon icon="save" class="text-3xl text-purple-700 mt-1 mr-2" />
+                 
+                   <button class="text-md rounded-lg text-center px-2 py-1 bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-500  text-white "><font-awesome-icon icon="save" class="text-xl text-white mr-2 "/>Save </button>
                 </div>
               </div>
               <div class="text-xs font-light text-gray-500 mb-5 mt-1">
@@ -65,7 +76,7 @@
 
  <!-- PROFILE SETTINGS AREA -->
   <div class="mt-2" v-if="showSettingsArea">
-    <div class="flex flex-wrap -mx-4">
+    <div class="flex flex-wrap md:-mx-4">
       <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-5">
         <div class="bg-white rounded-lg shadow p-4 h-full">
           <div class="flex flex-col">
@@ -109,7 +120,7 @@
               <div class="text-xs font-light text-gray-500 mb-5 mt-5">
                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque vel sapiente ducimus exercitationem voluptas!
               </div>
-              <div class="flex capitalize mb-3">
+              <div class="flex capitalize mb-6 pb-5">
                   <BasicCheckbox text="enable push notifications" :initialValue="true" @change="handleToggle1" />
               </div>
               <div class="flex capitalize mb-3">
@@ -131,8 +142,8 @@
 
   <!-- PROFILE PLANNINGS AREA -->
   <div class="mt-2" v-if="showPlanningsArea">  
-    <div class="flex flex-wrap -mx-4">
-      <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-5">
+    <div class="flex flex-wrap md:-mx-4">
+      <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-9">
         <PlanningCard 
           title="Nubank RDB"
           subtitle="Fixed Income"

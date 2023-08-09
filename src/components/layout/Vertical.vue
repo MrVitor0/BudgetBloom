@@ -1,5 +1,5 @@
 <template>
-      <div class="md:flex h-screen bg-gray-100">
+      <div class="md:flex h-full">
         <div class="md:w-56 text-white md:fixed md:h-full top-0 left-0">
           <Navbar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar"></Navbar>
         </div>
@@ -8,9 +8,7 @@
           <div class="hidden md:block rounded-lg text-white top-0 left-0 md:mb-2">
             <Header :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar"></Header>
           </div>
-          <div class="">
-            <router-view ></router-view>
-          </div>
+          <router-view ></router-view>
         </div>
        <!-- Layout Rendering -->
       </div>

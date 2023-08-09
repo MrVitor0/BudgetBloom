@@ -3,19 +3,19 @@
           <!-- HEADER -->
           <div class="md:flex md:items-start md:justify-between text-center md:text-start">
             <div class="flex-shrink-0 rounded-3xl shadow p-1 bg-gray-100 mr-2 w-20 items-center text-center hidden md:block">
-              <font-awesome-icon icon="earth" class="text-5xl text-purple-700" />
+              <font-awesome-icon :icon="icon" class="text-5xl text-purple-700" />
             </div> 
             <div class="flex-grow ml-1">
               <h2 class="text-xl font-semibold text-gray-800">{{ title }}</h2>
               <p class="text-gray-600">{{ subtitle }}</p>
             </div>
-            <div class="self-start">
+            <div class="self-start hidden md:block">
               <font-awesome-icon icon="ellipsis-vertical" class="text-2xl text-purple-700 cursor-pointer" />
             </div>
           </div>
           <!-- Body -->
-          <div class="flex mt-5 ">
-            <div class="bg-gray-200 rounded-xl p-3">
+          <div class="flex mt-5  ">
+            <div class="bg-gray-200 rounded-xl p-3  mr-1">
                 <h2 class="text-sm font-semibold text-gray-800">R${{ fromBudget }} <span class="text-gray-600">/ R${{ toBudget }}</span></h2>
                 <p class="text-gray-600">Total Budget</p>
             </div>
@@ -25,7 +25,7 @@
               <p class="text-sm font-semibold text-gray-700">Deadline: <span class="text-gray-600">{{ toDate }}</span></p>
             </div>
           </div>
-          <div class="pt-2 pb-2 pl-1">
+          <div class="pt-2 pb-2 pl-1 whitespace-normal">
             <h2 class="text-sm font-semibold text-gray-600">{{ description }}</h2>
           </div>
           <hr />
@@ -38,7 +38,7 @@
             <div class="flex-grow" />
             <div class="flex-end pt-1">
                 <h2 class="text-sm font-semibold text-gray-800"><BasicPill size="sm" color="bg-success" text-color="text-green-800" icon="hide" text="28 Days Left"  /></h2>
-                <p class="text-gray-600">{{ progress }}% Completed</p>
+                <p class="text-gray-600 break-words">{{ progress }}% Completed</p>
             </div>
           </div>
           <!-- ProgressBar -->
@@ -62,6 +62,10 @@ export default {
     FontAwesomeIcon,
   },
   props: {
+    icon: {
+        type: String,
+        default: () => 'earth'
+    },
     title: {
         type: String,
         default: () => 'Planning Card'
