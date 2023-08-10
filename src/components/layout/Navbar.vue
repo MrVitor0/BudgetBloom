@@ -48,7 +48,8 @@ export default {
     return {
       navLinks: [
         { to: '/', icon: 'home', text: 'Dashboard' },
-        { to: '/investments', icon: 'landmark', text: 'Investments' },
+        { to: '/banking', icon: 'landmark', text: 'Banking' },
+        { to: '/investments', icon: 'wallet', text: 'Investments' },
         { to: '/profile', icon: 'address-card', text: 'Profile' },
         // Add more links here
       ],
