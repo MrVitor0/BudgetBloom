@@ -48,10 +48,10 @@ export default {
           return this.type.toLowerCase() == 'received' ? 'circle-arrow-up' : 'circle-arrow-down';
       },
       moneyClass(){
-          return this.type.toLowerCase() == 'received' ? "text-xs text-green-700 text-center md:text-end" : "text-xs text-danger text-center md:text-end"
+          return this.type.toLowerCase() == 'received' ? "text-xs text-purple-400 text-center md:text-end" : "text-xs text-purple-700 text-center md:text-end"
       },
       typeClass(){
-        return this.type.toLowerCase() == 'received' ? "md:absolute hidden md:block text-green-700 text-3xl cursor-pointer pt-2" : "md:absolute hidden md:block text-danger text-3xl cursor-pointer pt-2"
+        return this.type.toLowerCase() == 'received' ? "md:absolute hidden md:block text-purple-700 text-3xl cursor-pointer pt-2" : "md:absolute hidden md:block text-purple-400 text-3xl cursor-pointer pt-2"
       }
   },
   components: {
