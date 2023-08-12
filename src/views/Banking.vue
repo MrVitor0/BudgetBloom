@@ -3,8 +3,8 @@
     <div class="mt-2">
             <div class="flex p-2 md:pl-5 flex-wrap md:-mx-4">
                 <!-- START OVERVIEW AREA -->
-                <div class="w-full md:w-2/2 lg:w-1/3 mb-5 md:bg-purple-100">
-                    <img src="@/assets/bgvector.png" class="rounded- w-screen h-64 hidden md:block "> 
+                <div class="w-full md:w-2/2 lg:w-1/3 mb-5 md:bg-purple-100 rounded-lg">
+                    <img src="@/assets/bgvector.png" class="rounded- w-screen h-64 hidden md:block border-t border-gray-500 rounded-t-lg">
                     <div class=" md:relative md:flex flex-col shadow md:shadow-transparent flex-auto min-w-0 p-5 md:p-4 md:mx-6 md:-mt-52 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
                         <div class="md:flex md:flex-col">
                             <div class="md:flex md:items-center text-center md:text-start">
@@ -101,11 +101,9 @@
             <!-- Invoices History -->
             <BasicDataTable />
        </div>
-       
      </div>
      <!-- PROFILE SETTINGS AREA -->
    </template>
-   
    <script>
    import BasicButton from '@/components/button/BasicButton.vue';
    import TransferItem from '@/components/cards/common/TransferItem.vue';
