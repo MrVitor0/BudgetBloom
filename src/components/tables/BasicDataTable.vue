@@ -7,20 +7,28 @@
                     <th class="py-3 px-6 text-left">Name</th>
                     <th class="py-3 px-6 text-left">Email</th>
                     <th class="py-3 px-6 text-center">Status</th>
-                    <th class="py-3 px-6 text-center">Role</th>
-                    <th class="py-3 px-6 text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
-                        <td class="py-3 px-6 text-left whitespace-nowrap">John Doe</td>
-                        <td class="py-3 px-6 text-left">johndoe@example.com</td>
-                        <td class="py-3 px-6 text-center">
-                            <span class = "bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Active</span>
-                            </td>
-                            <td class="py-3 px-6 text-center">
-
-                            </td>
+                        <td 
+                            v-for="item in mockupData"
+                            :key="item.id"
+                             class="py-3 px-6 text-left whitespace-nowrap">
+                            {{ item.name }}
+                        </td>
+                        <td 
+                            v-for="item in mockupData"
+                            :key="item.id"
+                             class="py-3 px-6 text-left whitespace-nowrap">
+                            {{ item.email }}
+                        </td>
+                        <td 
+                            v-for="item in mockupData"
+                            :key="item.id"
+                             class="py-3 px-6 text-center whitespace-nowrap">
+                            {{ item.status }}
+                        </td>
                     </tr>
                 </tbody>
            </table>
@@ -28,8 +36,19 @@
     </div>
 </template>
 
-
 <script>
+//import json from @/data/mockBanking
+import mockupData from '@/data/mockBanking.json'
 
+export default {
+    data() {
+        return {
+            mockupData: mockupData
+        }
+    },
+    mounted() {
+        console.log(this.mockupData)
+    }
+}
 
 </script>

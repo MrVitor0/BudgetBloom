@@ -1,3 +1,7 @@
 [
-   
+   {
+        "name": "Balance Edition",
+        "email": "Balance@balance.com",
+        "status": "active"
+   }
 ]

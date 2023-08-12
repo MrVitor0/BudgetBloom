@@ -19,7 +19,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- MONTH BALANCE -->
                 <div class=" md:relative md:flex flex-col shadow md:shadow-transparent flex-auto min-w-0 mt-2  md:p-4 md:mx-6 md:my-5 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
                         <div class="md:flex md:flex-col">
