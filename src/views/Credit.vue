@@ -4,7 +4,7 @@
             <div class="flex p-2 md:pl-5 flex-wrap md:-mx-4">
                 <!-- START OVERVIEW AREA -->
                 <div class="w-full md:w-2/2 lg:w-1/3 mb-5 md:bg-purple-100 rounded-lg">
-                    <img src="@/assets/cardbg2.jpg" class="rounded- w-screen h-full  border-t border-gray-500 rounded-lg">
+                    <img src="@/assets/cardbg3.png" class="rounded- w-screen h-full  border-t border-gray-500 rounded-lg">
                     <div class="relative flex flex-col flex-auto min-w-0 -mt-36 pt-12 md:pt-0 md:-mt-36 overflow-hidden break-words border-0  rounded-2xl bg-clip-border ">
                         <p class="pl-3 text-white text-5xl ">R$ 0.000,00</p>
                         <div class="flex">
@@ -18,20 +18,20 @@
                     </div>
                 </div>
               <!-- ACCOUNT BALANCE -->
-              <div class="w-full md:w-1/2 lg:w-1/3 mb-5 px-3 ">
+              <div class="w-full md:w-1/2 lg:w-1/3 mb-5 md:px-3 ">
                 <div class="flex justify-center items-center bg-white rounded-lg py-5 shadow p-4 h-full">
                     <div class="flex flex-col items-center text-center ">
                         <div class="rounded-md bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-500 transition duration-500 ease-in-out shadow">
-                          <font-awesome-icon icon="money-check" class="text-white text-5xl p-6" />
+                          <font-awesome-icon icon="calendar-days" class="text-white text-5xl p-6" />
                         </div>
                         <div class="text-md text-gray-700 font-medium mt-2">
-                          Edit Account Balance
+                          Update Current Credit Statement
                         </div>
                         <div class="text-xs font-light text-gray-500 mb-5 mt-1">
                            Your balance doesn't match your real balance? <br/> Update it here!
                         </div>
                         <div class="w-64">
-                        <BasicButton active="true" text="Update Account Balance" icon="edit" />
+                        <BasicButton active="true" text="Increase Statement" icon="edit" />
                         </div>  
                     </div>
                 </div>
@@ -41,16 +41,16 @@
                 <div class="flex justify-center items-center bg-white rounded-lg shadow p-4 h-full">
                     <div class="flex flex-col items-center text-center mt-26">
                         <div class="rounded-md bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-500 transition duration-500 ease-in-out shadow">
-                        <font-awesome-icon icon="money-check" class="text-white text-5xl p-6" />
+                        <font-awesome-icon icon="calendar-plus" class="text-white text-5xl p-6" />
                         </div>
                         <div class="text-md text-gray-700 font-medium mt-2">
-                        Edit Account Balance
+                        Update Older Statements
                         </div>
                         <div class="text-xs font-light text-gray-500 mb-5 mt-1">
                         Your balance doesn't match your real balance? <br/> Update it here!
                         </div>
                         <div class="w-64">
-                        <BasicButton active="true" text="Update Account Balance" icon="edit" />
+                        <BasicButton active="true" text="Update Statement" icon="edit" />
                         </div>  
                     </div>
                 </div>
