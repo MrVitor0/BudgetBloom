@@ -50,7 +50,7 @@
                         Your balance doesn't match your real balance? <br/> Update it here!
                         </div>
                         <div class="w-64">
-                        <BasicButton active="true" text="Update Statement" icon="edit" />
+                        <BasicButton  @click="showModal" active="true" text="Update Statement" icon="edit" />
                         </div>  
                     </div>
                 </div>

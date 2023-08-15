@@ -10,12 +10,12 @@
         class="block w-full pl-8 py-3 border rounded focus:outline-none focus:border-blue-500 bg-gray-200"
         :placeholder="placeholder"
         :id="inputId"
-      />
+        :disabled="disabled"
+        />
     </div>
   </template>
   
   <script>
-  // Importe o FontAwesomeIcon aqui, se ainda não o fez
   import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
   
   export default {
@@ -49,6 +49,11 @@
         formattedValue: this.formatCurrency(this.value),
       };
     },
+    watch: {
+      value(newVal) {
+        this.formattedValue = this.formatCurrency(newVal);
+      },
+    },
     methods: {
       formatCurrency(value) {
         const formatter = new Intl.NumberFormat("pt-BR", {
@@ -61,6 +66,7 @@
       updateValue(event) {
         const rawValue = event.target.value.replace(/\D+/g, "");
         this.formattedValue = this.formatCurrency(rawValue);
+       
         this.$emit("input", parseFloat(rawValue));
       },
       formatValue() {
@@ -72,20 +78,6 @@
         }
       },
     },
-    watch: {
-      value(newVal) {
-        this.formattedValue = this.formatCurrency(newVal);
-      },
-    },
   };
   </script>
-  
-  <style scoped>
-  /* Adicione a classe personalizada para o ícone do FontAwesome */
-  .dollar-icon {
-    color: #8b5cf6; /* ou qualquer outra cor que você prefira */
-  }
-  
-  /* Estilos adicionais podem ser aplicados aqui */
-  </style>
   
