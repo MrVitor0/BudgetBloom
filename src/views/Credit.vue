@@ -56,8 +56,6 @@
                 </div>
             </div>
        </div>
-
-
        <div>
             <div class="flex p-2 md:pl-5 flex-wrap md:-mx-4">
                 <!-- START OVERVIEW AREA -->
@@ -75,11 +73,10 @@
                 </div>
            </div>      
        </div>
-
-
-
-
-       
+       <div>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-md" @click="showModal">Abrir Modal</button>
+            <BBInputModal />
+        </div>
      </div>
      <!-- PROFILE SETTINGS AREA -->
    </template>
@@ -87,18 +84,22 @@
    import BasicButton from '@/components/button/BasicButton.vue';
    import CreditCardChartCard from '@/components/charts/CreditCardChartCard.vue';
    import InfoCard from '@/components/cards/InfoCard.vue';
+   import BBInputModal from '@/components/modal/BBInputModal.vue';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+   import { mapActions } from 'vuex';
    export default {
      name: 'DashboardCredit',
      components: {
             BasicButton,
             InfoCard,
+            BBInputModal,
             CreditCardChartCard,
             FontAwesomeIcon,
       },
      data() {
        return {
          progress: 95,
+         isModalVisible: true,
          transferItems: [
             {
                 name: 'Vitor Hugo',
@@ -137,6 +138,16 @@
             },
         ]
        };
+     },
+     methods: {
+        ...mapActions('modal', ['showInputModal']), // Importante: "modal" é o namespace do módulo no store
+        showModal() {
+        // Chama a ação para mostrar o modal
+        this.showInputModal();
+        },
+        closeModal() {
+            this.isModalVisible = false;
+        },
      },
      computed: {
         currentMonth() {

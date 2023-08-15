@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import './styles.css';
+import store from './store';
 
 // Importe os ícones que você deseja usar
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -12,4 +13,8 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 // Adicione os ícones à biblioteca
 library.add(fas, fab, far);
 
-createApp(App).use(router).mount('#app');
+
+createApp(App)
+.use(router)
+.use(store)
+.mount('#app');

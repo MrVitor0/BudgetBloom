@@ -1,0 +1,25 @@
+<template>
+    <transition name="modal" appear>
+      <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded-lg w-full sm:max-w-md">
+          <slot></slot>
+        </div>
+      </div>
+    </transition>
+  </template>
+  
+  <script>
+  export default {
+    name: 'BBModal'
+  }
+  </script>
+  
+  <style scoped>
+  .modal-enter-active, .modal-leave-active {
+    transition: opacity 0.3s ease;
+  }
+  .modal-enter, .modal-leave-to {
+    opacity: 0;
+  }
+  </style>
+  
