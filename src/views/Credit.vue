@@ -1,37 +1,34 @@
 <template >
-    <!-- ADD NEW INVESTMENT AREA -->
+    <!-- ADD NEW INVESTMENT AREA --> 
     <div class="mt-2">
             <div class="flex p-2 md:pl-5 flex-wrap md:-mx-4">
                 <!-- START OVERVIEW AREA -->
                 <div class="w-full md:w-2/2 lg:w-1/3 mb-5 md:bg-purple-100 rounded-lg">
-                    <img src="@/assets/bgvector.png" class="rounded- w-screen h-full hidden md:block border-t border-gray-500 rounded-t-lg">
-                    <!-- <div class=" md:relative md:flex flex-col shadow md:shadow-transparent  flex-auto min-w-0 p-5 md:p-4 md:mx-6 md:-mt-52 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
-                        <div class="md:flex md:flex-col">
-                            <div class="md:flex md:items-center text-center md:text-start">
-                                <div class="flex-shrink-0 rounded-3xl shadow p-1  bg-white mr-2 w-32 items-center text-center hidden md:block">
-                                    <font-awesome-icon icon="bank" class="text-5xl text-purple-700 m-5" />
-                                </div> 
-                                <div class="flex-grow ml-5 my-2 md:mt-0">
-                                <p class="text-gray-600 text-xs">Account Balance</p>
-                                <h2 class="text-xl font-semibold mb-2">R$00.000,00</h2>
-                                <p class="text-gray-600 text-xs">This is your actual account ballance.</p>
+                    <img src="@/assets/cardbg2.jpg" class="rounded- w-screen h-full  border-t border-gray-500 rounded-lg">
+                    <div class="relative flex flex-col flex-auto min-w-0 -mt-36 pt-12 md:pt-0 md:-mt-36 overflow-hidden break-words border-0  rounded-2xl bg-clip-border ">
+                        <p class="pl-3 text-white text-5xl ">R$ 0.000,00</p>
+                        <div class="flex">
+                            <div class="flex flex-col">
+                                <p class="pl-3 text-purple-200 text-2xl">Vitor Hugo</p>
                             </div>
+                            <div class="flex flex-col">
+                                <p class="pl-3 text-purple-200 text-2xl capitalize">{{ currentMonth }}/23</p>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
               <!-- ACCOUNT BALANCE -->
               <div class="w-full md:w-1/2 lg:w-1/3 mb-5 px-3 ">
                 <div class="flex justify-center items-center bg-white rounded-lg py-5 shadow p-4 h-full">
                     <div class="flex flex-col items-center text-center ">
                         <div class="rounded-md bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-500 transition duration-500 ease-in-out shadow">
-                        <font-awesome-icon icon="money-check" class="text-white text-5xl p-6" />
+                          <font-awesome-icon icon="money-check" class="text-white text-5xl p-6" />
                         </div>
                         <div class="text-md text-gray-700 font-medium mt-2">
-                        Edit Account Balance
+                          Edit Account Balance
                         </div>
                         <div class="text-xs font-light text-gray-500 mb-5 mt-1">
-                        Your balance doesn't match your real balance? <br/> Update it here!
+                           Your balance doesn't match your real balance? <br/> Update it here!
                         </div>
                         <div class="w-64">
                         <BasicButton active="true" text="Update Account Balance" icon="edit" />
