@@ -48,7 +48,7 @@
     },
     data() {
       return {
-        inputValue: '424'
+        inputValue: 0
       };
     },
     methods: {
