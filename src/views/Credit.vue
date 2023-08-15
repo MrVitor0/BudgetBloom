@@ -1,6 +1,6 @@
 <template >
     <!-- ADD NEW INVESTMENT AREA --> 
-    <div class="mt-2">
+        <div class="mt-2">
             <div class="flex p-2 md:pl-5 flex-wrap md:-mx-4">
                 <!-- START OVERVIEW AREA -->
                 <div class="w-full md:w-2/2 lg:w-1/3 mb-5 md:bg-purple-100 rounded-lg">
@@ -55,21 +55,45 @@
                     </div>
                 </div>
             </div>
-            <!-- Invoices History -->
-            <BasicDataTable />
        </div>
+
+
+       <div>
+            <div class="flex p-2 md:pl-5 flex-wrap md:-mx-4">
+                <!-- START OVERVIEW AREA -->
+                <div class="w-full md:w-1/2 lg:w-1/3 mb-5  rounded-lg">
+                    <CreditCardChartCard />
+                </div>
+                <div class="w-full md:w-1/2 lg:w-2/3 mb-5 px-3  rounded-lg">
+                    <InfoCard 
+                    heading="Built by developers"
+                    subheading="BudgetBloom"
+                    content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus incidunt ut officiis explicabo inventore."
+                    linkText="View More"
+                    icon="arrow-right"
+                  />
+                </div>
+           </div>      
+       </div>
+
+
+
+
+       
      </div>
      <!-- PROFILE SETTINGS AREA -->
    </template>
    <script>
    import BasicButton from '@/components/button/BasicButton.vue';
-   import BasicDataTable from '@/components/tables/BasicDataTable.vue';
+   import CreditCardChartCard from '@/components/charts/CreditCardChartCard.vue';
+   import InfoCard from '@/components/cards/InfoCard.vue';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
    export default {
      name: 'DashboardCredit',
      components: {
             BasicButton,
-            BasicDataTable,
+            InfoCard,
+            CreditCardChartCard,
             FontAwesomeIcon,
       },
      data() {

@@ -98,8 +98,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Invoices History -->
-            <BasicDataTable />
        </div>
      </div>
      <!-- PROFILE SETTINGS AREA -->
@@ -107,14 +105,12 @@
    <script>
    import BasicButton from '@/components/button/BasicButton.vue';
    import TransferItem from '@/components/cards/common/TransferItem.vue';
-   import BasicDataTable from '@/components/tables/BasicDataTable.vue';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
    export default {
      name: 'DashboardInvestments',
      components: {
             BasicButton,
             TransferItem,
-            BasicDataTable,
             FontAwesomeIcon,
       },
      data() {
