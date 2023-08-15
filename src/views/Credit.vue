@@ -31,7 +31,7 @@
                            Your balance doesn't match your real balance? <br/> Update it here!
                         </div>
                         <div class="w-64">
-                        <BasicButton active="true" text="Increase Statement" icon="edit" />
+                          <BasicButton @click="showModal" active="true" text="Increase Statement" icon="edit" />
                         </div>  
                     </div>
                 </div>
@@ -60,7 +60,7 @@
             <div class="flex p-2 md:pl-5 flex-wrap md:-mx-4">
                 <!-- START OVERVIEW AREA -->
                 <div class="w-full md:w-1/2 lg:w-1/3 mb-5  rounded-lg">
-                    <CreditCardChartCard />
+                    <CreditCardChartCard class="h-full" />
                 </div>
                 <div class="w-full md:w-1/2 lg:w-2/3 mb-5 px-3  rounded-lg">
                     <InfoCard 
@@ -73,10 +73,9 @@
                 </div>
            </div>      
        </div>
-       <div>
-            <button class="bg-blue-500 text-white px-4 py-2 rounded-md" @click="showModal">Abrir Modal</button>
-            <BBInputModal />
-        </div>
+
+       <!-- Modals-->
+        <BBInputModal />
      </div>
      <!-- PROFILE SETTINGS AREA -->
    </template>
@@ -142,11 +141,8 @@
      methods: {
         ...mapActions('modal', ['showInputModal']), // Importante: "modal" é o namespace do módulo no store
         showModal() {
-        // Chama a ação para mostrar o modal
-        this.showInputModal();
-        },
-        closeModal() {
-            this.isModalVisible = false;
+         // Chama a ação para mostrar o modal
+          this.showInputModal();
         },
      },
      computed: {
