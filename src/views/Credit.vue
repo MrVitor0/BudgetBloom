@@ -65,7 +65,7 @@
                 <div class="w-full md:w-1/2 lg:w-2/3 mb-5 px-3  rounded-lg">
                     <InfoCard 
                     heading="Built by developers"
-                    subheading="BudgetBloom"
+                    subheading="PurpleWallet"
                     content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus incidunt ut officiis explicabo inventore."
                     linkText="View More"
                     icon="arrow-right"

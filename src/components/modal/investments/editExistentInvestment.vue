@@ -2,12 +2,12 @@
     <div class="md:flex">
         <div class="md:w-1/3 md:pr-4 hidden md:block">
             <!-- Coloque sua imagem aqui -->
-            <img src="@/assets/bbtrack.png" alt="Imagem" class="max-w-auto h-full rounded-l-2xl" />
+            <img src="@/assets/bbedit.png" alt="Imagem" class="max-w-auto h-full rounded-l-2xl" />
         </div>
         <div class="md:w-2/3 p-5 text-center md:text-start">
             <div>
                 <!-- Investment Name -->
-                <h2 class="text-xl font-semibold mb-4">Add New Investment</h2>
+                <h2 class="text-xl font-semibold mb-4">Edit Investment</h2>
                 <label for="input" class="block mb-2">How much to increase?</label>
                 <BBInputHandler>
                   <BBTextInput v-model="investmentName" placeholder="Itaú Unibanco S.a" icon="bank" class="mb-2" />

@@ -18,7 +18,7 @@
       <div class="w-full md:w-1/2 lg:w-2/3 px-4 mb-5">
         <InfoCard
           heading="Built by developers"
-          subheading="BudgetBloom"
+          subheading="PurpleWallet"
           content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus incidunt ut officiis explicabo inventore."
           linkText="View More"
           icon="arrow-right"
@@ -28,7 +28,7 @@
       <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-5">
         <InfoCard
           heading="Built by developers"
-          subheading="BudgetBloom"
+          subheading="PurpleWallet"
           content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus incidunt ut officiis explicabo inventore."
           linkText="View More"
           icon="arrow-right"

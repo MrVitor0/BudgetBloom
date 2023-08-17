@@ -2,7 +2,7 @@
     <nav class=" text-white w-full  flex justify-between items-center py-2">
       <div class="flex flex-col ">
         <!-- Nome da página atual -->
-        <p class="font-semibold text-BBPurple opacity-70"><span class="opacity-50">BudgetBloom / </span>{{ currentRoute }}</p>
+        <p class="font-semibold text-BBPurple opacity-70"><span class="opacity-50">PurpleWallet / </span>{{ currentRoute }}</p>
         <!-- Rota atual com opacidade menor -->
         <p class="font-bold text-xl text-gray-700">{{ currentPageName  }}</p>
       </div>
