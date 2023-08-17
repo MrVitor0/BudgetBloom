@@ -84,7 +84,7 @@
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   import BBMoney from '@/utils/BBMoney'
   
-  import investmentsType from '@/mocks/investmentsType.json';
+  import investmentsType from '@/mocks/data/investmentsType.json';
   import { mapActions } from 'vuex';
   export default {
     components: {

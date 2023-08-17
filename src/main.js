@@ -10,11 +10,15 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 // Importe todos os ícones de marcas
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import axios from './services/api';
+
 // Adicione os ícones à biblioteca
 library.add(fas, fab, far);
 
+const app = createApp(App);
 
-createApp(App)
-.use(router)
-.use(store)
-.mount('#app');
+app.config.globalProperties.$api = axios;
+
+app.use(router)
+app.use(store)
+app.mount('#app');

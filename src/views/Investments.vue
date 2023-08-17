@@ -94,8 +94,7 @@
   import editExistentInvestment from '@/components/modal/investments/editExistentInvestment';
   import { mapActions } from 'vuex';
 
-  import MockInvestments from '@/mocks/investments.json';
-  import MockInvestmentsType from '@/mocks/investmentsType.json';
+  import MockInvestmentsType from '@/mocks/data/investmentsType.json';
   import BBMoney from '@/utils/BBMoney';
   import PWUtils from '@/utils/PWUtils';
 
@@ -116,11 +115,21 @@
       return {
         currentModal: null,
         currentModalData: null,
-        investments: MockInvestments,
+        investments: [],
         investmentsType: MockInvestmentsType,
         progress: 95,
         selectedValue: '',
       };
+    },
+    mounted() {
+      console.log(process.env.VUE_APP_JSON_SERVER) 
+      this.$api.get(`/investments`)
+      .then((response) => {
+        this.investments = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     },
     methods: {
       ...mapActions('modal', ['showInputModal', 'hideInputModal']),
