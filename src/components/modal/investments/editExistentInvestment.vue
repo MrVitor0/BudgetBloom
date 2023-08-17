@@ -49,6 +49,7 @@
                       <font-awesome-icon icon="comment" class="text-md text-purple-400" />
                     </div>
                     <BBTextArea 
+                      :value="description"
                       v-model="description" 
                       maxlength="75"
                       placeholder="Please, inform a short comment. Up to 75 characters."
@@ -91,10 +92,16 @@
       BBInputHandler,
       BBTextInput
     },
+    props: {
+      data: {
+        type: Object,
+        default: () => null
+      }
+    },
     data() {
       return {
         //form
-        description: '',
+        description: 'gaga',
         investmentName: '',
         investmentType: '',
         initialAport: 0,

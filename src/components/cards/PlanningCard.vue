@@ -88,23 +88,7 @@ export default {
         type: String,
         default: () => '00/00/0000'
     },
-    toDate: {
-        type: String,
-        default: () => '00/00/0000'
-    },
-    fromAport: {
-        type: String,
-        default: () => '0'
-    },
     toAport: {
-        type: String,
-        default: () => '0'
-    },
-    fromMounth: {
-        type: String,
-        default: () => '0'
-    },
-    toMounth: {
         type: String,
         default: () => '0'
     },

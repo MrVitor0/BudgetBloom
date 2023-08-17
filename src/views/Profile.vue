@@ -58,17 +58,17 @@
                   </BBInputHandler>
                 </div>
                 <div class="capitalize">
-                  <BBInputHandler>
+                  <BBInputHandler icon="envelope">
                     <BBTextInput label="Enter your email" type="email" icon="envelope" placeholder="john@example.com" />
                   </BBInputHandler>
                 </div>
                 <div class="capitalize">
-                  <BBInputHandler>
+                  <BBInputHandler icon="phone">
                     <BBTextInput label="Enter your number" type="number" icon="mobile" placeholder="123-456-7890" />
                   </BBInputHandler>
                 </div>
-                <div class="capitalize">
-                  <BBInputHandler>
+                <div class="capitalize" >
+                  <BBInputHandler icon="suitcase">
                     <BBTextInput label="Enter your role" icon="suitcase" placeholder="Developer" />
                   </BBInputHandler>
                 </div>

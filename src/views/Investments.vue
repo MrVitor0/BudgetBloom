@@ -61,71 +61,58 @@
         <div class="flex flex-wrap scroll-row cursor-grabbing md:cursor-auto">
             <div class="md:w-1/2 lg:w-1/3 px-3">
                 <PlanningCard 
-                title="Nubank RDB"
-                icon="bank"
-                subtitle="Fixed Income"
-                description="Lorem ipsum dolor sit amet  adipisicing elit. Quisquam, voluptatibus."
-                fromBudget="1.000,00"
-                toBudget="10.000,00"
-                fromAport="1"
-                toAport="25"
-                fromDate="01/01/2021"
-                toDate="01/01/2021"
-                fromMounth="1"
-                toMounth="10"
+                  title="Nubank RDB"
+                  icon="bank"
+                  subtitle="Fixed Income"
+                  description="Lorem ipsum dolor sit amet  adipisicing elit. Quisquam, voluptatibus."
+                  fromBudget="1.000,00"
+                  toBudget="10.000,00"
+                  toAport="25"
+                  fromDate="01/01/2021"
+                  @click="EditExistentInvestment({data: null})"
                 />
             </div>
             <div class="md:w-1/2 lg:w-1/3 px-3">
                 <PlanningCard 
-                title="Bradesco S.A. (BBDC4)"
-                icon="bank"
-                subtitle="Fixed Income"
-                description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus."
-                fromBudget="1.000,00"
-                toBudget="10.000,00"
-                fromAport="1"
-                toAport="25"
-                fromDate="01/01/2021"
-                toDate="01/01/2021"
-                fromMounth="1"
-                toMounth="10"
+                  title="Bradesco S.A. (BBDC4)"
+                  icon="bank"
+                  subtitle="Fixed Income"
+                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus."
+                  fromBudget="1.000,00"
+                  toBudget="10.000,00"
+                  toAport="25"
+                  fromDate="01/01/2021"
+                  @click="EditExistentInvestment({data: null})"
                 />
             </div>
             <div class="md:w-1/2 lg:w-1/3 px-3">
                 <PlanningCard 
-                title="Apple Inc. (AAPL34)"
-                icon="apple-whole"
-                subtitle="Stock Market"
-                description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus."
-                fromBudget="1.000,00"
-                toBudget="10.000,00"
-                fromAport="23"
-                toAport="25"
-                fromDate="01/01/2021"
-                toDate="01/01/2021"
-                fromMounth="9"
-                toMounth="10"
-                progress="95"
+                  title="Apple Inc. (AAPL34)"
+                  icon="apple-whole"
+                  subtitle="Stock Market"
+                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus."
+                  fromBudget="1.000,00"
+                  toBudget="10.000,00"
+                  toAport="25"
+                  fromDate="01/01/2021"
+                  progress="95"
+                  @click="EditExistentInvestment({data: null})"
                 />
             </div>
             <div class="md:w-1/2 lg:w-1/3 px-3">
                 <PlanningCard 
-                title="Itaú Unibanco S.A. (ITUB4)"
-                icon="bank"
-                subtitle="Fixed Income"
-                description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus."
-                fromBudget="1.000,00"
-                toBudget="10.000,00"
-                fromAport="1"
-                toAport="25"
-                fromDate="01/01/2021"
-                toDate="01/01/2021"
-                fromMounth="3"
-                toMounth="10"
-                progress="30"
+                  title="Itaú Unibanco S.A. (ITUB4)"
+                  icon="bank"
+                  subtitle="Fixed Income"
+                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus."
+                  fromBudget="1.000,00"
+                  toBudget="10.000,00"
+                  toAport="25"
+                  fromDate="01/01/2021"
+                  progress="30"
+                  @click="EditExistentInvestment({data: null})"
                 />
             </div>
-            <!-- Repeat similar blocks for other PlanningCard components -->
         </div>
     </div>
  
@@ -138,6 +125,7 @@
     <BBModal>
           <addNewInvestment v-if="this.currentModal == 0" />
           <updateOlderInvestment v-if="this.currentModal == 1" />
+          <editExistentInvestment :data="currentModalData" v-if="this.currentModal == 2" />
     </BBModal>
   </template>
   
@@ -150,6 +138,7 @@
   import BBModal from '@/components/modal/BBModal.vue';
   import addNewInvestment from '@/components/modal/investments/addNewInvestment';
   import updateOlderInvestment from '@/components/modal/investments/updateExistentInvestment';
+  import editExistentInvestment from '@/components/modal/investments/editExistentInvestment';
   import { mapActions } from 'vuex';
   export default {
     name: 'DashboardInvestments',
@@ -158,14 +147,16 @@
       PriceCard,
       BasicButton,
       FontAwesomeIcon,
-
+ 
       BBModal,
       addNewInvestment,
       updateOlderInvestment,
+      editExistentInvestment,
     },
     data() {
       return {
         currentModal: null,
+        currentModalData: null,
         progress: 95,
         selectOptions: [
             { label: 'CDB/RDB Application', value: 'option1' },
@@ -181,6 +172,11 @@
         this.currentModal = modal;
         this.showInputModal();
       },
+      EditExistentInvestment(data) {
+        this.currentModalData = data;
+        this.currentModal = 2;
+        this.showInputModal();
+      }
     }
   }
   </script>

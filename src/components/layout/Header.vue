@@ -8,7 +8,9 @@
       </div>
       <div class="flex items-center text-BBPurple">
         <div class="relative">
-          <BBTextInput icon="search" placeholder="Search..." />
+          <BBInputHandler icon="search">
+            <BBTextInput icon="search" placeholder="Search..." />
+          </BBInputHandler>
         </div>
         <div class="mr-4">
             <font-awesome-icon icon="user" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openUserSettings" />
@@ -21,11 +23,13 @@
   
   <script>
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+  import BBInputHandler from '../form/common/BBInputHandler.vue';
   import BBTextInput from '@/components/form/BBTextInput.vue';
   export default {
     name: 'DashboardHeader',
     components: {
       FontAwesomeIcon,
+      BBInputHandler,
       BBTextInput
     },
     props: {
