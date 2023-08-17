@@ -80,10 +80,10 @@
      <!-- PROFILE SETTINGS AREA -->
    </template>
    <script>
-   import BasicButton from '@/components/button/BasicButton.vue';
-   import CreditCardChartCard from '@/components/charts/CreditCardChartCard.vue';
-   import InfoCard from '@/components/cards/InfoCard.vue';
-   import BBInputModal from '@/components/modal/BBInputModal.vue';
+   import BasicButton from '@/components/button/BasicButton';
+   import CreditCardChartCard from '@/components/charts/CreditCardChartCard';
+   import InfoCard from '@/components/cards/InfoCard';
+   import BBInputModal from '@/components/modal/creditCards/updateCurrentCredit';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
    import { mapActions } from 'vuex';
    export default {

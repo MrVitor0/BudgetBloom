@@ -9,7 +9,12 @@
                 <div>
                     <h2 class="text-xl font-semibold mb-4">Increase Statement</h2>
                     <label for="input" class="block mb-2">How much to increase?</label>
-                    <BBPriceInput v-model="inputValue" />
+                    <div class="relative w-full">
+                      <div class="absolute left-3 top-1/2 -translate-y-1/2">
+                        <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
+                      </div>
+                      <BBPriceInput v-model="inputValue" />
+                    </div>
                 </div>
                 <div class="mt-4">
                     <button
@@ -31,9 +36,10 @@
 </template>
   
 <script>
-  import BBModal from './BBModal.vue';
+  import BBModal from '../BBModal.vue';
   import BBPriceInput from '@/components/form/BBPriceInput';
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+  import BBMoney from '@/utils/BBMoney'
   import { mapState, mapActions } from 'vuex';
   export default {
     components: {
@@ -49,18 +55,27 @@
         inputValue: 0
       };
     },
-    watch: {
-      inputValue() {
-        console.log(this.inputValue)
-      }
-    },
     methods: {
       ...mapActions('modal', ['showInputModal', 'hideInputModal']),
+      formatCurrency(value) {
+        const formatter = new Intl.NumberFormat("pt-BR", {
+          style: "decimal",
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+        return formatter.format(value / 100);
+      },
       submitInput() {
-        console.log(this.inputValue)
-        if (this.inputValue) {
-            this.hideInputModal();
-        }
+        //remove dots andd "," from the inputvalue
+        let rawValue = this.inputValue.replace(/\D+/g, "");
+
+        console.log({
+          from: BBMoney.toCurrency(rawValue, "pt-BR"),
+          to: BBMoney.toDouble(rawValue)
+        })
+        // if (this.inputValue) {
+        //     this.hideInputModal();
+        // }
       },
       hideModal() {
         this.hideInputModal();

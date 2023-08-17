@@ -11,11 +11,9 @@ export default {
     },
     actions: {
       showInputModal({ commit }) {
-        console.log('Modal está sendo mostrado.');
         commit('setInputModalVisible', true);
       },
       hideInputModal({ commit }) {
-        console.log('Modal está sendo escondido.');
         commit('setInputModalVisible', false);
       }
     }
