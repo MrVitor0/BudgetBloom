@@ -23,7 +23,7 @@
                 <font-awesome-icon icon="money-bill-trend-up" class="text-white text-5xl p-6" />
                 </div>
                 <div class="text-md text-gray-700 font-medium mt-2">
-                  Add New Investment
+                  Track New Investment
                 </div>
                 <div class="text-xs font-light text-gray-500 mb-5 mt-1">
                   Want to add a new investment to track? Click the button below.
@@ -44,7 +44,7 @@
                 <font-awesome-icon icon="money-bill-transfer" class="text-white text-5xl p-6" />
                 </div>
                 <div class="text-md text-gray-700 font-medium mt-2">
-                  Update Apport
+                  Track New Apport
                 </div>
                 <div class="text-xs font-light text-gray-500 mb-5 mt-1">
                   Want to update your apport? Click the button below.

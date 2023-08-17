@@ -1,13 +1,13 @@
 <template>
-      <div class="md:flex">
-        <div class="md:w-1/3 md:pr-4 hidden md:flex">
+    <div class="md:flex">
+        <div class="md:w-1/3 md:pr-4 hidden md:block">
             <!-- Coloque sua imagem aqui -->
-            <img src="@/assets/ccstatement.png" alt="Imagem" class="max-w-full h-auto rounded-l-2xl" />
+            <img src="@/assets/bbspend.png" alt="Imagem" class="max-w-full h-auto  rounded-l-2xl" />
         </div>
         <div class="md:w-2/3 p-5 text-center md:text-start">
             <div>
-                <h2 class="text-xl font-semibold mb-4">Update Older Statements</h2>
-                <label for="input" class="block mb-2">How much to increase?</label>
+                <h2 class="text-xl font-semibold mb-4">Add Expanse Value</h2>
+                <label for="input" class="block mb-2">How much you spend?</label>
                 <div class="relative w-full mt-3">
                   <div class="absolute left-3 top-1/2 -translate-y-1/2">
                     <FontAwesomeIcon icon="calendar-days" class="text-md text-purple-400" />

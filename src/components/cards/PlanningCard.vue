@@ -10,7 +10,7 @@
               <p class="text-gray-600">{{ subtitle }}</p>
             </div>
             <div class="self-start hidden md:block">
-              <font-awesome-icon icon="ellipsis-vertical" class="text-2xl text-purple-700 cursor-pointer" />
+              <font-awesome-icon icon="edit" class="text-2xl text-purple-700 cursor-pointer hover:text-purple-600" />
             </div>
           </div>
           <!-- Body -->
@@ -22,7 +22,7 @@
             <div class="flex-grow" />
             <div class="flex-end bg-gray-200 rounded-xl p-3">
               <h2 class="text-sm font-semibold text-gray-700 ">Start Date: <span class="text-gray-600">{{  fromDate }}</span></h2>
-              <p class="text-sm font-semibold text-gray-700">Deadline: <span class="text-gray-600">{{ toDate }}</span></p>
+              <p class="text-gray-600">Total Days: 10</p>
             </div>
           </div>
           <div class="pt-2 pb-2 pl-1 whitespace-normal">
@@ -32,13 +32,11 @@
           <!-- Footer -->
           <div class="flex mt-5 ">
             <div class="p-3">
-                <h2 class="text-sm font-semibold text-gray-800">All Aports: {{ fromAport }}/{{ toAport }}</h2>
-                <p class="text-gray-600 pt-2">Mounths: {{ fromMounth }}/{{ toMounth }}</p>
+                <h2 class="text-sm font-semibold text-gray-800">Aport Count: {{ toAport }}</h2>
             </div>
             <div class="flex-grow" />
             <div class="flex-end pt-1">
-                <h2 class="text-sm font-semibold text-gray-800"><BasicPill size="sm" color="bg-success" text-color="text-green-800" icon="hide" text="28 Days Left"  /></h2>
-                <p class="text-gray-600 break-words">{{ progress }}% Completed</p>
+                <h2 class="text-sm font-semibold text-gray-800"><BasicPill size="sm" color="bg-success" text-color="text-green-800" icon="hide" :text="progress + '% Completed'"  /></h2>          
             </div>
           </div>
           <!-- ProgressBar -->

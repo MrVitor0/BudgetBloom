@@ -93,7 +93,13 @@
                         Your balance doesn't match your real balance? <br/> Update it here!
                         </div>
                         <div class="w-64">
-                        <BasicButton @click="showModal(0)" active="true" text="Update Account Balance" icon="edit" />
+                            <BasicButton @click="showModal(0)" active="true" text="Add Incoming" icon="square-plus" />
+                        </div>  
+                        <div class="w-64">
+                            <BasicButton @click="showModal(1)" active="true" text="Add Expanse" icon="square-minus" />
+                        </div>  
+                        <div class="w-64">
+                            <BasicButton @click="showModal(2)" active="true" text="Adjust Account Balance" icon="wrench" />
                         </div>  
                     </div>
                 </div>
@@ -104,7 +110,9 @@
 
       <!-- Modals-->
     <BBModal>
-          <updateAccountBalance v-if="this.currentModal == 0" />
+          <addIncomingValue v-if="this.currentModal == 0" />
+          <addExpanseValue v-if="this.currentModal == 1" />
+          <updateAccountBalance v-if="this.currentModal == 2" />
     </BBModal>
    </template>
    <script>
@@ -112,6 +120,8 @@
    import TransferItem from '@/components/cards/common/TransferItem.vue';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
    import updateAccountBalance from '@/components/modal/banking/updateAccountBalance';
+   import addIncomingValue from '@/components/modal/banking/addIncomingValue';
+   import addExpanseValue from '@/components/modal/banking/addExpanseValue';
    import BBModal from '@/components/modal/BBModal.vue';
    import { mapActions } from 'vuex';
    export default {
@@ -122,7 +132,9 @@
             FontAwesomeIcon,
             
             BBModal,
-            updateAccountBalance
+            updateAccountBalance,
+            addIncomingValue,
+            addExpanseValue
       },
      data() {
        return {

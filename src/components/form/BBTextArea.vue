@@ -1,31 +1,26 @@
 <template>
-    <div class="relative w-full">
-        <label :for="inputId" v-if="label" class="text-sm block font-medium text-gray-500">{{ label }}</label>
-        <input
+    <textarea
         :id="inputId"
+        :maxlength="maxlength"
         :type="type"
         :class="inputClasses"
         :placeholder="placeholder"
         @focus="isFocused = true"
         @blur="isFocused = false"
         v-model="inputValue"
-        />
-        <div :class='`absolute left-3 ${label ? "top-7" : "top-2"}`' >
-            <font-awesome-icon :icon="icon" class="text-md text-purple-400" />
-        </div>
-    </div>
+    />
   </template>
   
   <script>
-  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-  
+
   export default {
-    components: {
-      FontAwesomeIcon,
-    },
     props: {
       label: String,
       placeholder: String,
+      maxlength: {
+        type: Number,
+        default: 150,
+      },
       type: {
         type: String,
         default: 'text',
@@ -45,7 +40,7 @@
     computed: {
       inputClasses() {
         return [
-          'border border-gray-300 rounded-lg w-full px-4 py-2 focus:outline-none focus:border-purple-500 pl-10 pr-4 focus:outline-none',
+          'border resize-none border-gray-300 rounded-lg w-full px-4 py-2 focus:outline-none focus:border-purple-500 pl-10 pr-4 focus:outline-none',
           this.isFocused ? 'focus:border-purple-500' : 'border-gray-300',
         ];
       },

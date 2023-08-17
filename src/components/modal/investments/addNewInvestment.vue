@@ -1,18 +1,56 @@
 <template>
-    <div class="flex">
-        <div class="w-1/3 pr-4">
+    <div class="md:flex">
+        <div class="md:w-1/3 md:pr-4 hidden md:block">
             <!-- Coloque sua imagem aqui -->
-            <img src="@/assets/ccstatement.png" alt="Imagem" class="max-w-full h-auto rounded-l-2xl" />
+            <img src="@/assets/bbtrack.png" alt="Imagem" class="max-w-auto h-full rounded-l-2xl" />
         </div>
-        <div class="w-2/3 p-5">
+        <div class="md:w-2/3 p-5 text-center md:text-start">
             <div>
+                <!-- Investment Name -->
                 <h2 class="text-xl font-semibold mb-4">Add New Investment</h2>
                 <label for="input" class="block mb-2">How much to increase?</label>
+                <BBTextInput placeholder="Itaú Unibanco S.a" icon="bank" class="mb-2" />
+                <!--INVESTMENT TYPE -->
                 <div class="relative w-full">
-                  <div class="absolute left-3 top-1/2 -translate-y-1/2">
-                    <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
+                    <!-- Adicionando um ícone ao lado do input original -->
+                    <div class="absolute left-3 top-2">
+                      <font-awesome-icon icon="money-bill" class="text-md text-purple-400" />
+                    </div>
+                    <BBSelectInput
+                      v-model="selectedOption"
+                      :options="investmentOptions"
+                      placeholder="Select an investment"
+                      class="mb-2 pl-9"
+                    />
+                </div>
+                <!--INITIAL VALUES -->
+                <div class="md:flex md:mb-3">
+                  <div class="relative w-full pr-2 text-start ">
+                    <label for="input" class="block mb-1 mt-3">What is the initial aport?</label>
+                    <div class="absolute left-3 pt-11 -translate-y-1/2">
+                      <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
+                    </div>
+                    <BBPriceInput v-model="inputValue" class="pl-8 rounded-lg" />
                   </div>
-                  <BBPriceInput v-model="inputValue" />
+                  <div class="relative w-full text-start">
+                    <label for="input" class="block mb-1 mt-3">What is the objetive?</label>
+                    <div class="absolute left-3 pt-11 -translate-y-1/2">
+                      <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
+                    </div>
+                    <BBPriceInput v-model="inputValue" class="pl-8 rounded-lg" />
+                  </div>
+                </div>
+                <!--SHORT DESCRIPTION -->
+                <div class="relative w-full">
+                    <!-- Adicionando um ícone ao lado do input original -->
+                    <div class="absolute left-3 top-2">
+                      <font-awesome-icon icon="comment" class="text-md text-purple-400" />
+                    </div>
+                    <BBTextArea 
+                      v-model="BBDescription" 
+                      maxlength="75"
+                      placeholder="Please, inform a short comment. Up to 75 characters."
+                    />
                 </div>
             </div>
             <div class="mt-4">
@@ -35,18 +73,54 @@
   
 <script>
   import BBPriceInput from '@/components/form/BBPriceInput';
+  import BBTextInput from '@/components/form/BBTextInput.vue';
+  import BBSelectInput from '@/components/form/BBSelectInput.vue';
+  import BBTextArea from '@/components/form/BBTextArea.vue';
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   import BBMoney from '@/utils/BBMoney'
   import { mapActions } from 'vuex';
   export default {
     components: {
       FontAwesomeIcon,
-      BBPriceInput
+      BBPriceInput,
+      BBSelectInput,
+      BBTextArea,
+      BBTextInput
     },
     data() {
       return {
-        inputValue: 0
+        //form
+        BBDescription: '',
+        
+
+
+
+        inputValue: 0,
+        selectedOption: 'FIE',
+        investmentOptions: [
+          {
+            label: "Fixed Income",
+            value: "FIE"
+          },
+          {
+            label: "Stocks",
+            value: "STK"
+          },
+          {
+            label: "Crypto",
+            value: "CRP"
+          },
+          {
+            label: "Others",
+            value: "OTH"
+          }
+        ]
       };
+    },
+    watch: {
+      BBDescription(newValue) {
+        console.log(newValue);
+      },
     },
     methods: {
       ...mapActions('modal', ['hideInputModal']),

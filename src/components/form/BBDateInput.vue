@@ -2,14 +2,14 @@
    <select
         v-if="type === 'Month'"
         v-model="selectedMonth"
-        class="block pl-8 appearance-none py-3 border cursor-pointer focus:outline-none focus:border-purple-500 w-full bg-gray-200"
+        class="block pl-8 appearance-none py-3 border cursor-pointer focus:outline-none focus:border-purple-500 w-full"
       >
         <option v-for="(month, index) in months" :key="month" :value="index + 1">{{ month }}</option>
     </select>
     <select
         v-else-if="type === 'Year'"
         v-model="selectedYear"
-        class="block pl-1 py-3 border w-full cursor-pointer focus:outline-none focus:border-purple-500 bg-gray-200"
+        class="block pl-1 py-3 border w-full cursor-pointer focus:outline-none focus:border-purple-500"
       >
         <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
       </select>
