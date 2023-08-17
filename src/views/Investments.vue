@@ -1,8 +1,4 @@
 <template >
-
-
-
-
    <!-- ADD NEW INVESTMENT AREA -->
    <div class="mt-2">
         <div class="flex flex-wrap md:-mx-4">

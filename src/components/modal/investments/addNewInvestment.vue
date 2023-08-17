@@ -9,7 +9,9 @@
                 <!-- Investment Name -->
                 <h2 class="text-xl font-semibold mb-4">Add New Investment</h2>
                 <label for="input" class="block mb-2">How much to increase?</label>
-                <BBTextInput placeholder="Itaú Unibanco S.a" icon="bank" class="mb-2" />
+                <BBInputHandler>
+                  <BBTextInput v-model="investmentName" placeholder="Itaú Unibanco S.a" icon="bank" class="mb-2" />
+                </BBInputHandler>
                 <!--INVESTMENT TYPE -->
                 <div class="relative w-full">
                     <!-- Adicionando um ícone ao lado do input original -->
@@ -17,7 +19,7 @@
                       <font-awesome-icon icon="money-bill" class="text-md text-purple-400" />
                     </div>
                     <BBSelectInput
-                      v-model="selectedOption"
+                      v-model="investmentType"
                       :options="investmentOptions"
                       placeholder="Select an investment"
                       class="mb-2 pl-9"
@@ -30,14 +32,14 @@
                     <div class="absolute left-3 pt-11 -translate-y-1/2">
                       <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                     </div>
-                    <BBPriceInput v-model="inputValue" class="pl-8 rounded-lg" />
+                    <BBPriceInput v-model="initialAport" class="pl-8 rounded-lg" />
                   </div>
                   <div class="relative w-full text-start">
                     <label for="input" class="block mb-1 mt-3">What is the objetive?</label>
                     <div class="absolute left-3 pt-11 -translate-y-1/2">
                       <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                     </div>
-                    <BBPriceInput v-model="inputValue" class="pl-8 rounded-lg" />
+                    <BBPriceInput v-model="nearestObjetive" class="pl-8 rounded-lg" />
                   </div>
                 </div>
                 <!--SHORT DESCRIPTION -->
@@ -47,7 +49,7 @@
                       <font-awesome-icon icon="comment" class="text-md text-purple-400" />
                     </div>
                     <BBTextArea 
-                      v-model="BBDescription" 
+                      v-model="description" 
                       maxlength="75"
                       placeholder="Please, inform a short comment. Up to 75 characters."
                     />
@@ -73,6 +75,7 @@
   
 <script>
   import BBPriceInput from '@/components/form/BBPriceInput';
+  import BBInputHandler from '@/components/form/common/BBInputHandler';
   import BBTextInput from '@/components/form/BBTextInput.vue';
   import BBSelectInput from '@/components/form/BBSelectInput.vue';
   import BBTextArea from '@/components/form/BBTextArea.vue';
@@ -85,18 +88,20 @@
       BBPriceInput,
       BBSelectInput,
       BBTextArea,
+      BBInputHandler,
       BBTextInput
     },
     data() {
       return {
         //form
-        BBDescription: '',
+        description: '',
+        investmentName: '',
+        investmentType: '',
+        initialAport: 0,
+        nearestObjetive: 0,
+
+
         
-
-
-
-        inputValue: 0,
-        selectedOption: 'FIE',
         investmentOptions: [
           {
             label: "Fixed Income",
@@ -117,11 +122,6 @@
         ]
       };
     },
-    watch: {
-      BBDescription(newValue) {
-        console.log(newValue);
-      },
-    },
     methods: {
       ...mapActions('modal', ['hideInputModal']),
       formatCurrency(value) {
@@ -133,13 +133,12 @@
         return formatter.format(value / 100);
       },
       submitInput() {
-        if(this.inputValue == 0) {
-          return;
-        }
-        let rawValue = this.inputValue.replace(/\D+/g, "");
         console.log({
-          from: BBMoney.toCurrency(rawValue, "pt-BR"),
-          to: BBMoney.toDouble(rawValue)
+          description: this.description,
+          investmentName: this.investmentName,
+          investmentType: this.investmentType,
+          initialAport: BBMoney.toDouble(BBMoney.toRaw(this.initialAport)),
+          nearestObjetive: BBMoney.toDouble(BBMoney.toRaw(this.nearestObjetive)),
         })
       },
       hideModal() {

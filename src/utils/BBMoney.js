@@ -13,6 +13,9 @@ class BBMoney {
         this._amount = value;
     }
 
+    static toRaw = (amount = 0) => {
+        return amount.replace(/\D+/g, "");
+    }
     /**
      * @description Retorna o valor formatado em moeda
      * @param {*} amount 

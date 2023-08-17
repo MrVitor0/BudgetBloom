@@ -53,16 +53,24 @@
               </div>
               <div class="grid grid-cols-2 gap-4 w-full">
                 <div class="capitalize">
-                  <BBTextInput label="Enter your name" placeholder="John Doe" />
+                  <BBInputHandler>
+                    <BBTextInput label="Enter your name" placeholder="John Doe" />
+                  </BBInputHandler>
                 </div>
                 <div class="capitalize">
-                  <BBTextInput label="Enter your email" type="email" icon="envelope" placeholder="john@example.com" />
+                  <BBInputHandler>
+                    <BBTextInput label="Enter your email" type="email" icon="envelope" placeholder="john@example.com" />
+                  </BBInputHandler>
                 </div>
                 <div class="capitalize">
-                  <BBTextInput label="Enter your number" type="number" icon="mobile" placeholder="123-456-7890" />
+                  <BBInputHandler>
+                    <BBTextInput label="Enter your number" type="number" icon="mobile" placeholder="123-456-7890" />
+                  </BBInputHandler>
                 </div>
                 <div class="capitalize">
-                  <BBTextInput label="Enter your role" icon="suitcase" placeholder="Developer" />
+                  <BBInputHandler>
+                    <BBTextInput label="Enter your role" icon="suitcase" placeholder="Developer" />
+                  </BBInputHandler>
                 </div>
               </div>
           </div>
@@ -143,6 +151,7 @@
 import BasicPill from '@/components/pills/BasicPill.vue';
 import BasicCheckbox from '@/components/checkbox/BasicCheckbox.vue';
 import BBTextInput from '@/components/form/BBTextInput.vue';
+import BBInputHandler from '@/components/form/common/BBInputHandler.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 export default {
   name: 'DashboardProfile',
@@ -150,6 +159,7 @@ export default {
     BasicPill,
     BasicCheckbox,
     BBTextInput,
+    BBInputHandler,
     FontAwesomeIcon,
   },
   data() {
