@@ -29,7 +29,7 @@
                   Want to add a new investment to track? Click the button below.
                 </div>
                 <div class="w-64">
-                    <BasicButton  active="true" text="Add New Investment" icon="plus" />
+                    <BasicButton @click="showModal(0)"  active="true" text="Add New Investment" icon="plus" />
                 </div>  
             </div>
           </div>
@@ -50,7 +50,7 @@
                   Want to update your apport? Click the button below.
                 </div>
                 <div class="w-64">
-                    <BasicButton  text="Update Investment" icon="pen-to-square" />
+                    <BasicButton @click="showModal(1)" text="Update Investment" icon="pen-to-square" />
                 </div> 
             </div>
           </div>
@@ -138,7 +138,11 @@
     
   
   
-    
+    <!-- Modals-->
+    <BBModal>
+          <addNewInvestment v-if="this.currentModal == 0" />
+          <updateOlderInvestment v-if="this.currentModal == 1" />
+    </BBModal>
   </template>
   
   <script>
@@ -146,6 +150,11 @@
   import BasicButton from '@/components/button/BasicButton.vue';
   import PriceCard from '@/components/cards/PriceCard.vue';
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+  import BBModal from '@/components/modal/BBModal.vue';
+  import addNewInvestment from '@/components/modal/investments/addNewInvestment';
+  import updateOlderInvestment from '@/components/modal/investments/updateExistentInvestment';
+  import { mapActions } from 'vuex';
   export default {
     name: 'DashboardInvestments',
     components: {
@@ -153,9 +162,14 @@
       PriceCard,
       BasicButton,
       FontAwesomeIcon,
+
+      BBModal,
+      addNewInvestment,
+      updateOlderInvestment,
     },
     data() {
       return {
+        currentModal: null,
         progress: 95,
         selectOptions: [
             { label: 'CDB/RDB Application', value: 'option1' },
@@ -165,6 +179,13 @@
         selectedValue: '',
       };
     },
+    methods: {
+      ...mapActions('modal', ['showInputModal', 'hideInputModal']),
+      showModal(modal) {
+        this.currentModal = modal;
+        this.showInputModal();
+      },
+    }
   }
   </script>
 

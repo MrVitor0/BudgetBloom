@@ -93,7 +93,7 @@
                         Your balance doesn't match your real balance? <br/> Update it here!
                         </div>
                         <div class="w-64">
-                        <BasicButton active="true" text="Update Account Balance" icon="edit" />
+                        <BasicButton @click="showModal(0)" active="true" text="Update Account Balance" icon="edit" />
                         </div>  
                     </div>
                 </div>
@@ -101,21 +101,33 @@
        </div>
      </div>
      <!-- PROFILE SETTINGS AREA -->
+
+      <!-- Modals-->
+    <BBModal>
+          <updateAccountBalance v-if="this.currentModal == 0" />
+    </BBModal>
    </template>
    <script>
    import BasicButton from '@/components/button/BasicButton.vue';
    import TransferItem from '@/components/cards/common/TransferItem.vue';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+   import updateAccountBalance from '@/components/modal/banking/updateAccountBalance';
+   import BBModal from '@/components/modal/BBModal.vue';
+   import { mapActions } from 'vuex';
    export default {
      name: 'DashboardInvestments',
      components: {
             BasicButton,
             TransferItem,
             FontAwesomeIcon,
+            
+            BBModal,
+            updateAccountBalance
       },
      data() {
        return {
          progress: 95,
+         currentModal: null,
          transferItems: [
             {
                 name: 'Vitor Hugo',
@@ -154,6 +166,13 @@
             },
         ]
        };
+     },
+     methods: {
+       ...mapActions('modal', ['showInputModal', 'hideInputModal']),
+       showModal(modal) {
+         this.currentModal = modal;
+         this.showInputModal();
+       },
      },
      computed: {
         currentMonth() {
