@@ -10,7 +10,7 @@
                 <h2 class="text-xl font-semibold mb-4">Edit Investment</h2>
                 <label for="input" class="block mb-2">How much to increase?</label>
                 <BBInputHandler>
-                  <BBTextInput v-model="investmentName" placeholder="Itaú Unibanco S.a" icon="bank" class="mb-2" />
+                  <BBTextInput  :value="investmentName" v-model="investmentName" placeholder="Itaú Unibanco S.a" icon="bank" class="mb-2" />
                 </BBInputHandler>
                 <!--INVESTMENT TYPE -->
                 <div class="relative w-full">
@@ -19,6 +19,7 @@
                       <font-awesome-icon icon="money-bill" class="text-md text-purple-400" />
                     </div>
                     <BBSelectInput
+                      :value="investmentType"
                       v-model="investmentType"
                       :options="investmentOptions"
                       placeholder="Select an investment"
@@ -32,14 +33,14 @@
                     <div class="absolute left-3 pt-11 -translate-y-1/2">
                       <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                     </div>
-                    <BBPriceInput v-model="initialAport" class="pl-8 rounded-lg" />
+                    <BBPriceInput :value="initialAport" v-model="initialAport" class="pl-8 rounded-lg" />
                   </div>
                   <div class="relative w-full text-start">
                     <label for="input" class="block mb-1 mt-3">What is the objetive?</label>
                     <div class="absolute left-3 pt-11 -translate-y-1/2">
                       <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                     </div>
-                    <BBPriceInput v-model="nearestObjetive" class="pl-8 rounded-lg" />
+                    <BBPriceInput :value="nearestObjetive" v-model="nearestObjetive" class="pl-8 rounded-lg" />
                   </div>
                 </div>
                 <!--SHORT DESCRIPTION -->
@@ -82,6 +83,8 @@
   import BBTextArea from '@/components/form/BBTextArea.vue';
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   import BBMoney from '@/utils/BBMoney'
+  
+  import investmentsType from '@/mocks/investmentsType.json';
   import { mapActions } from 'vuex';
   export default {
     components: {
@@ -98,33 +101,19 @@
         default: () => null
       }
     },
+    mounted() {
+      console.log(this.data)
+    },
     data() {
       return {
         //form
-        description: 'gaga',
-        investmentName: '',
-        investmentType: '',
-        initialAport: 0,
-        nearestObjetive: 0,
+        description: this.data.description,
+        investmentName: this.data.title,
+        investmentType: this.data.subtitle,
+        initialAport: BBMoney.toRaw(this.data.fromBudget),
+        nearestObjetive: BBMoney.toRaw(this.data.toBudget),
         
-        investmentOptions: [
-          {
-            label: "Fixed Income",
-            value: "FIE"
-          },
-          {
-            label: "Stocks",
-            value: "STK"
-          },
-          {
-            label: "Crypto",
-            value: "CRP"
-          },
-          {
-            label: "Others",
-            value: "OTH"
-          }
-        ]
+        investmentOptions: investmentsType,
       };
     },
     methods: {

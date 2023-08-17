@@ -55,71 +55,24 @@
       </div>
     </div>
     <!-- PROFILE SETTINGS AREA -->
-
-
     <div class="rounded-lg scroll-container mb-5">
         <div class="flex flex-wrap scroll-row cursor-grabbing md:cursor-auto">
-            <div class="md:w-1/2 lg:w-1/3 px-3">
+            <div class="md:w-1/2 lg:w-1/3 px-3"  v-for="investment in investments"  :key="investment.id">
                 <PlanningCard 
-                  title="Nubank RDB"
-                  icon="bank"
-                  subtitle="Fixed Income"
-                  description="Lorem ipsum dolor sit amet  adipisicing elit. Quisquam, voluptatibus."
-                  fromBudget="1.000,00"
-                  toBudget="10.000,00"
-                  toAport="25"
-                  fromDate="01/01/2021"
-                  @click="EditExistentInvestment({data: null})"
-                />
-            </div>
-            <div class="md:w-1/2 lg:w-1/3 px-3">
-                <PlanningCard 
-                  title="Bradesco S.A. (BBDC4)"
-                  icon="bank"
-                  subtitle="Fixed Income"
-                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus."
-                  fromBudget="1.000,00"
-                  toBudget="10.000,00"
-                  toAport="25"
-                  fromDate="01/01/2021"
-                  @click="EditExistentInvestment({data: null})"
-                />
-            </div>
-            <div class="md:w-1/2 lg:w-1/3 px-3">
-                <PlanningCard 
-                  title="Apple Inc. (AAPL34)"
-                  icon="apple-whole"
-                  subtitle="Stock Market"
-                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus."
-                  fromBudget="1.000,00"
-                  toBudget="10.000,00"
-                  toAport="25"
-                  fromDate="01/01/2021"
-                  progress="95"
-                  @click="EditExistentInvestment({data: null})"
-                />
-            </div>
-            <div class="md:w-1/2 lg:w-1/3 px-3">
-                <PlanningCard 
-                  title="Itaú Unibanco S.A. (ITUB4)"
-                  icon="bank"
-                  subtitle="Fixed Income"
-                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus."
-                  fromBudget="1.000,00"
-                  toBudget="10.000,00"
-                  toAport="25"
-                  fromDate="01/01/2021"
-                  progress="30"
-                  @click="EditExistentInvestment({data: null})"
+                  :title="investment.title"
+                  :icon="investment.icon"
+                  :subtitle="getOptionLabel(investment.subtitle)"
+                  :description="investment.description"
+                  :fromBudget="formatCurrency(investment.fromBudget)"
+                  :toBudget="formatCurrency(investment.toBudget)"
+                  :toAport="investment.toAport"
+                  :fromDate="investment.fromDate"
+                  @click="EditExistentInvestment(investment)"
                 />
             </div>
         </div>
     </div>
  
-   
-
-    
-  
   
     <!-- Modals-->
     <BBModal>
@@ -140,6 +93,12 @@
   import updateOlderInvestment from '@/components/modal/investments/updateExistentInvestment';
   import editExistentInvestment from '@/components/modal/investments/editExistentInvestment';
   import { mapActions } from 'vuex';
+
+  import MockInvestments from '@/mocks/investments.json';
+  import MockInvestmentsType from '@/mocks/investmentsType.json';
+  import BBMoney from '@/utils/BBMoney';
+  import PWUtils from '@/utils/PWUtils';
+
   export default {
     name: 'DashboardInvestments',
     components: {
@@ -157,12 +116,9 @@
       return {
         currentModal: null,
         currentModalData: null,
+        investments: MockInvestments,
+        investmentsType: MockInvestmentsType,
         progress: 95,
-        selectOptions: [
-            { label: 'CDB/RDB Application', value: 'option1' },
-            { label: 'Stock Market', value: 'option2' },
-            { label: 'FIIS', value: 'option3' },
-        ],
         selectedValue: '',
       };
     },
@@ -171,6 +127,12 @@
       showModal(modal) {
         this.currentModal = modal;
         this.showInputModal();
+      },
+      getOptionLabel(value) {
+        return PWUtils.findOptionByValue(this.investmentsType, value).label;
+      },
+      formatCurrency(value) {
+        return BBMoney.toCurrency(BBMoney.toRaw(value));
       },
       EditExistentInvestment(data) {
         this.currentModalData = data;

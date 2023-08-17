@@ -41,6 +41,9 @@ export default {
       this.formattedValue = newVal;
     },
   },
+  mounted() {
+    console.log(BBMoney.toCurrency(this.value))
+  },
   methods: {
     updateValue(event) {
       const rawValue = event.target.value.replace(/\D+/g, "");

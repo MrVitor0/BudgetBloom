@@ -38,11 +38,6 @@
         return `input-${Math.random().toString(36).substring(2, 10)}`;
       },
     },
-    watch: {
-      inputValue(newValue) {
-        this.$emit('input', newValue);
-      },
-    },
   };
   </script>
   
