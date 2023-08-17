@@ -3,7 +3,7 @@
       v-model="formattedValue"
       @input="updateValue"
       @blur="formatValue"
-      class="block w-full pl-8 py-3 border rounded focus:outline-none focus:border-blue-500 bg-gray-200"
+      class="block w-full pl-8 py-3 border rounded focus:outline-none focus:border-purple-500 bg-gray-200"
       :placeholder="placeholder"
       :id="inputId"
       :disabled="disabled"

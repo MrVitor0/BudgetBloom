@@ -8,7 +8,17 @@
             <div>
                 <h2 class="text-xl font-semibold mb-4">Update Older Statements</h2>
                 <label for="input" class="block mb-2">How much to increase?</label>
-                <div class="relative w-full">
+                <div class="relative w-full mt-3">
+                  <div class="absolute left-3 top-1/2 -translate-y-1/2">
+                    <FontAwesomeIcon icon="calendar-days" class="text-md text-purple-400" />
+                  </div>
+                  <div class="flex w-full bg-gray-200 ">
+                    <BBMonthInput type="Month" v-model="monthInput" /> 
+                    <div class="border-r border-gray-300 my-3 "></div> 
+                    <BBMonthInput type="Year" v-model="yearInput"  />
+                  </div>
+                </div>
+                <div class="relative w-full mt-3">
                   <div class="absolute left-3 top-1/2 -translate-y-1/2">
                     <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                   </div>
@@ -35,18 +45,30 @@
   
 <script>
   import BBPriceInput from '@/components/form/BBPriceInput';
-  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+  import BBMonthInput from '@/components/form/BBMonthInput';
   import BBMoney from '@/utils/BBMoney'
   import { mapActions } from 'vuex';
+  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   export default {
     components: {
       FontAwesomeIcon,
-      BBPriceInput
+      BBMonthInput,
+      BBPriceInput,
     },
     data() {
       return {
-        inputValue: 0
+        inputValue: 0,
+        monthInput: "",
+        yearInput: "",
       };
+    },
+    watch: {
+      monthInput(newValue) {
+        console.log(newValue);
+      },
+      yearInput(newValue) {
+        console.log(newValue);
+      }
     },
     methods: {
       ...mapActions('modal', ['hideInputModal']),
