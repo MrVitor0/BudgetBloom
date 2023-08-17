@@ -31,7 +31,7 @@
                            Your balance doesn't match your real balance? <br/> Update it here!
                         </div>
                         <div class="w-64">
-                          <BasicButton @click="showModal" active="true" text="Increase Statement" icon="edit" />
+                          <BasicButton @click="showModal(0)" active="true" text="Increase Statement" icon="edit" />
                         </div>  
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                         Your balance doesn't match your real balance? <br/> Update it here!
                         </div>
                         <div class="w-64">
-                        <BasicButton  @click="showModal" active="true" text="Update Statement" icon="edit" />
+                        <BasicButton  @click="showModal(1)" active="true" text="Update Statement" icon="edit" />
                         </div>  
                     </div>
                 </div>
@@ -75,7 +75,10 @@
        </div>
 
        <!-- Modals-->
-        <BBInputModal />
+       <BBModal>
+            <updateCurrentStatement v-if="this.currentModal == 0" />
+            <updateOlderStatements v-if="this.currentModal == 1" />
+        </BBModal>
      </div>
      <!-- PROFILE SETTINGS AREA -->
    </template>
@@ -83,7 +86,11 @@
    import BasicButton from '@/components/button/BasicButton';
    import CreditCardChartCard from '@/components/charts/CreditCardChartCard';
    import InfoCard from '@/components/cards/InfoCard';
-   import BBInputModal from '@/components/modal/creditCards/updateCurrentCredit';
+  
+   import BBModal from '@/components/modal/BBModal.vue';
+   import updateCurrentStatement from '@/components/modal/creditCards/updateCurrentStatement';
+   import updateOlderStatements from '@/components/modal/creditCards/updateOlderStatements';
+
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
    import { mapActions } from 'vuex';
    export default {
@@ -91,7 +98,11 @@
      components: {
             BasicButton,
             InfoCard,
-            BBInputModal,
+
+            BBModal,
+            updateCurrentStatement,
+            updateOlderStatements,
+
             CreditCardChartCard,
             FontAwesomeIcon,
       },
@@ -99,6 +110,7 @@
        return {
          progress: 95,
          isModalVisible: true,
+         currentModal: null,
          transferItems: [
             {
                 name: 'Vitor Hugo',
@@ -140,8 +152,8 @@
      },
      methods: {
         ...mapActions('modal', ['showInputModal']), // Importante: "modal" é o namespace do módulo no store
-        showModal() {
-         // Chama a ação para mostrar o modal
+        showModal(modalIndex) {
+          this.currentModal = modalIndex;
           this.showInputModal();
         },
      },
