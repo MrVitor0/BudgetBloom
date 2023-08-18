@@ -83,7 +83,7 @@
   import BBTextArea from '@/components/form/BBTextArea.vue';
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   import BBMoney from '@/utils/BBMoney'
-  
+  import PWUtils from '@/utils/PWUtils';
   import investmentsType from '@/mocks/data/investmentsType.json';
   import { mapActions } from 'vuex';
   export default {
@@ -101,9 +101,6 @@
         default: () => null
       }
     },
-    mounted() {
-      console.log(this.data)
-    },
     data() {
       return {
         //form
@@ -118,22 +115,29 @@
     },
     methods: {
       ...mapActions('modal', ['hideInputModal']),
-      formatCurrency(value) {
-        const formatter = new Intl.NumberFormat("pt-BR", {
-          style: "decimal",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
-        return formatter.format(value / 100);
-      },
       submitInput() {
-        console.log({
-          description: this.description,
-          investmentName: this.investmentName,
-          investmentType: this.investmentType,
-          initialAport: BBMoney.toDouble(BBMoney.toRaw(this.initialAport)),
-          nearestObjetive: BBMoney.toDouble(BBMoney.toRaw(this.nearestObjetive)),
-        })
+        let data = {
+            id: this.data.id,
+            description: this.description,
+            icon: this.data.icon,
+            toAport: this.data.toAport,
+            fromDate: PWUtils.getCurrentDate(),
+            title: this.investmentName,
+            subtitle: this.investmentType,
+            fromBudget: BBMoney.toDouble(BBMoney.toRaw(this.initialAport)),
+            toBudget: BBMoney.toDouble(BBMoney.toRaw(this.nearestObjetive)),
+        }
+        if (this.description && this.investmentName && this.investmentType && this.initialAport && this.nearestObjetive) {
+          this.$api.put(`/investments/${this.data.id}`, data ).then(() => {
+            PWUtils.PWNotification('success', 'Investment updated successfully!');
+            this.$emit('updateTask', data);
+            this.hideModal();
+          }).catch(() => {
+            PWUtils.PWNotification('error', 'Something went wrong!');
+          });
+        }else{
+          PWUtils.PWNotification('warning', 'Fill all fields!');
+        }
       },
       hideModal() {
         this.hideInputModal();

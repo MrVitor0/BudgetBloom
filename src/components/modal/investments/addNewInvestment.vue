@@ -1,175 +1,141 @@
 <template>
-    <div class="md:flex">
-        <div class="md:w-1/3 md:pr-4 hidden md:block">
-            <!-- Coloque sua imagem aqui -->
-            <img src="@/assets/bbtrack.png" alt="Imagem" class="max-w-auto h-full rounded-l-2xl" />
-        </div>
-        <div class="md:w-2/3 p-5 text-center md:text-start">
-            <div>
-                <!-- Investment Name -->
-                <h2 class="text-xl font-semibold mb-4">Add New Investment</h2>
-                <label for="input" class="block mb-2">How much to increase?</label>
-                <BBInputHandler>
-                  <BBTextInput v-model="investmentName" placeholder="Itaú Unibanco S.a" icon="bank" class="mb-2" />
-                </BBInputHandler>
-                <!--INVESTMENT TYPE -->
-                <div class="relative w-full">
-                    <!-- Adicionando um ícone ao lado do input original -->
-                    <div class="absolute left-3 top-2">
-                      <font-awesome-icon icon="money-bill" class="text-md text-purple-400" />
-                    </div>
-                    <BBSelectInput
-                      v-model="investmentType"
-                      :options="investmentOptions"
-                      placeholder="Select an investment"
-                      class="mb-2 pl-9"
-                    />
-                </div>
-                <!--INITIAL VALUES -->
-                <div class="md:flex md:mb-3">
-                  <div class="relative w-full pr-2 text-start ">
-                    <label for="input" class="block mb-1 mt-3">What is the initial aport?</label>
-                    <div class="absolute left-3 pt-11 -translate-y-1/2">
-                      <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
-                    </div>
-                    <BBPriceInput v-model="initialAport" class="pl-8 rounded-lg" />
+  <div class="md:flex">
+      <div class="md:w-1/3 md:pr-4 hidden md:block">
+          <!-- Coloque sua imagem aqui -->
+          <img src="@/assets/bbtrack.png" alt="Imagem" class="max-w-auto h-full rounded-l-2xl" />
+      </div>
+      <div class="md:w-2/3 p-5 text-center md:text-start">
+          <div>
+              <!-- Investment Name -->
+              <h2 class="text-xl font-semibold mb-4">Add New Investment</h2>
+              <label for="input" class="block mb-2">How much to increase?</label>
+              <BBInputHandler>
+                <BBTextInput v-model="investmentName" placeholder="Itaú Unibanco S.a" icon="bank" class="mb-2" />
+              </BBInputHandler>
+              <!--INVESTMENT TYPE -->
+              <div class="relative w-full">
+                  <!-- Adicionando um ícone ao lado do input original -->
+                  <div class="absolute left-3 top-2">
+                    <font-awesome-icon icon="money-bill" class="text-md text-purple-400" />
                   </div>
-                  <div class="relative w-full text-start">
-                    <label for="input" class="block mb-1 mt-3">What is the objetive?</label>
-                    <div class="absolute left-3 pt-11 -translate-y-1/2">
-                      <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
-                    </div>
-                    <BBPriceInput v-model="nearestObjetive" class="pl-8 rounded-lg" />
+                  <BBSelectInput
+                    v-model="investmentType"
+                    :options="investmentOptions"
+                    placeholder="Select an investment"
+                    class="mb-2 pl-9"
+                  />
+              </div>
+              <!--INITIAL VALUES -->
+              <div class="md:flex md:mb-3">
+                <div class="relative w-full pr-2 text-start ">
+                  <label for="input" class="block mb-1 mt-3">What is the initial aport?</label>
+                  <div class="absolute left-3 pt-11 -translate-y-1/2">
+                    <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                   </div>
+                  <BBPriceInput v-model="initialAport" class="pl-8 rounded-lg" />
                 </div>
-                <!--SHORT DESCRIPTION -->
-                <div class="relative w-full">
-                    <!-- Adicionando um ícone ao lado do input original -->
-                    <div class="absolute left-3 top-2">
-                      <font-awesome-icon icon="comment" class="text-md text-purple-400" />
-                    </div>
-                    <BBTextArea 
-                      v-model="description" 
-                      maxlength="75"
-                      placeholder="Please, inform a short comment. Up to 75 characters."
-                    />
+                <div class="relative w-full text-start">
+                  <label for="input" class="block mb-1 mt-3">What is the objetive?</label>
+                  <div class="absolute left-3 pt-11 -translate-y-1/2">
+                    <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
+                  </div>
+                  <BBPriceInput v-model="nearestObjetive" class="pl-8 rounded-lg" />
                 </div>
-            </div>
-            <div class="mt-4">
-                <button
-                    class="bg-purple-800 text-white px-4 py-2 rounded-md  hover:bg-purple-700"
-                    @click="submitInput"
-                >
-                    Save  <FontAwesomeIcon class="pl-1" icon="save" />
-                </button>
-                <button
-                    class="ml-2 border px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300"
-                    @click="closeModal"
-                >
-                    Close <FontAwesomeIcon class="pl-1" icon="times" />
-                </button>
-            </div>
-        </div>
-    </div>
+              </div>
+              <!--SHORT DESCRIPTION -->
+              <div class="relative w-full">
+                  <!-- Adicionando um ícone ao lado do input original -->
+                  <div class="absolute left-3 top-2">
+                    <font-awesome-icon icon="comment" class="text-md text-purple-400" />
+                  </div>
+                  <BBTextArea 
+                    v-model="description" 
+                    maxlength="75"
+                    placeholder="Please, inform a short comment. Up to 75 characters."
+                  />
+              </div>
+          </div>
+          <div class="mt-4">
+              <button
+                  class="bg-purple-800 text-white px-4 py-2 rounded-md  hover:bg-purple-700"
+                  @click="submitInput"
+              >
+                  Save  <FontAwesomeIcon class="pl-1" icon="save" />
+              </button>
+              <button
+                  class="ml-2 border px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300"
+                  @click="closeModal"
+              >
+                  Close <FontAwesomeIcon class="pl-1" icon="times" />
+              </button>
+          </div>
+      </div>
+  </div>
 </template>
-  
+
 <script>
-  import BBPriceInput from '@/components/form/BBPriceInput';
-  import BBInputHandler from '@/components/form/common/BBInputHandler';
-  import BBTextInput from '@/components/form/BBTextInput.vue';
-  import BBSelectInput from '@/components/form/BBSelectInput.vue';
-  import BBTextArea from '@/components/form/BBTextArea.vue';
-  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-  import investmentsType from '@/mocks/data/investmentsType.json';
-  import BBMoney from '@/utils/BBMoney'
-  import Swal from 'sweetalert2';
-  import PWUtils from '@/utils/PWUtils';
-  import { mapActions } from 'vuex';
-  export default {
-    components: {
-      FontAwesomeIcon,
-      BBPriceInput,
-      BBSelectInput,
-      BBTextArea,
-      BBInputHandler,
-      BBTextInput
-    },
-    data() {
-      return {
-        description: '',
-        investmentName: '',
-        investmentType: '',
-        initialAport: 0,
-        nearestObjetive: 0,
-        investmentOptions: investmentsType
-      };
-    },
-    methods: {
-      ...mapActions('modal', ['hideInputModal']),
-      formatCurrency(value) {
-        const formatter = new Intl.NumberFormat("pt-BR", {
-          style: "decimal",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
-        return formatter.format(value / 100);
-      },
-      popSwal(icon, message){
-        Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', Swal.stopTimer)
-                  toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-        }).fire({
-                icon: icon,
-                title: message
-        })
-      },
-      submitInput() {
-
-        //emit success
-        this.$emit('newTask', {
+import BBPriceInput from '@/components/form/BBPriceInput';
+import BBInputHandler from '@/components/form/common/BBInputHandler';
+import BBTextInput from '@/components/form/BBTextInput.vue';
+import BBSelectInput from '@/components/form/BBSelectInput.vue';
+import BBTextArea from '@/components/form/BBTextArea.vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import investmentsType from '@/mocks/data/investmentsType.json';
+import BBMoney from '@/utils/BBMoney'
+import PWUtils from '@/utils/PWUtils';
+import { mapActions } from 'vuex';
+export default {
+  components: {
+    FontAwesomeIcon,
+    BBPriceInput,
+    BBSelectInput,
+    BBTextArea,
+    BBInputHandler,
+    BBTextInput
+  },
+  data() {
+    return {
+      description: '',
+      investmentName: '',
+      investmentType: '',
+      initialAport: 0,
+      nearestObjetive: 0,
+      investmentOptions: investmentsType
+    };
+  },
+  methods: {
+    ...mapActions('modal', ['hideInputModal']),
+    submitInput() {
+      let data = {
           description: this.description,
-          investmentName: this.investmentName,
-          investmentType: this.investmentType,
-          initialAport: BBMoney.toDouble(BBMoney.toRaw(this.initialAport)),
-          nearestObjetive: BBMoney.toDouble(BBMoney.toRaw(this.nearestObjetive)),
-        });
-
-        //check if all fields are filled
-        if (this.description && this.investmentName && this.investmentType && this.initialAport && this.nearestObjetive) {
-           //format a date to format 03/01/2023
-           this.$api.post('/investments', {
-            description: this.description,
-            icon: 'money-bill',
-            toAport: 1,
-            fromDate: PWUtils.getCurrentDate(),
-            title: this.investmentName,
-            subtitle: this.investmentType,
-            fromBudget: BBMoney.toDouble(BBMoney.toRaw(this.initialAport)),
-            toBudget: BBMoney.toDouble(BBMoney.toRaw(this.nearestObjetive)),
-          }).then(() => {
-            this.popSwal("success", "Investment Tracked!")
-            this.hideModal();
-          }).catch(() => {
-            this.popSwal("error", "Something went wrong")
-          });
-        }else{
-          this.popSwal("warning", "Fill all fields")
+          icon: 'money-bill',
+          toAport: 1,
+          fromDate: PWUtils.getCurrentDate(),
+          title: this.investmentName,
+          subtitle: this.investmentType,
+          fromBudget: BBMoney.toDouble(BBMoney.toRaw(this.initialAport)),
+          toBudget: BBMoney.toDouble(BBMoney.toRaw(this.nearestObjetive)),
         }
-      },
-      hideModal() {
-        this.hideInputModal();
-      },
-      closeModal() {
-        this.hideModal();
+      //check if all fields are filled
+      if (this.description && this.investmentName && this.investmentType && this.initialAport && this.nearestObjetive) {
+         //format a date to format 03/01/2023
+         this.$api.post('/investments', data).then(() => {
+          this.$emit('newTask', data);
+          PWUtils.PWNotification("success", "Investment Tracked!")
+          this.hideModal();
+        }).catch(() => {
+          PWUtils.PWNotification("error", "Something went wrong")
+        });
+      }else{
+        PWUtils.PWNotification("warning", "Fill all fields")
       }
+    },
+    hideModal() {
+      this.hideInputModal();
+    },
+    closeModal() {
+      this.hideModal();
     }
-  };
-  </script>
-  
+  }
+};
+</script>

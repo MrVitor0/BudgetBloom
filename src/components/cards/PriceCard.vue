@@ -29,9 +29,6 @@
       icon: String,
       color: String, // Adicione a prop para a cor do degradê
     },
-    mounted() {
-     console.log(this.percentage);
-    },
     computed: {
         spanClass() {
             return this.percentage >= 0 ? 'text-green-500 text-sm ml-1' : 'text-red-500  text-sm ml-1';

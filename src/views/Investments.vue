@@ -78,7 +78,7 @@
     <BBModal>
           <addNewInvestment @newTask="trackNew" v-if="this.currentModal == 0" />
           <updateOlderInvestment v-if="this.currentModal == 1" />
-          <editExistentInvestment :data="currentModalData" v-if="this.currentModal == 2" />
+          <editExistentInvestment @updateTask="editExistent" :data="currentModalData" v-if="this.currentModal == 2" />
     </BBModal>
   </template>
   
@@ -114,7 +114,6 @@
     computed: {
       sortedInvestments() {
         if(this.investments.length < 1) return [];
-        console.log(this.investments);
         return this.investments.slice().sort((a, b) => {
             const dateA = this.convertToDate(a.fromDate);
             const dateB = this.convertToDate(b.fromDate);
@@ -152,18 +151,14 @@
     methods: {
       ...mapActions('modal', ['showInputModal', 'hideInputModal']),
       trackNew(message){
-        if (message.description && message.investmentName && message.investmentType && message.initialAport && message.nearestObjetive) {
-          this.investments.push({
-            id: this.investments.length + 1,
-            title: message.investmentName,
-            subtitle: message.investmentType,
-            description: message.description,
-            fromBudget: message.initialAport,
-            toBudget: message.nearestObjetive,
-            toAport: 0,
-            fromDate: PWUtils.getCurrentDate(),
-            icon: 'piggy-bank',
-          });
+        if (PWUtils.validateInvestmentObject(message)) {
+          this.investments.push(message);
+        }
+      },
+      editExistent(message){
+        if (PWUtils.validateInvestmentObject(message)) {
+          const index = this.investments.findIndex((investment) => investment.id === message.id);
+          this.investments[index] = message;
         }
       },
       convertToDate(dateString) {
@@ -180,7 +175,6 @@
             this.$api.get('/investWallet')
           ]);
 
-          console.log(investmentWalletResponse.data[0].passiveincoming.percentage);
           this.investments = investmentsResponse.data;
           this.investmentwallet = investmentWalletResponse.data[0];
         } catch (error) {
