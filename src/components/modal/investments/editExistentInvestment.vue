@@ -29,14 +29,14 @@
                 <!--INITIAL VALUES -->
                 <div class="md:flex md:mb-3">
                   <div class="relative w-full pr-2 text-start ">
-                    <label for="input" class="block mb-1 mt-3">What is the initial aport?</label>
+                    <label for="input" class="block mb-1 mt-3">Current Budget</label>
                     <div class="absolute left-3 pt-11 -translate-y-1/2">
                       <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                     </div>
                     <BBPriceInput :value="initialAport" v-model="initialAport" class="pl-8 rounded-lg" />
                   </div>
                   <div class="relative w-full text-start">
-                    <label for="input" class="block mb-1 mt-3">What is the objetive?</label>
+                    <label for="input" class="block mb-1 mt-3">Current Objetive</label>
                     <div class="absolute left-3 pt-11 -translate-y-1/2">
                       <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                     </div>

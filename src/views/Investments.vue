@@ -57,7 +57,7 @@
     <!-- PROFILE SETTINGS AREA -->
     <div class="rounded-lg scroll-container mb-5">
         <div class="flex flex-wrap scroll-row cursor-grabbing md:cursor-auto">
-            <div class="md:w-1/2 lg:w-1/3 px-3"  v-for="investment in investments"  :key="investment.id">
+            <div class="md:w-1/2 lg:w-1/3 px-3"  v-for="investment in sortedInvestments"  :key="investment.id">
                 <PlanningCard 
                   :title="investment.title"
                   :icon="investment.icon"
@@ -111,6 +111,17 @@
       updateOlderInvestment,
       editExistentInvestment,
     },
+    computed: {
+      sortedInvestments() {
+        if(this.investments.length < 1) return [];
+        console.log(this.investments);
+        return this.investments.slice().sort((a, b) => {
+            const dateA = this.convertToDate(a.fromDate);
+            const dateB = this.convertToDate(b.fromDate);
+            return dateB - dateA;
+        });
+      },
+    },
     data() {
       return {
         currentModal: null,
@@ -140,6 +151,10 @@
     },
     methods: {
       ...mapActions('modal', ['showInputModal', 'hideInputModal']),
+      convertToDate(dateString) {
+        const [day, month, year] = dateString.split('/');
+        return new Date(`${year}-${month}-${day}`);
+      },
       format_c(n) {
         return BBMoney.toCurrency(BBMoney.toRaw((n).toFixed(2)));
       },
