@@ -9,7 +9,7 @@
               <h2 class="text-xl font-semibold text-gray-800">{{ title }}</h2>
               <p class="text-gray-600">{{ subtitle }}</p>
             </div>
-            <div class="self-start hidden md:block">
+            <div class="self-start hidden md:block" @click="EditCurrentCard(id)">
               <font-awesome-icon icon="edit" class="text-2xl text-purple-700 cursor-pointer hover:text-purple-600" />
             </div>
           </div>
@@ -97,6 +97,11 @@ export default {
         default: () => '10'
     },
   },
+  methods: {
+    EditCurrentCard(id) {
+      this.$emit('edit', id);
+    }
+  }
 }
 </script>
 

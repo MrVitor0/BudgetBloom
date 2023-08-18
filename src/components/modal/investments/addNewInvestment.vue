@@ -83,6 +83,7 @@
   import investmentsType from '@/mocks/data/investmentsType.json';
   import BBMoney from '@/utils/BBMoney'
   import Swal from 'sweetalert2';
+  import PWUtils from '@/utils/PWUtils';
   import { mapActions } from 'vuex';
   export default {
     components: {
@@ -95,13 +96,11 @@
     },
     data() {
       return {
-        //form
         description: '',
         investmentName: '',
         investmentType: '',
         initialAport: 0,
         nearestObjetive: 0,
-        
         investmentOptions: investmentsType
       };
     },
@@ -115,63 +114,54 @@
         });
         return formatter.format(value / 100);
       },
-      
+      popSwal(icon, message){
+        Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+        }).fire({
+                icon: icon,
+                title: message
+        })
+      },
       submitInput() {
+
+        //emit success
+        this.$emit('newTask', {
+          description: this.description,
+          investmentName: this.investmentName,
+          investmentType: this.investmentType,
+          initialAport: BBMoney.toDouble(BBMoney.toRaw(this.initialAport)),
+          nearestObjetive: BBMoney.toDouble(BBMoney.toRaw(this.nearestObjetive)),
+        });
+
         //check if all fields are filled
         if (this.description && this.investmentName && this.investmentType && this.initialAport && this.nearestObjetive) {
-            //format a date to format 03/01/2023
-            let dateF = new Date();
-            let day = dateF.getDate();
-            let month = dateF.getMonth() + 1;
-            let year = dateF.getFullYear();
-            let date = `${day}/${month}/${year}`;
-
+           //format a date to format 03/01/2023
            this.$api.post('/investments', {
             description: this.description,
             icon: 'money-bill',
             toAport: 1,
-            fromDate: date,
+            fromDate: PWUtils.getCurrentDate(),
             title: this.investmentName,
             subtitle: this.investmentType,
             fromBudget: BBMoney.toDouble(BBMoney.toRaw(this.initialAport)),
             toBudget: BBMoney.toDouble(BBMoney.toRaw(this.nearestObjetive)),
           }).then(() => {
-            //create swal toast in left corner
-            Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', Swal.stopTimer)
-                  toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            }).fire({
-                icon: 'success',
-                title: 'Investment Tracked!'
-            })
+            this.popSwal("success", "Investment Tracked!")
             this.hideModal();
-          }).catch((error) => {
-            console.log(error);
+          }).catch(() => {
+            this.popSwal("error", "Something went wrong")
           });
         }else{
-          Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', Swal.stopTimer)
-                  toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-          }).fire({
-                icon: 'warning',
-                title: 'Fill all fields!'
-          })
+          this.popSwal("warning", "Fill all fields")
         }
-
       },
       hideModal() {
         this.hideInputModal();

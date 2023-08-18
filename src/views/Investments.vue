@@ -67,7 +67,7 @@
                   :toBudget="formatCurrency(investment.toBudget)"
                   :toAport="investment.toAport"
                   :fromDate="investment.fromDate"
-                  @click="EditExistentInvestment(investment)"
+                  @edit="EditExistentInvestment(investment)"
                 />
             </div>
         </div>
@@ -76,7 +76,7 @@
   
     <!-- Modals-->
     <BBModal>
-          <addNewInvestment v-if="this.currentModal == 0" />
+          <addNewInvestment @newTask="trackNew" v-if="this.currentModal == 0" />
           <updateOlderInvestment v-if="this.currentModal == 1" />
           <editExistentInvestment :data="currentModalData" v-if="this.currentModal == 2" />
     </BBModal>
@@ -151,6 +151,21 @@
     },
     methods: {
       ...mapActions('modal', ['showInputModal', 'hideInputModal']),
+      trackNew(message){
+        if (message.description && message.investmentName && message.investmentType && message.initialAport && message.nearestObjetive) {
+          this.investments.push({
+            id: this.investments.length + 1,
+            title: message.investmentName,
+            subtitle: message.investmentType,
+            description: message.description,
+            fromBudget: message.initialAport,
+            toBudget: message.nearestObjetive,
+            toAport: 0,
+            fromDate: PWUtils.getCurrentDate(),
+            icon: 'piggy-bank',
+          });
+        }
+      },
       convertToDate(dateString) {
         const [day, month, year] = dateString.split('/');
         return new Date(`${year}-${month}-${day}`);
