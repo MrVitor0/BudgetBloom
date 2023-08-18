@@ -96,7 +96,6 @@ export default {
       description: '',
       investmentSelection: '',
       initialAport: 0,
-      
       investmentOptions: []
     };
   },
@@ -104,9 +103,15 @@ export default {
     this.investmentOptions = this.investments.map((investment) => {
       return {
         label: investment.title,
+        date: investment.fromDate,
         value: investment.id,
       }
     })
+    //filter investmentOptions by date desc
+    this.investmentOptions.sort((a, b) => {
+      return new Date(b.date) - new Date(a.date);
+    });
+
   },
   methods: {
     ...mapActions('modal', ['hideInputModal']),
@@ -121,7 +126,8 @@ export default {
           const originalFromBudget = parseFloat(BBMoney.toDouble(BBMoney.toRaw(investment.fromBudget)))
           const updatedInvestment = {
             ...investment,
-            toAport: investment.toAport + 1,
+            fromDate: PWUtils.getCurrentDate(),
+            toAport: parseFloat(investment.toAport) + 1,
             fromBudget: parseFloat((initialAport + originalFromBudget).toFixed(2))
           };
           this.$api.put(`/investments/${updatedInvestment.id}`, updatedInvestment).then(() => {

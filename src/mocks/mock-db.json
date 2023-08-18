@@ -5,10 +5,10 @@
       "icon": "bank",
       "subtitle": "FIE",
       "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
-      "fromBudget": "7040.00",
+      "fromBudget": 7041.56,
       "toBudget": "40.240,20",
-      "toAport": "12",
-      "fromDate": "2023-8-4 00:00:00",
+      "toAport": 13,
+      "fromDate": "2023-8-18 14:8:20",
       "id": 1
     },
     {
@@ -27,22 +27,22 @@
       "icon": "apple-whole",
       "subtitle": "STK",
       "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
-      "fromBudget": "500.00",
+      "fromBudget": 515.58,
       "toBudget": "13050.00",
-      "toAport": "12",
-      "fromDate": "2023-6-17 00:00:00",
+      "toAport": 2,
+      "fromDate": "2023-8-18 14:8:13",
       "id": 3
     },
     {
-      "title": "Itaú Unibanco S.A (ITUB4)",
-      "icon": "bank",
-      "subtitle": "FIE",
+      "id": 4,
       "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
-      "fromBudget": "3200.00",
-      "toBudget": "5000.00",
-      "toAport": "12",
-      "fromDate": "2023-8-17 00:00:00",
-      "id": 4
+      "icon": "bank",
+      "toAport": "1211",
+      "fromDate": "2023-8-18 14:1:41",
+      "title": "Itaú Unibanco S.A",
+      "subtitle": "FIE",
+      "fromBudget": 3229.55,
+      "toBudget": "5000.00"
     },
     {
       "id": 5,
@@ -59,11 +59,11 @@
       "id": 6,
       "description": "Reserva de Emergência",
       "icon": "money-bill",
-      "toAport": 12,
+      "toAport": 14,
       "fromDate": "2023-8-18 13:6:5",
       "title": "Nubank RDB",
       "subtitle": "FIE",
-      "fromBudget": 4504.92,
+      "fromBudget": 4656.15,
       "toBudget": "100000.00"
     }
   ],
