@@ -14,6 +14,7 @@ class BBMoney {
     }
 
     static toRaw = (amount = 0) => {
+        amount = amount.toString();
         return amount.replace(/\D+/g, "");
     }
     /**

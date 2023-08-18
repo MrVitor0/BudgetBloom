@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "mock-server": "json-server src/mocks/mock-db.json --port 3001",
-    "start": "concurrently \"npm run mock-server\" \"npm run serve\"",
+    "mock-server": "json-server --watch src/mocks/mock-db.json --port 3001",
+    "start": "concurrently \"npm run --watch mock-server\" \"npm run serve\"",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },

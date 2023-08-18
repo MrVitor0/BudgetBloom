@@ -4,9 +4,9 @@
         <div class="flex flex-wrap md:-mx-4">
          <!-- OVERVIEW AREA -->
         <div class="w-full md:w-2/2 lg:w-1/3 px-4 mb-5">
-            <price-card class="mb-5" title="Investment Balance" amount="R$0.000,00" percentage="+20%" icon="vault" color="purple" />
-            <price-card class="mb-5" title="Account balance" amount="R$0.000,00" percentage="+20%" icon="money-check-dollar" color="purple" />
-            <price-card title="Passive Incoming" amount="R$0.000,00" percentage="+20%" icon="piggy-bank" color="purple" />
+            <price-card class="mb-5" title="Investment Balance" :amount="this.format_c(investmentwallet.investmentbalance?.value)" :percentage='investmentwallet.investmentbalance?.percentage' icon="vault" color="purple" />
+            <price-card class="mb-5" title="Account balance" :amount="this.format_c(investmentwallet.accountbalance?.value)" :percentage="investmentwallet.accountbalance?.percentage" icon="money-check-dollar" color="purple" />
+            <price-card title="Passive Incoming" :amount="this.format_c(investmentwallet.passiveincoming?.value)" :percentage="investmentwallet.passiveincoming.percentage" icon="piggy-bank" color="purple" />
         </div>
 
          <!-- OVERVIEW AREA -->
@@ -117,22 +117,46 @@
         currentModalData: null,
         investments: [],
         investmentsType: MockInvestmentsType,
+        investmentwallet: {
+          accountbalance: {
+            value: 0,
+            percentage: 10,
+          },
+          investmentbalance: {
+            value: 0,
+            percentage: 10,
+          },
+          passiveincoming: {
+            value: 0,
+            percentage: 10,
+          },
+        },
         progress: 95,
         selectedValue: '',
       };
     },
-    mounted() {
-      console.log(process.env.VUE_APP_JSON_SERVER) 
-      this.$api.get(`/investments`)
-      .then((response) => {
-        this.investments = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    async mounted() {
+      this.fetchData();
     },
     methods: {
       ...mapActions('modal', ['showInputModal', 'hideInputModal']),
+      format_c(n) {
+        return BBMoney.toCurrency(BBMoney.toRaw((n).toFixed(2)));
+      },
+      async fetchData() {
+        try {
+          const [investmentsResponse, investmentWalletResponse] = await Promise.all([
+            this.$api.get('/investments'),
+            this.$api.get('/investWallet')
+          ]);
+
+          console.log(investmentWalletResponse.data[0].passiveincoming.percentage);
+          this.investments = investmentsResponse.data;
+          this.investmentwallet = investmentWalletResponse.data[0];
+        } catch (error) {
+          console.error('Erro ao carregar dados:', error);
+        }
+      },
       showModal(modal) {
         this.currentModal = modal;
         this.showInputModal();

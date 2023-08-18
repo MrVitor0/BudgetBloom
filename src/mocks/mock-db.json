@@ -45,11 +45,20 @@
        "id": 4  
     }
  ],
-  "comments": [
+  "investwallet": [
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "investmentbalance": {
+        "value": 305.10,
+        "percentage": 10
+      },
+      "accountbalance": {
+        "value": 15.10,
+        "percentage": 30
+      },
+      "passiveincoming": {
+        "value": 50.10,
+        "percentage": -10
+      }
     }
   ],
   "profile": {

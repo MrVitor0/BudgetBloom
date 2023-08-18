@@ -36,7 +36,6 @@
 <script>
   import BBPriceInput from '@/components/form/BBPriceInput';
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-  import BBMoney from '@/utils/BBMoney'
   import { mapActions } from 'vuex';
   export default {
     components: {
@@ -62,11 +61,6 @@
         if(this.inputValue == 0) {
           return;
         }
-        let rawValue = this.inputValue.replace(/\D+/g, "");
-        console.log({
-          from: BBMoney.toCurrency(rawValue, "pt-BR"),
-          to: BBMoney.toDouble(rawValue)
-        })
       },
       hideModal() {
         this.hideInputModal();
