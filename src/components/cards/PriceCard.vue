@@ -2,7 +2,7 @@
     <div class="bg-white shadow-md rounded-3xl p-6 flex items-center justify-between">
       <div>
         <h2 class="text-xl font-semibold mb-1">{{ title }}</h2>
-        <p class="text-gray-600 text-3xl">{{ amount }} <span :class="spanClass">{{ percentage >= 0 ? "+" : ""  }}{{ percentage }}%</span></p>
+        <p class="text-gray-600 text-3xl">R$ {{ amount }} <span :class="spanClass">{{ percentage >= 0 ? "+" : ""  }}{{ percentage }}%</span></p>
       </div>
       <div>
         <button :class="gradientClass" class="text-white w-12 h-12 rounded-full flex items-center justify-center">
@@ -27,7 +27,7 @@
         default: -10,
       },
       icon: String,
-      color: String, // Adicione a prop para a cor do degradê
+      color: String,
     },
     computed: {
         spanClass() {

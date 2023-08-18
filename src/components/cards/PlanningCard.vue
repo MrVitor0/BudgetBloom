@@ -21,7 +21,7 @@
             </div>
             <div class="flex-grow" />
             <div class="flex-end bg-gray-200 rounded-xl p-3">
-              <h2 class="text-sm font-semibold text-gray-700 ">Start Date: <span class="text-gray-600">{{  fromDate }}</span></h2>
+              <h2 class="text-sm font-semibold text-gray-700 ">Start Date: <span class="text-gray-600">{{  formatDate(fromDate) }}</span></h2>
               <p class="text-gray-600">Total Days: 10</p>
             </div>
           </div>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import PWUtils from '@/utils/PWUtils';
 import BasicPill from '@/components/pills/BasicPill.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 export default {
@@ -98,6 +99,9 @@ export default {
     },
   },
   methods: {
+    formatDate(date) {
+      return PWUtils.formatDate(date);
+    },
     EditCurrentCard(id) {
       this.$emit('edit', id);
     }

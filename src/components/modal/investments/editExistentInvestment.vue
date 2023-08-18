@@ -129,7 +129,7 @@
         }
         if (this.description && this.investmentName && this.investmentType && this.initialAport && this.nearestObjetive) {
           this.$api.put(`/investments/${this.data.id}`, data ).then(() => {
-            PWUtils.PWNotification('success', 'Investment updated successfully!');
+            PWUtils.PWNotification('success', 'Investment Updated!');
             this.$emit('updateTask', data);
             this.hideModal();
           }).catch(() => {

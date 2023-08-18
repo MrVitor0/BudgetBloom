@@ -1,6 +1,10 @@
 import Swal from 'sweetalert2';
 class PWUtils {
 
+    static formatDate(date) {
+        const dateObject = new Date(date);
+        return `${dateObject.getDate()}/${dateObject.getMonth() + 1}/${dateObject.getFullYear()}`;
+    }
 
     static validateInvestmentObject(investmentObject) {
         if(investmentObject?.description && investmentObject?.title && investmentObject?.icon && investmentObject?.toAport && investmentObject?.fromDate && investmentObject?.subtitle && investmentObject?.fromBudget && investmentObject?.toBudget){
