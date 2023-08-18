@@ -70,6 +70,7 @@ import BBTextArea from '@/components/form/BBTextArea.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BBMoney from '@/utils/BBMoney'
 import { mapActions } from 'vuex';
+import PWUtils from '@/utils/PWUtils';
 export default {
   components: {
     FontAwesomeIcon,
@@ -77,52 +78,62 @@ export default {
     BBSelectInput,
     BBTextArea,
   },
+  props: {
+    data: {
+        type: Object,
+        default: () => null
+    },
+    investments: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    }
+  },
   data() {
     return {
       //form
       description: '',
       investmentSelection: '',
       initialAport: 0,
-
-
       
-      investmentOptions: [
-        {
-          label: "Nubank RDB",
-          value: "FIE"
-        },
-        {
-          label: "Itaú Unibanco S.A (ITUB4)",
-          value: "STK"
-        },
-        {
-          label: "Apple Inc. (AAPL34)",
-          value: "CRP"
-        },
-        {
-          label: "Bradesco S.A (BBDC4)",
-          value: "OTH"
-        }
-      ]
+      investmentOptions: []
     };
+  },
+  mounted() {
+    this.investmentOptions = this.investments.map((investment) => {
+      return {
+        label: investment.title,
+        value: investment.id,
+      }
+    })
   },
   methods: {
     ...mapActions('modal', ['hideInputModal']),
-    formatCurrency(value) {
-      const formatter = new Intl.NumberFormat("pt-BR", {
-        style: "decimal",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      });
-      return formatter.format(value / 100);
-    },
     submitInput() {
-      console.log({
-        description: this.description,
-        investmentName: this.investmentName,
-        investmentSelection: this.investmentSelection,
-        initialAport: BBMoney.toDouble(BBMoney.toRaw(this.initialAport)),
-      })
+      //find in investments array the investment with the same id as investmentSelection
+      const investment = this.investments.find((investment) => {
+        return investment.id === this.investmentSelection;
+      });
+
+      if(investment && this.initialAport) {
+          const initialAport = parseFloat(BBMoney.toDouble(BBMoney.toRaw(this.initialAport)));
+          const originalFromBudget = parseFloat(BBMoney.toDouble(BBMoney.toRaw(investment.fromBudget)));
+          const updatedInvestment = {
+            ...investment,
+            toAport: investment.toAport + 1,
+            fromBudget: initialAport + originalFromBudget,
+          };
+          this.$api.put(`/investments/${updatedInvestment.id}`, updatedInvestment).then(() => {
+            PWUtils.PWNotification('success', 'Track Saved Successfully!');
+            this.$emit('updateTask', updatedInvestment);
+            this.hideModal();
+          }).catch((error) => {
+            console.error('Erro ao salvar aporte:', error);
+          });
+      }else{
+        PWUtils.PWNotification('warning', 'Fill all fields!');
+      }
     },
     hideModal() {
       this.hideInputModal();

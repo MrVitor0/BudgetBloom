@@ -77,7 +77,7 @@
     <!-- Modals-->
     <BBModal>
           <addNewInvestment @newTask="trackNew" v-if="this.currentModal == 0" />
-          <updateOlderInvestment v-if="this.currentModal == 1" />
+          <updateOlderInvestment  @updateTask="updateInvestment" :investments="investments" :data="currentModalData" v-if="this.currentModal == 1" />
           <editExistentInvestment @updateTask="editExistent" :data="currentModalData" v-if="this.currentModal == 2" />
     </BBModal>
   </template>
@@ -150,6 +150,12 @@
     },
     methods: {
       ...mapActions('modal', ['showInputModal', 'hideInputModal']),
+      updateInvestment(message){
+        if (PWUtils.validateInvestmentObject(message)) {
+          const index = this.investments.findIndex((investment) => investment.id === message.id);
+          this.investments[index] = message;
+        }
+      },
       trackNew(message){
         if (PWUtils.validateInvestmentObject(message)) {
           this.investments.push(message);

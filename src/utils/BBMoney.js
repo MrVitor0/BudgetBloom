@@ -32,7 +32,7 @@ class BBMoney {
         return formatter.format(amount / 100);
     }
     static toDouble = (amount = 0) => {
-      return (amount / 100).toFixed(2);
+        return (amount / 100).toFixed(2)
     };
       
 

@@ -3,7 +3,7 @@ class PWUtils {
 
 
     static validateInvestmentObject(investmentObject) {
-        if(investmentObject.description && investmentObject.title && investmentObject.icon && investmentObject.toAport && investmentObject.fromDate && investmentObject.subtitle && investmentObject.fromBudget && investmentObject.toBudget){
+        if(investmentObject?.description && investmentObject?.title && investmentObject?.icon && investmentObject?.toAport && investmentObject?.fromDate && investmentObject?.subtitle && investmentObject?.fromBudget && investmentObject?.toBudget){
             return true;
         }
         return false
