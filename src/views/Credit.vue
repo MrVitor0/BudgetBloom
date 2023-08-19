@@ -77,7 +77,7 @@
        <!-- Modals-->
        <BBModal>
             <updateCurrentStatement @updateCurrentStatement="updateCurrentStatement" :currentStatement="this.statements.current_statement" v-if="this.currentModal == 0" />
-            <updateOlderStatements v-if="this.currentModal == 1" />
+            <updateOlderStatements  @updateStatement="updateStatement" v-if="this.currentModal == 1" />
         </BBModal>
      </div>
      <!-- PROFILE SETTINGS AREA -->
@@ -159,6 +159,9 @@
      methods: {
         ...mapActions('modal', ['showInputModal']), // Importante: "modal" é o namespace do módulo no store
         async updateCurrentStatement(newStatement){
+            this.statements.current_statement = newStatement
+        },
+        async updateStatement(newStatement){
             this.statements.current_statement = newStatement
         },
         async fetchStatementData(){

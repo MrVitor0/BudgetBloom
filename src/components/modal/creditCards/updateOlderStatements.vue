@@ -47,6 +47,7 @@
   import BBPriceInput from '@/components/form/BBPriceInput';
   import BBDateInput from '@/components/form/BBDateInput';
   import BBMoney from '@/utils/BBMoney'
+  import PWUtils from '@/utils/PWUtils'
   import { mapActions } from 'vuex';
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   export default {
@@ -58,37 +59,43 @@
     data() {
       return {
         inputValue: 0,
-        monthInput: "",
-        yearInput: "",
+        monthInput: (new Date()).getMonth() + 1,
+        yearInput: (new Date()).getFullYear(),
       };
-    },
-    watch: {
-      monthInput(newValue) {
-        console.log(newValue);
-      },
-      yearInput(newValue) {
-        console.log(newValue);
-      }
     },
     methods: {
       ...mapActions('modal', ['hideInputModal']),
-      formatCurrency(value) {
-        const formatter = new Intl.NumberFormat("pt-BR", {
-          style: "decimal",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
-        return formatter.format(value / 100);
-      },
-      submitInput() {
-        if(this.inputValue == 0) {
-          return;
-        }
-        let rawValue = this.inputValue.replace(/\D+/g, "");
+      async submitInput() {
+        //!!! This is temporary, will be changed in the future
+        //check if the year and the month are the same as the current date
+        let today = new Date();
+        let currentMonth = today.getMonth() + 1;
+        let currentYear = today.getFullYear();
+
         console.log({
-          from: BBMoney.toCurrency(rawValue, "pt-BR"),
-          to: BBMoney.toDouble(rawValue)
+          monthInput: this.monthInput,
+          yearInput: this.yearInput,
+          currentMonth: currentMonth,
+          currentYear: currentYear
         })
+
+        if(this.monthInput == currentMonth && this.yearInput == currentYear){
+          if(this.inputValue >= 0){
+            let inputValue = parseFloat(BBMoney.toDouble(this.inputValue))
+            let value = inputValue.toFixed(2)
+            const response = await this.$api.put('creditcard', {
+              current_statement:  value
+            })
+            PWUtils.PWNotification('success', 'Statement Saved!');
+            this.$emit('updateStatement', value);
+            this.hideModal();
+            return response
+          }else{
+            PWUtils.PWNotification('warning', 'Please fill all the fields!');
+          }
+        }else{
+          this.hideModal()
+        }
       },
       hideModal() {
         this.hideInputModal();
