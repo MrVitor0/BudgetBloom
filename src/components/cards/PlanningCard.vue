@@ -22,7 +22,7 @@
             <div class="flex-grow" />
             <div class="flex-end bg-gray-200 rounded-xl p-3">
               <h2 class="text-sm font-semibold text-gray-700 ">Start Date: <span class="text-gray-600">{{  formatDate(fromDate) }}</span></h2>
-              <p class="text-gray-600">Total Days: 10</p>
+              <p class="text-gray-600">Total Days: {{ calcDays(fromDate) }}</p>
             </div>
           </div>
           <div class="pt-2 pb-2 pl-1 whitespace-normal">
@@ -99,6 +99,13 @@ export default {
     },
   },
   methods: {
+    calcDays(date) {
+     let formatedDate = date;
+      let today = new Date();
+      let diff = Math.abs(today - new Date(formatedDate));
+      let days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+      return days;
+    },
     formatDate(date) {
       return PWUtils.formatDate(date);
     },

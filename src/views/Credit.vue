@@ -6,7 +6,7 @@
                 <div class="w-full md:w-2/2 lg:w-1/3 mb-5 md:bg-purple-100 rounded-lg">
                     <img src="@/assets/cardbg3.png" class="rounded- w-screen h-full  border-t border-gray-500 rounded-lg">
                     <div class="relative flex flex-col flex-auto min-w-0 -mt-36 pt-12 md:pt-0 md:-mt-36 overflow-hidden break-words border-0  rounded-2xl bg-clip-border ">
-                        <p class="pl-3 text-white text-5xl ">R$ 0.000,00</p>
+                        <p class="pl-3 text-white text-5xl ">R$ {{ currentStatement }}</p>
                         <div class="flex">
                             <div class="flex flex-col">
                                 <p class="pl-3 text-purple-200 text-2xl">Vitor Hugo</p>
@@ -91,6 +91,7 @@
    import updateCurrentStatement from '@/components/modal/creditCards/updateCurrentStatement';
    import updateOlderStatements from '@/components/modal/creditCards/updateOlderStatements';
 
+//    import BBMoney from '@/utils/BBMoney';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
    import { mapActions } from 'vuex';
    export default {
@@ -109,6 +110,7 @@
      data() {
        return {
          progress: 95,
+         statements: {},
          isModalVisible: true,
          currentModal: null,
          transferItems: [
@@ -150,14 +152,25 @@
         ]
        };
      },
+     async mounted() {
+        this.statements = await this.fetchStatementData()
+        console.log(this.statements)
+     },
      methods: {
         ...mapActions('modal', ['showInputModal']), // Importante: "modal" é o namespace do módulo no store
+        async fetchStatementData(){
+            const response = await this.$api.get('/creditcard')
+            return response.data
+        },
         showModal(modalIndex) {
           this.currentModal = modalIndex;
           this.showInputModal();
         },
      },
      computed: {
+        currentStatement(){
+            return this.statements.current_statement;
+        },
         currentMonth() {
             const date = new Date();
             const month = date.toLocaleString('default', { month: 'long' });

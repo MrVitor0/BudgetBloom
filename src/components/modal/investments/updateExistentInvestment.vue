@@ -122,13 +122,13 @@ export default {
       });
 
       if(investment && this.initialAport) {
-          const initialAport = parseFloat(BBMoney.toDouble(BBMoney.toRaw(this.initialAport)));
-          const originalFromBudget = parseFloat(BBMoney.toDouble(BBMoney.toRaw(investment.fromBudget)))
+          const initialAport = parseFloat(BBMoney.toDouble(this.initialAport));
+          const originalFromBudget = parseFloat(BBMoney.toDouble(investment.fromBudget))
           const updatedInvestment = {
             ...investment,
             fromDate: PWUtils.getCurrentDate(),
             toAport: parseFloat(investment.toAport) + 1,
-            fromBudget: parseFloat((initialAport + originalFromBudget).toFixed(2))
+            fromBudget: (initialAport + originalFromBudget).toFixed(2)
           };
           this.$api.put(`/investments/${updatedInvestment.id}`, updatedInvestment).then(() => {
             PWUtils.PWNotification('success', 'Track Saved Successfully!');

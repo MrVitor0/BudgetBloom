@@ -1,70 +1,81 @@
 {
   "investments": [
     {
+      "id": 1,
+      "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
+      "icon": "bank",
+      "toAport": 28,
+      "fromDate": "2023-8-19 4:31:22",
       "title": "Nubank RDB",
-      "icon": "bank",
       "subtitle": "FIE",
-      "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
-      "fromBudget": 7041.56,
-      "toBudget": "40.240,20",
-      "toAport": 13,
-      "fromDate": "2023-8-18 14:8:20",
-      "id": 1
+      "fromBudget": "0.01",
+      "toBudget": "10.00"
     },
     {
-      "title": "Bradesco S.A (BBDC4)",
+      "id": 2,
+      "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
       "icon": "bank",
-      "subtitle": "FIE",
-      "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
-      "fromBudget": 1000.01,
-      "toBudget": "10000.00",
-      "toAport": "121",
-      "fromDate": "2023-7-17 00:00:00",
-      "id": 2
-    },
-    {
-      "title": "Apple Inc. (AAPL34)",
-      "icon": "apple-whole",
-      "subtitle": "STK",
-      "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
-      "fromBudget": 515.58,
-      "toBudget": "13050.00",
       "toAport": 2,
-      "fromDate": "2023-8-18 14:8:13",
-      "id": 3
+      "fromDate": "2023-8-19 4:31:30",
+      "title": "Bradesco S.A (BBDC4)",
+      "subtitle": "FIE",
+      "fromBudget": "0.15",
+      "toBudget": "7609.00"
+    },
+    {
+      "id": 3,
+      "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
+      "icon": "apple-whole",
+      "toAport": 2,
+      "fromDate": "2023-8-19 4:19:54",
+      "title": "Apple Inc. (AAPL34)",
+      "subtitle": "STK",
+      "fromBudget": "2001.00",
+      "toBudget": "10000.00"
     },
     {
       "id": 4,
       "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
       "icon": "bank",
-      "toAport": "1211",
-      "fromDate": "2023-8-18 14:1:41",
+      "toAport": 1,
+      "fromDate": "2023-8-19 4:20:4",
       "title": "Itaú Unibanco S.A",
       "subtitle": "FIE",
-      "fromBudget": 3229.55,
-      "toBudget": "5000.00"
+      "fromBudget": "2001.00",
+      "toBudget": "10000.00"
     },
     {
       "id": 5,
       "description": "1",
       "icon": "money-bill",
       "toAport": 19,
-      "fromDate": "2023-8-18 1:46:39",
+      "fromDate": "2023-8-19 4:20:15",
       "title": "Discord S.a",
       "subtitle": "STK",
-      "fromBudget": "1000.00",
-      "toBudget": "3000.00"
+      "fromBudget": "2001.00",
+      "toBudget": "10000.00"
     },
     {
       "id": 6,
       "description": "Reserva de Emergência",
       "icon": "money-bill",
-      "toAport": 14,
-      "fromDate": "2023-8-18 13:6:5",
+      "toAport": 16,
+      "fromDate": "2023-8-19 4:31:54",
       "title": "Nubank RDB",
       "subtitle": "FIE",
-      "fromBudget": 4656.15,
-      "toBudget": "100000.00"
+      "fromBudget": "2051.01",
+      "toBudget": "3000.00"
+    },
+    {
+      "id": 7,
+      "description": "sample",
+      "icon": "money-bill",
+      "toAport": 16,
+      "fromDate": "2023-8-19 4:31:27",
+      "title": "C6 Bank",
+      "subtitle": "FIE",
+      "fromBudget": "10.00",
+      "toBudget": "15.76"
     }
   ],
   "investwallet": [
@@ -83,6 +94,9 @@
       }
     }
   ],
+  "creditcard": {
+    "current_statement": 5656.15
+  },
   "profile": {
     "name": "typicode"
   }

@@ -113,8 +113,8 @@ export default {
           fromDate: PWUtils.getCurrentDate(),
           title: this.investmentName,
           subtitle: this.investmentType,
-          fromBudget: BBMoney.toDouble(BBMoney.toRaw(this.initialAport)),
-          toBudget: BBMoney.toDouble(BBMoney.toRaw(this.nearestObjetive)),
+          fromBudget: BBMoney.toDouble(this.initialAport),
+          toBudget: BBMoney.toDouble(this.nearestObjetive),
         }
       //check if all fields are filled
       if (this.description && this.investmentName && this.investmentType && this.initialAport && this.nearestObjetive) {

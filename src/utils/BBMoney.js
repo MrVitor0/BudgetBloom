@@ -32,8 +32,19 @@ class BBMoney {
         return formatter.format(amount / 100);
     }
     static toDouble = (amount = 0) => {
-        return (amount / 100).toFixed(2)
+        if (typeof amount === "string") {
+            amount = amount.replace(/\D+/g, "");
+            amount = parseFloat(amount);
+        }
+        let output = (amount / 100).toFixed(2);
+        return output;
     };
+
+    
+    
+    
+    
+    
       
 
 }
