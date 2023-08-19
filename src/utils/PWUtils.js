@@ -22,6 +22,15 @@ class PWUtils {
         return options.find(option => option.value === value);
     }
 
+    static getCurrentMonth() {
+        //return the name of the current month
+        const date = new Date();
+        const month = date.getMonth();
+        //portuguese months
+        const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+        return months[month];
+    }
+
     /**
      * @description This method is used to get the current date
      * @returns {String}
@@ -54,6 +63,24 @@ class PWUtils {
         })
     }
 
+    /**
+     * @description This method is used to show a popup
+     * @param {*} title 
+     * @param {*} type 
+     * @returns {void}
+     */
+    static async PWPopup(title, message, type = "warning") {
+       const response = await Swal.fire({
+            icon: type,
+            title: title,
+            html: message,
+            showConfirmButton: true,
+            confirmButtonText: 'Yes!',
+            showCancelButton: true,
+            cancelButtonText: 'No :(',
+        })
+        return response.isConfirmed;
+    }
 }
 
 export default PWUtils;

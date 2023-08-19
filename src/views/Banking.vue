@@ -5,49 +5,10 @@
                 <!-- START OVERVIEW AREA -->
                 <div class="w-full md:w-2/2 lg:w-1/3 mb-5 md:bg-purple-100 rounded-lg">
                     <img src="@/assets/bgvector.png" class="rounded- w-screen h-64 hidden md:block border-t border-gray-500 rounded-t-lg">
-                    <div class=" md:relative md:flex flex-col shadow md:shadow-transparent flex-auto min-w-0 p-5 md:p-4 md:mx-6 md:-mt-52 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
-                        <div class="md:flex md:flex-col">
-                            <div class="md:flex md:items-center text-center md:text-start">
-                                <div class="flex-shrink-0 rounded-3xl shadow p-1  bg-white mr-2 w-32 items-center text-center hidden md:block">
-                                    <font-awesome-icon icon="bank" class="text-5xl text-purple-700 m-5" />
-                                </div> 
-                                <div class="flex-grow ml-5 my-2 md:mt-0">
-                                <p class="text-gray-600 text-xs">Account Balance</p>
-                                <h2 class="text-xl font-semibold mb-2">R$00.000,00</h2>
-                                <p class="text-gray-600 text-xs">This is your actual account ballance.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <BankingCard :amount="this.banking_data.account_balance" icon="bank" class="md:-mt-52"/>
                 <!-- MONTH BALANCE -->
-                <div class=" md:relative md:flex flex-col shadow md:shadow-transparent flex-auto min-w-0 mt-2  md:p-4 md:mx-6 md:my-5 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
-                        <div class="md:flex md:flex-col">
-                            <div class="md:flex md:items-center text-center md:text-start">
-                                <div class="flex-shrink-0 rounded-3xl shadow p-1 bg-white mr-2 w-32 items-center text-center hidden md:block">
-                                    <font-awesome-icon icon="chart-pie" class="text-5xl text-purple-700 m-5" />
-                                </div> 
-                                <div class="flex-grow ml-5 my-2 md:mt-0">
-                                    <p class="text-gray-600 text-xs capitalize">{{ currentMonth }} <b>Incoming</b> <span class="text-green-500 text-sm ml-1">+25%</span><span class="text-gray-400 text-sm ml-1">Since Last Month</span></p>
-                                    <h2 class="text-xl font-semibold mb-2">R$00.000,00</h2>
-                                    <p class="text-gray-600 text-xs">You received 25% more than the last month!</p>
-                                </div>
-                        </div>
-                    </div>
-                </div>
-                <div class=" md:relative md:flex flex-col shadow md:shadow-transparent flex-auto min-w-0 mt-2  md:p-4 md:mx-6 md:my-5 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
-                        <div class="md:flex md:flex-col">
-                            <div class="md:flex md:items-center text-center md:text-start">
-                                <div class="flex-shrink-0 rounded-3xl shadow p-1 bg-white mr-2 w-32 items-center text-center hidden md:block">
-                                    <font-awesome-icon icon="chart-pie" class="text-5xl text-purple-700 m-5" />
-                                </div> 
-                                <div class="flex-grow ml-5 my-2 md:mt-0">
-                                    <p class="text-gray-600 text-xs capitalize">{{ currentMonth }} <b>Expenses</b> <span class="text-red-500 text-sm ml-1">-15%</span><span class="text-gray-400 text-sm ml-1">Since Last Month</span></p>
-                                    <h2 class="text-xl font-semibold mb-2">R$00.000,00</h2>
-                                    <p class="text-gray-600 text-xs">Your expenses decreased by 15%</p>
-                                </div>
-                        </div>
-                    </div>
-                </div>
+                <BankingCard :amount="this.banking_data.current_incoming" type="Earnings" :percentage="0" />
+                <BankingCard :amount="this.banking_data.current_expenses" type="Expenses" :percentage="0" />
                 <!-- MONTH BALANCE -->
             </div>
             <!-- RECENT TRANSACTIONS -->
@@ -110,9 +71,9 @@
 
       <!-- Modals-->
     <BBModal>
-          <addIncomingValue v-if="this.currentModal == 0" />
-          <addExpanseValue v-if="this.currentModal == 1" />
-          <updateAccountBalance v-if="this.currentModal == 2" />
+          <addIncomingValue @update="updateIncoming" :banking_data="banking_data" v-if="this.currentModal == 0" />
+          <addExpanseValue  @update="updateExpanses" :banking_data="banking_data" v-if="this.currentModal == 1" />
+          <updateAccountBalance @update="updateBalance" v-if="this.currentModal == 2" />
     </BBModal>
    </template>
    <script>
@@ -123,6 +84,8 @@
    import addIncomingValue from '@/components/modal/banking/addIncomingValue';
    import addExpanseValue from '@/components/modal/banking/addExpanseValue';
    import BBModal from '@/components/modal/BBModal.vue';
+   import recentTransactions from '@/mocks/data/recentTransactions.json';
+   import BankingCard from '@/components/cards/BankingCard.vue';
    import { mapActions } from 'vuex';
    export default {
      name: 'DashboardInvestments',
@@ -130,8 +93,8 @@
             BasicButton,
             TransferItem,
             FontAwesomeIcon,
-            
             BBModal,
+            BankingCard,
             updateAccountBalance,
             addIncomingValue,
             addExpanseValue
@@ -140,47 +103,42 @@
        return {
          progress: 95,
          currentModal: null,
-         transferItems: [
-            {
-                name: 'Vitor Hugo',
-                method: 'Pix',
-                type: 'Outgoing',
-                date: '12/03/2023',
-                value: 'R$1000,00'
-            },
-            {
-                name: 'Elisyum LTDA',
-                method: 'Pix',
-                type: 'Received',
-                date: '11/03/2023',
-                value: 'R$1000,00'
-            },
-            {
-                name: 'Robert Jr',
-                method: 'Pix',
-                type: 'Outgoing',
-                date: '12/03/2023',
-                value: 'R$1000,00'
-            },
-            {
-                name: "Urubu's Pix Bank",
-                method: 'Pix',
-                type: 'Received',
-                date: '12/03/2023',
-                value: 'R$2000,69'
-            },
-            {
-                name: "Urubu's Pix Bank",
-                method: 'Pix',
-                type: 'Received',
-                date: '12/03/2023',
-                value: 'R$2000,69'
-            },
-        ]
+         transferItems: recentTransactions,
+         banking_data: {
+            account_balance: 0,
+            current_incoming: 0,
+            current_expenses: 0
+         }
        };
+     },
+     async mounted() {
+        const response = await this.$api.get("/banking")
+        if(response.data)
+            this.banking_data = response.data
      },
      methods: {
        ...mapActions('modal', ['showInputModal', 'hideInputModal']),
+       updateBalance(response){
+            this.banking_data.account_balance = response
+       },
+       updateIncoming(response){
+            if(typeof response.hardEdit == "boolean" && response.hardEdit){
+                this.banking_data.current_incoming = response.value
+            }else{
+                this.banking_data.current_incoming += response.value
+                this.banking_data.account_balance += response.value
+            }
+       },
+       updateExpanses(response){
+            if(typeof response.hardEdit == "boolean" && response.hardEdit){
+                this.banking_data.current_expenses = response.value
+            }else{
+                this.banking_data.current_expenses += response.value
+                let account_balance = this.banking_data.account_balance - response.value
+                if(account_balance < 0) account_balance = 0;
+                this.banking_data.account_balance = account_balance
+            }
+       },
        showModal(modal) {
          this.currentModal = modal;
          this.showInputModal();

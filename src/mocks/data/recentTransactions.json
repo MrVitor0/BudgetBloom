@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Vitor Hugo",
+        "method": "Pix",
+        "type": "Outgoing",
+        "date": "12/03/2023",
+        "value": "R$1000,00"
+    },
+    {
+        "name": "Elisyum LTDA",
+        "method": "Pix",
+        "type": "Received",
+        "date": "11/03/2023",
+        "value": "R$1000,00"
+    },
+    {
+        "name": "Robert Jr",
+        "method": "Pix",
+        "type": "Outgoing",
+        "date": "12/03/2023",
+        "value": "R$1000,00"
+    },
+    {
+        "name": "Urubus Pix Bank",
+        "method": "Pix",
+        "type": "Received",
+        "date": "12/03/2023",
+        "value": "R$2000,69"
+    },
+    {
+        "name": "Urubus Pix Bank",
+        "method": "Pix",
+        "type": "Received",
+        "date": "12/03/2023",
+        "value": "R$2000,69"
+    }
+]

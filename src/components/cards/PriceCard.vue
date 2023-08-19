@@ -2,7 +2,7 @@
     <div class="bg-white shadow-md rounded-3xl p-6 flex items-center justify-between">
       <div>
         <h2 class="text-xl font-semibold mb-1">{{ title }}</h2>
-        <p class="text-gray-600 text-3xl">R$ {{ amount }} <span :class="spanClass">{{ percentage >= 0 ? "+" : ""  }}{{ percentage }}%</span></p>
+        <p class="text-gray-600 text-3xl">R${{ currentBalance }}<span :class="spanClass">{{ percentage >= 0 ? "+" : ""  }}{{ percentage }}%</span></p>
       </div>
       <div>
         <button :class="gradientClass" class="text-white w-12 h-12 rounded-full flex items-center justify-center">
@@ -14,7 +14,7 @@
   
   <script>
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-  
+  import BBMoney from '@/utils/BBMoney';
   export default {
     components: {
       FontAwesomeIcon,
@@ -33,6 +33,9 @@
         spanClass() {
             return this.percentage >= 0 ? 'text-green-500 text-sm ml-1' : 'text-red-500  text-sm ml-1';
         },
+        currentBalance(){
+          return BBMoney.toCurrency(this.amount);
+        },  
         gradientClass() {
         switch (this.color) {
             case 'blue':

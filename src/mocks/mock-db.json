@@ -29,9 +29,9 @@
     }
   ],
   "creditcard": {
-    "current_statement": 254.61
+    "current_statement": 2667.86
   },
-  "profile": {
-    "name": "typicode"
+  "banking": {
+    "account_balance": 1000
   }
 }

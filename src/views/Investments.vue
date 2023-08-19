@@ -4,9 +4,9 @@
         <div class="flex flex-wrap md:-mx-4">
          <!-- OVERVIEW AREA -->
         <div class="w-full md:w-2/2 lg:w-1/3 px-4 mb-5">
-            <price-card class="mb-5" title="Investment Balance" :amount="this.format_c(investmentwallet.investmentbalance?.value)" :percentage='investmentwallet.investmentbalance?.percentage' icon="vault" color="purple" />
-            <price-card class="mb-5" title="Account balance" :amount="this.format_c(investmentwallet.accountbalance?.value)" :percentage="investmentwallet.accountbalance?.percentage" icon="money-check-dollar" color="purple" />
-            <price-card title="Passive Incoming" :amount="this.format_c(investmentwallet.passiveincoming?.value)" :percentage="investmentwallet.passiveincoming.percentage" icon="piggy-bank" color="purple" />
+            <price-card class="mb-5" title="Investment Balance" :amount="investmentwallet.investmentbalance?.value" :percentage='investmentwallet.investmentbalance?.percentage' icon="vault" color="purple" />
+            <price-card class="mb-5" title="Account balance" :amount="investmentwallet.accountbalance?.value" :percentage="investmentwallet.accountbalance?.percentage" icon="money-check-dollar" color="purple" />
+            <price-card title="Passive Incoming" :amount="investmentwallet.passiveincoming?.value" :percentage="investmentwallet.passiveincoming.percentage" icon="piggy-bank" color="purple" />
         </div>
 
          <!-- OVERVIEW AREA -->
@@ -170,9 +170,6 @@
       convertToDate(dateString) {
         const [day, month, year] = dateString.split('/');
         return new Date(`${year}-${month}-${day}`);
-      },
-      format_c(n) {
-        return BBMoney.toCurrency(BBMoney.toRaw((n).toFixed(2)));
       },
       async fetchData() {
         try {
