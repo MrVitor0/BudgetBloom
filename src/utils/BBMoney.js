@@ -14,9 +14,12 @@ class BBMoney {
     }
 
     static toRaw = (amount = 0) => {
-        amount = amount.toString();
-        return amount.replace(/\D+/g, "");
+        if(typeof amount === "number"){
+            amount = amount.toFixed(2);
+        }
+        return (amount.toString()).replace(/\D+/g, "");
     }
+   
     /**
      * @description Retorna o valor formatado em moeda
      * @param {*} amount 
@@ -24,10 +27,7 @@ class BBMoney {
      * @returns 
      */
     static toCurrency = (amount = 0, locale = "pt-BR") => {
-        if (typeof amount === "string") {
-            amount = amount.replace(/\D+/g, "");
-            amount = parseFloat(amount);
-        }
+        amount = this.toRaw(amount);
         const formatter = new Intl.NumberFormat(locale, {
           style: "decimal",
           minimumFractionDigits: 2,
@@ -36,20 +36,10 @@ class BBMoney {
         return formatter.format(amount / 100);
     }
     static toDouble = (amount = 0) => {
-        if (typeof amount === "string") {
-            amount = amount.replace(/\D+/g, "");
-            amount = parseFloat(amount);
-        }
+        amount = this.toRaw(amount);
         let output = (amount / 100).toFixed(2);
-        return output;
+        return parseFloat(output);
     };
-
-    
-    
-    
-    
-    
-      
 
 }
 

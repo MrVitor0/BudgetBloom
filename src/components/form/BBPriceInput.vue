@@ -43,13 +43,11 @@ export default {
   },
   methods: {
     updateValue(event) {
-      const rawValue = event.target.value.replace(/\D+/g, "");
-      this.formattedValue = BBMoney.toCurrency(rawValue);
+      this.formattedValue = BBMoney.toCurrency(event.target.value);
     },
     formatValue() {
       if (this.formattedValue) {
-        const rawValue = parseFloat(this.formattedValue.replace(/\D+/g, "")) || 0;
-        this.formattedValue = BBMoney.toCurrency(rawValue);
+        this.formattedValue = BBMoney.toCurrency(this.formattedValue);
       } else {
         this.formattedValue = BBMoney.toCurrency(0);
       }

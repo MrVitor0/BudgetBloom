@@ -80,14 +80,13 @@
         })
 
         if(this.monthInput == currentMonth && this.yearInput == currentYear){
-          if(this.inputValue >= 0){
-            let inputValue = parseFloat(BBMoney.toDouble(this.inputValue))
-            let value = inputValue.toFixed(2)
+          if(this.inputValue !== '' && this.inputValue !== undefined && this.inputValue !== null){
+            let inputValue = BBMoney.toDouble(this.inputValue)
             const response = await this.$api.put('creditcard', {
-              current_statement:  value
+              current_statement:  inputValue
             })
             PWUtils.PWNotification('success', 'Statement Saved!');
-            this.$emit('updateStatement', value);
+            this.$emit('updateStatement', inputValue);
             this.hideModal();
             return response
           }else{

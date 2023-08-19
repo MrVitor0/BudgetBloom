@@ -52,23 +52,27 @@
     },
     data() {
       return {
-        inputValue: 0
+        inputValue: 0,
       };
     },
     methods: {
       ...mapActions('modal', ['hideInputModal']),
       async submitInput() {
         if(this.inputValue && this.currentStatement){
-          let inputValue = parseFloat(BBMoney.toDouble(this.inputValue))
-          let currentStatement = parseFloat(BBMoney.toDouble(this.currentStatement))
-          let sum =(currentStatement + inputValue).toFixed(2)
+          let inputValue = BBMoney.toDouble(this.inputValue)
+          let currentStatement = BBMoney.toDouble(this.currentStatement)
+          let sum = BBMoney.toDouble(currentStatement + inputValue)
+          console.log({
+            inputValue,
+            currentStatement,
+            sum
+          })
           const response = await this.$api.put('creditcard', {
             current_statement:  sum
           })
           PWUtils.PWNotification('success', 'Statement Saved!');
           this.$emit('updateCurrentStatement', sum);
           this.hideModal();
-
           return response
         }else{
           PWUtils.PWNotification('warning', 'Please fill all the fields!');

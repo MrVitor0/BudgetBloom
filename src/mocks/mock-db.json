@@ -4,78 +4,12 @@
       "id": 1,
       "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
       "icon": "bank",
-      "toAport": 28,
-      "fromDate": "2023-8-19 4:31:22",
+      "toAport": 36,
+      "fromDate": "2023-8-19 16:55:17",
       "title": "Nubank RDB",
       "subtitle": "FIE",
-      "fromBudget": "0.01",
-      "toBudget": "10.00"
-    },
-    {
-      "id": 2,
-      "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
-      "icon": "bank",
-      "toAport": 2,
-      "fromDate": "2023-8-19 4:31:30",
-      "title": "Bradesco S.A (BBDC4)",
-      "subtitle": "FIE",
-      "fromBudget": "0.15",
-      "toBudget": "7609.00"
-    },
-    {
-      "id": 3,
-      "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
-      "icon": "apple-whole",
-      "toAport": 2,
-      "fromDate": "2023-8-19 4:19:54",
-      "title": "Apple Inc. (AAPL34)",
-      "subtitle": "STK",
-      "fromBudget": "2001.00",
-      "toBudget": "10000.00"
-    },
-    {
-      "id": 4,
-      "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
-      "icon": "bank",
-      "toAport": 1,
-      "fromDate": "2023-8-19 4:20:4",
-      "title": "Itaú Unibanco S.A",
-      "subtitle": "FIE",
-      "fromBudget": "2001.00",
-      "toBudget": "10000.00"
-    },
-    {
-      "id": 5,
-      "description": "1",
-      "icon": "money-bill",
-      "toAport": 19,
-      "fromDate": "2023-8-19 4:20:15",
-      "title": "Discord S.a",
-      "subtitle": "STK",
-      "fromBudget": "2001.00",
-      "toBudget": "10000.00"
-    },
-    {
-      "id": 6,
-      "description": "Reserva de Emergência",
-      "icon": "money-bill",
-      "toAport": 16,
-      "fromDate": "2023-8-19 4:31:54",
-      "title": "Nubank RDB",
-      "subtitle": "FIE",
-      "fromBudget": "2051.01",
-      "toBudget": "3000.00"
-    },
-    {
-      "id": 7,
-      "description": "sample",
-      "icon": "money-bill",
-      "toAport": 16,
-      "fromDate": "2023-8-19 4:31:27",
-      "title": "C6 Bank",
-      "subtitle": "FIE",
-      "fromBudget": "10.00",
-      "toBudget": "15.76"
+      "fromBudget": 20,
+      "toBudget": 1000
     }
   ],
   "investwallet": [
@@ -95,7 +29,7 @@
     }
   ],
   "creditcard": {
-    "current_statement": "2639.37"
+    "current_statement": 254.61
   },
   "profile": {
     "name": "typicode"
