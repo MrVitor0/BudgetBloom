@@ -37,11 +37,18 @@
   import BBPriceInput from '@/components/form/BBPriceInput';
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   import BBMoney from '@/utils/BBMoney'
+  import PWUtils from '@/utils/PWUtils'
   import { mapActions } from 'vuex';
   export default {
     components: {
       FontAwesomeIcon,
       BBPriceInput
+    },
+    props: {
+      currentStatement: {
+        type: Number,
+        default: 0
+      },
     },
     data() {
       return {
@@ -50,23 +57,22 @@
     },
     methods: {
       ...mapActions('modal', ['hideInputModal']),
-      formatCurrency(value) {
-        const formatter = new Intl.NumberFormat("pt-BR", {
-          style: "decimal",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
-        return formatter.format(value / 100);
-      },
-      submitInput() {
-        if(this.inputValue == 0) {
-          return;
+      async submitInput() {
+        if(this.inputValue && this.currentStatement){
+          let inputValue = parseFloat(BBMoney.toDouble(this.inputValue))
+          let currentStatement = parseFloat(BBMoney.toDouble(this.currentStatement))
+          let sum =(currentStatement + inputValue).toFixed(2)
+          const response = await this.$api.put('creditcard', {
+            current_statement:  sum
+          })
+          PWUtils.PWNotification('success', 'Statement Saved!');
+          this.$emit('updateCurrentStatement', sum);
+          this.hideModal();
+
+          return response
+        }else{
+          PWUtils.PWNotification('warning', 'Please fill all the fields!');
         }
-        let rawValue = this.inputValue.replace(/\D+/g, "");
-        console.log({
-          from: BBMoney.toCurrency(rawValue, "pt-BR"),
-          to: BBMoney.toDouble(rawValue)
-        })
       },
       hideModal() {
         this.hideInputModal();

@@ -32,7 +32,7 @@
                         </div>
                         <div class="w-64">
                           <BasicButton @click="showModal(0)" active="true" text="Increase Statement" icon="edit" />
-                        </div>  
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
 
        <!-- Modals-->
        <BBModal>
-            <updateCurrentStatement v-if="this.currentModal == 0" />
+            <updateCurrentStatement @updateCurrentStatement="updateCurrentStatement" :currentStatement="this.statements.current_statement" v-if="this.currentModal == 0" />
             <updateOlderStatements v-if="this.currentModal == 1" />
         </BBModal>
      </div>
@@ -91,7 +91,7 @@
    import updateCurrentStatement from '@/components/modal/creditCards/updateCurrentStatement';
    import updateOlderStatements from '@/components/modal/creditCards/updateOlderStatements';
 
-//    import BBMoney from '@/utils/BBMoney';
+   import BBMoney from '@/utils/BBMoney';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
    import { mapActions } from 'vuex';
    export default {
@@ -158,6 +158,9 @@
      },
      methods: {
         ...mapActions('modal', ['showInputModal']), // Importante: "modal" é o namespace do módulo no store
+        async updateCurrentStatement(newStatement){
+            this.statements.current_statement = newStatement
+        },
         async fetchStatementData(){
             const response = await this.$api.get('/creditcard')
             return response.data
@@ -169,7 +172,7 @@
      },
      computed: {
         currentStatement(){
-            return this.statements.current_statement;
+            return  BBMoney.toCurrency(this.statements.current_statement);
         },
         currentMonth() {
             const date = new Date();

@@ -24,6 +24,10 @@ class BBMoney {
      * @returns 
      */
     static toCurrency = (amount = 0, locale = "pt-BR") => {
+        if (typeof amount === "string") {
+            amount = amount.replace(/\D+/g, "");
+            amount = parseFloat(amount);
+        }
         const formatter = new Intl.NumberFormat(locale, {
           style: "decimal",
           minimumFractionDigits: 2,
