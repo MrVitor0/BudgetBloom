@@ -45,9 +45,21 @@
       FontAwesomeIcon,
       BBPriceInput
     },
+    props: {
+      banking_data: {
+        type: Object,
+        default: () => {
+          return {
+            account_balance: 0,
+            current_incoming: 0,
+            current_expenses: 0
+          };
+        }
+      }
+    },
     data() {
       return {
-        inputValue: 0
+        inputValue: "0"
       };
     },
     methods: {
@@ -57,7 +69,7 @@
           const inputValue = BBMoney.toDouble(this.inputValue)
     
           const updatedData = {
-              ...this.banking_data,
+            ...this.banking_data,
               account_balance: inputValue,
           }
           try {

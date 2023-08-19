@@ -94,7 +94,7 @@
             let account_balance = this.banking_data.account_balance - inputValue
             if(account_balance < 0)  account_balance = 0;
             const updatedData = {
-               ...this.banking_data,
+              ...this.banking_data,
                 account_balance: account_balance,
                 current_expenses: this.banking_data.current_expenses + inputValue,
             }
@@ -102,7 +102,7 @@
               let response =  await PWUtils.PWPopup('Are you sure?', 'This will directly edit the current incoming value.');
               if(!response) 
                     return;
-              updatedData.current_incoming = inputValue;
+              updatedData.current_expenses = inputValue;
             }
             try {
               const response = await this.$api.put('banking', updatedData)

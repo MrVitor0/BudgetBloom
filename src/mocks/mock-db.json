@@ -32,6 +32,8 @@
     "current_statement": 2667.86
   },
   "banking": {
-    "account_balance": 1000
+    "account_balance": 88.59000000000015,
+    "current_incoming": 7438.08,
+    "current_expenses": 7349.49
   }
 }

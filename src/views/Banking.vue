@@ -72,8 +72,8 @@
       <!-- Modals-->
     <BBModal>
           <addIncomingValue @update="updateIncoming" :banking_data="banking_data" v-if="this.currentModal == 0" />
-          <addExpanseValue  @update="updateExpanses" :banking_data="banking_data" v-if="this.currentModal == 1" />
-          <updateAccountBalance @update="updateBalance" v-if="this.currentModal == 2" />
+          <addExpanseValue  @update="updateExpenses" :banking_data="banking_data" v-if="this.currentModal == 1" />
+          <updateAccountBalance @update="updateBalance" :banking_data="banking_data" v-if="this.currentModal == 2" />
     </BBModal>
    </template>
    <script>
@@ -118,27 +118,45 @@
      },
      methods: {
        ...mapActions('modal', ['showInputModal', 'hideInputModal']),
-       updateBalance(response){
-            this.banking_data.account_balance = response
-       },
-       updateIncoming(response){
-            if(typeof response.hardEdit == "boolean" && response.hardEdit){
-                this.banking_data.current_incoming = response.value
-            }else{
-                this.banking_data.current_incoming += response.value
-                this.banking_data.account_balance += response.value
+        /**
+         * Update the current balance in the banking account.
+         * @param {number} response
+        */
+        updateBalance(response) {
+            this.banking_data.account_balance = response;
+        },
+
+        /**
+         * Update the current incoming in the banking account.
+         * @param {object} response
+         */
+        updateIncoming(response) {
+            if (typeof response.hardEdit === "boolean" && response.hardEdit) {
+                this.banking_data.current_incoming = response.value;
+            } else {
+                console.log(response)
+                this.banking_data.current_incoming += response.value;
+                this.banking_data.account_balance += response.value;
             }
-       },
-       updateExpanses(response){
-            if(typeof response.hardEdit == "boolean" && response.hardEdit){
-                this.banking_data.current_expenses = response.value
-            }else{
-                this.banking_data.current_expenses += response.value
-                let account_balance = this.banking_data.account_balance - response.value
-                if(account_balance < 0) account_balance = 0;
-                this.banking_data.account_balance = account_balance
+        },
+        
+        /**
+         *  Update the current expenses in the banking account.
+         * @param {object} response 
+       */
+        updateExpenses(response) {
+            console.log(response)
+            if (typeof response.hardEdit === "boolean" && response.hardEdit) {
+                this.banking_data.current_expenses = response.value;
+            } else {
+                this.banking_data.current_expenses += response.value;
+                let account_balance = this.banking_data.account_balance - response.value;
+                if (account_balance < 0) {
+                    account_balance = 0;
+                }
+                this.banking_data.account_balance = account_balance;
             }
-       },
+        },
        showModal(modal) {
          this.currentModal = modal;
          this.showInputModal();
