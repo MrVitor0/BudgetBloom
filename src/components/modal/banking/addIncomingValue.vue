@@ -27,19 +27,20 @@
             </div>
             <div class="mt-4">
                 <button
-                    class="bg-purple-800 text-white px-4 py-2 rounded-md  hover:bg-purple-700"
+                    class="bg-purple-800 text-white px-4 py-2 w-full mt-1 md:mt-0 md:w-auto rounded-md  hover:bg-purple-700"
                     @click="submitInput(false)"
                 >
                     Increase Incoming  <FontAwesomeIcon class="pl-1" icon="plus-square" />
                 </button>
+                <br class="md:hidden" />
                 <button
-                    class="ml-2 border text-white px-4 py-2 rounded-md bg-purple-800 hover:bg-purple-800"
+                    class="md:ml-2 border text-white px-4 py-2 w-full mt-1 md:mt-0 md:w-auto rounded-md bg-purple-800 hover:bg-purple-800"
                     @click="submitInput(true)"
                 >
                      Edit Incoming <FontAwesomeIcon class="pl-1" icon="edit" />
-                </button>
+                </button> <br class="md:hidden" />
                 <button
-                    class="ml-2 border px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300"
+                    class="md:ml-2 border px-4 py-2 w-full mt-1 md:mt-0 md:w-auto rounded-md bg-gray-200 hover:bg-gray-300"
                     @click="hideModal"
                 >
                     Close <FontAwesomeIcon class="pl-1" icon="times" />
