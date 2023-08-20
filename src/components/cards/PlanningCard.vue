@@ -12,6 +12,9 @@
             <div class="self-start hidden md:block" @click="EditCurrentCard(id)">
               <font-awesome-icon icon="edit" class="text-2xl text-purple-700 cursor-pointer hover:text-purple-600" />
             </div>
+            <div class="self-start hidden md:block pl-2" @click="DeleteCurrentCard(id)">
+              <font-awesome-icon icon="trash" class="text-2xl text-purple-700 cursor-pointer hover:text-purple-600" />
+            </div>
           </div>
           <!-- Body -->
           <div class="flex mt-5  ">
@@ -111,6 +114,11 @@ export default {
     },
     EditCurrentCard(id) {
       this.$emit('edit', id);
+    },
+    async DeleteCurrentCard(id) {
+      const response = await PWUtils.PWPopup('Are you sure?', 'This action cannot be undone')
+      if(!response) return;
+      this.$emit('delete', id);
     }
   }
 }

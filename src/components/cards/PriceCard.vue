@@ -2,7 +2,7 @@
     <div class="bg-white shadow-md rounded-3xl p-6 flex items-center justify-between">
       <div>
         <h2 class="text-xl font-semibold mb-1">{{ title }}</h2>
-        <p class="text-gray-600 text-3xl">R${{ currentBalance }}<span :class="spanClass">{{ percentage >= 0 ? "+" : ""  }}{{ percentage }}%</span></p>
+        <p class="text-gray-600 text-3xl">R${{ currentBalance }}<span :class="spanClass" v-if="percentage !== 0">{{ percentage >= 0 ? "+" : ""  }}{{ percentage }}%</span></p>
       </div>
       <div>
         <button :class="gradientClass" class="text-white w-12 h-12 rounded-full flex items-center justify-center">
@@ -24,7 +24,7 @@
       amount: String,
       percentage: {
         type: Number,
-        default: -10,
+        default: 0,
       },
       icon: String,
       color: String,

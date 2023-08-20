@@ -4,7 +4,7 @@
         <div class="flex flex-wrap md:-mx-4">
          <!-- OVERVIEW AREA -->
         <div class="w-full md:w-2/2 lg:w-1/3 px-4 mb-5">
-            <price-card class="mb-5" title="Investment Balance" :amount="investmentwallet.investmentbalance?.value" :percentage='investmentwallet.investmentbalance?.percentage' icon="vault" color="purple" />
+            <price-card class="mb-5" title="Investment Balance" :amount="investmentwallet.investmentbalance?.value"  icon="vault" color="purple" />
             <price-card class="mb-5" title="Passive Earnings" :amount="investmentwallet.accountbalance?.value" :percentage="investmentwallet.accountbalance?.percentage" icon="money-check-dollar" color="purple" />
             <price-card title="Passive Incoming" :amount="investmentwallet.passiveincoming?.value" :percentage="investmentwallet.passiveincoming.percentage" icon="piggy-bank" color="purple" />
         </div>
@@ -68,6 +68,7 @@
                   :toAport="investment.toAport"
                   :fromDate="investment.fromDate"
                   @edit="EditExistentInvestment(investment)"
+                  @delete="deleteInvestment(investment)"
                 />
             </div>
         </div>
@@ -198,7 +199,15 @@
         this.currentModalData = data;
         this.currentModal = 2;
         this.showInputModal();
-      }
+      },
+      deleteInvestment(data) {
+        this.$api.delete(`/investments/${data.id}`).then(() => {
+          this.investments = this.investments.filter((investment) => investment.id !== data.id);
+          PWUtils.PWNotification('success', 'Investment Deleted!');
+        }).catch(() => {
+          PWUtils.PWNotification('error', 'Something went wrong!');
+        });
+      },
     }
   }
   </script>

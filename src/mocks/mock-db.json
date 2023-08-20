@@ -5,9 +5,11 @@
       "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
       "icon": "bank",
       "toAport": 36,
-      "fromDate": "2023-8-19 19:30:7",
+      "fromDate": "2023-8-20 0:13:49",
       "title": "Nubank RDB",
       "subtitle": "FIE",
+      "profitPercentage": 12,
+      "profitCalendarType": "months",
       "fromBudget": 53841.25,
       "toBudget": 100000
     }
@@ -19,21 +21,21 @@
         "percentage": 10
       },
       "accountbalance": {
-        "value": 15.1,
+        "value": 282.59,
         "percentage": 30
       },
       "passiveincoming": {
-        "value": 50.1,
-        "percentage": -10
+        "value": 23.95,
+        "percentage": 12
       }
     }
   ],
   "creditcard": {
-    "current_statement": 2667.86
+    "current_statement": 2862.37
   },
   "banking": {
-    "account_balance": 88.59,
-    "current_incoming": 7438.08,
-    "current_expenses": 7349.49
+    "account_balance": 100.59,
+    "current_incoming": 7788.08,
+    "current_expenses": 7787.49
   }
 }
