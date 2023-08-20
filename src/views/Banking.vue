@@ -11,33 +11,20 @@
                 <BankingCard :amount="this.banking_data.current_expenses" type="Expenses" :percentage="0" />
                 <!-- MONTH BALANCE -->
             </div>
-            <!-- RECENT TRANSACTIONS -->
+            <!-- Monthly Planning -->
             <div class="w-full md:w-1/2 lg:w-1/3 md:px-4 mb-5">
-                <div class="bg-white rounded-lg shadow py-4 h-full">
+                <div class="bg-white rounded-lg shadow pb-4 pt-2 h-full text-center">
                     <div class="flex items-start justify-between text-center px-4 pb-4 md:p-3">
                         <div class="flex-start">
-                            <p class="text-xl text-BBDark">Recent Transactions</p>
+                            <p class="text-xl text-BBDark">Monthly Planning</p>
                         </div>
                         <div class="flex-end">
-                            <font-awesome-icon icon="file-circle-plus" class="text-BBPurple text-2xl cursor-pointer" />
+                            <font-awesome-icon title="View More" icon="list-check" class="text-BBPurple text-2xl cursor-pointer" />
                         </div>
                     </div>
                     <hr class="h-px mx-3 bg-purple-200 border-0 mb-5" />
                     <!-- ITEM -->
-                    <TransferItem
-                        v-for="(item, index) in transferItems"
-                        :key="index"
-                        :name="item.name"
-                        :method="item.method"
-                        :type="item.type"
-                        :date="item.date"
-                        :value="item.value"
-                    />
-                    <div class="justify-center items-end text-center">
-                        <div class="mt-auto mb-4">
-                            <BasicButton active="true" text="View More" icon="receipt" />
-                        </div>
-                    </div>
+                    <p>In development</p>
                 </div>
             </div>
             <!-- ACCOUNT BALANCE -->
@@ -65,8 +52,35 @@
                     </div>
                 </div>
             </div>
+           <!-- RECENT TRANSACTIONS -->
+            <div class="w-full mb-5">
+                <div class="bg-white rounded-lg shadow py-4 h-full">
+                    <div class="flex items-start justify-between text-center px-4 pb-4 md:p-3">
+                        <div class="flex-start">
+                            <p class="text-xl text-BBDark">Recent Transactions</p>
+                        </div>
+                        <div class="flex-end">
+                            <font-awesome-icon title="View More" icon="eye" class="text-BBPurple text-2xl cursor-pointer pr-3" />
+                            <font-awesome-icon icon="file-circle-plus" class="text-BBPurple text-2xl cursor-pointer" />
+                        </div>
+                    </div>
+                    <hr class="h-px mx-3 bg-purple-200 border-0 mb-5" />
+                    <!-- ITEM -->
+                    <TransferItem
+                        v-for="(item, index) in transferItems"
+                        :key="index"
+                        :name="item.name"
+                        :method="item.method"
+                        :type="item.type"
+                        :date="item.date"
+                        :value="item.value"
+                    />
+                </div>
+            </div>
        </div>
+       
      </div>
+     
      <!-- PROFILE SETTINGS AREA -->
 
       <!-- Modals-->

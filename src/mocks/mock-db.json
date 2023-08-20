@@ -5,17 +5,17 @@
       "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
       "icon": "bank",
       "toAport": 36,
-      "fromDate": "2023-8-19 16:55:17",
+      "fromDate": "2023-8-19 19:30:7",
       "title": "Nubank RDB",
       "subtitle": "FIE",
-      "fromBudget": 20,
-      "toBudget": 1000
+      "fromBudget": 53841.25,
+      "toBudget": 100000
     }
   ],
   "investwallet": [
     {
       "investmentbalance": {
-        "value": 1305.1,
+        "value": 53841.25,
         "percentage": 10
       },
       "accountbalance": {
@@ -32,7 +32,7 @@
     "current_statement": 2667.86
   },
   "banking": {
-    "account_balance": 88.59000000000015,
+    "account_balance": 88.59,
     "current_incoming": 7438.08,
     "current_expenses": 7349.49
   }

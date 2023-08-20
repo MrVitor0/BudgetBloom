@@ -5,7 +5,7 @@
          <!-- OVERVIEW AREA -->
         <div class="w-full md:w-2/2 lg:w-1/3 px-4 mb-5">
             <price-card class="mb-5" title="Investment Balance" :amount="investmentwallet.investmentbalance?.value" :percentage='investmentwallet.investmentbalance?.percentage' icon="vault" color="purple" />
-            <price-card class="mb-5" title="Account balance" :amount="investmentwallet.accountbalance?.value" :percentage="investmentwallet.accountbalance?.percentage" icon="money-check-dollar" color="purple" />
+            <price-card class="mb-5" title="Passive Earnings" :amount="investmentwallet.accountbalance?.value" :percentage="investmentwallet.accountbalance?.percentage" icon="money-check-dollar" color="purple" />
             <price-card title="Passive Incoming" :amount="investmentwallet.passiveincoming?.value" :percentage="investmentwallet.passiveincoming.percentage" icon="piggy-bank" color="purple" />
         </div>
 
