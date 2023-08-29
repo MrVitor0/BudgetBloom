@@ -2,22 +2,22 @@
   "investments": [
     {
       "id": 1,
-      "description": "Lorem ipsum dolor sit amet  adipisicing elit.",
-      "icon": "bank",
-      "toAport": 36,
-      "fromDate": "2023-8-20 0:13:49",
+      "description": "Meta de renda passiva",
+      "icon": "money-bill",
+      "toAport": 3,
+      "fromDate": "2023-8-24 1:51:29",
       "title": "Nubank RDB",
       "subtitle": "FIE",
       "profitPercentage": 12,
       "profitCalendarType": "months",
-      "fromBudget": 53841.25,
+      "fromBudget": 53897.32,
       "toBudget": 100000
     }
   ],
   "investwallet": [
     {
       "investmentbalance": {
-        "value": 53841.25,
+        "value": 54001.25,
         "percentage": 10
       },
       "accountbalance": {
@@ -31,11 +31,11 @@
     }
   ],
   "creditcard": {
-    "current_statement": 2862.37
+    "current_statement": 2990.8
   },
   "banking": {
-    "account_balance": 100.59,
-    "current_incoming": 7788.08,
-    "current_expenses": 7787.49
+    "account_balance": 2773.36,
+    "current_incoming": 7741,
+    "current_expenses": 4967.639999999999
   }
 }

@@ -1,16 +1,16 @@
 <template>
    <div class="flex flex-wrap -mx-4">
       <div class="w-full md:w-1/2 lg:w-1/4 px-4 mb-5">
-        <price-card title="Current Money" amount="R$0.000,00" icon="money-bill" color="green" />
+        <price-card title="Current Balance" :amount="balance" icon="bank" color="green" />
       </div>
       <div class="w-full md:w-1/2 lg:w-1/4 px-4 mb-5">
-        <price-card title="Passive Incoming" amount="R$0.000,00" percentage="+20%" icon="money-bill" color="red" />
+        <price-card title="Investment Portfolio" :amount="investmentBalance"  icon="piggy-bank" color="blue" />
       </div>
       <div class="w-full md:w-1/2 lg:w-1/4 px-4 mb-5">
-        <price-card title="CDB Applications" amount="R$0.000,00" percentage="+20%"  icon="money-bill" color="blue" />
+        <price-card title="Month Earnings" :amount="monthEarnings"  icon="sack-dollar" color="red" />
       </div>
       <div class="w-full md:w-1/2 lg:w-1/4 px-4 mb-5">
-        <price-card title="Stock Apllications" amount="R$0.000,00" percentage="+20%"  icon="money-bill"  />
+        <price-card title="Stock Apllications" amount="R$0.000,00" percentage="20"  icon="money-bill"  />
       </div>
     </div>
     <!-- Info cards -->
@@ -56,7 +56,7 @@
 
 <script>
 import PriceCard from '@/components/cards/PriceCard.vue';
- import BarChartCard from '@/components/charts/BarChartCard.vue';
+import BarChartCard from '@/components/charts/BarChartCard.vue';
 import InfoCard from '@/components/cards/InfoCard.vue';
 import StockChartCard from '@/components/charts/StockChartCard.vue';
 export default {
@@ -79,11 +79,30 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
-        // Outras configurações do gráfico
       },
+
+
+      balance:0,
+      monthEarnings: 0,
+      investmentBalance: 0,
+
     };
   },
-  // ... Outras configurações
+  async mounted() {
+        const response = await this.$api.get("/banking")
+        const investmentResponse = await this.$api.get("/investwallet")
+        if(response.data){
+          let data = response.data
+          this.balance = data.account_balance
+          this.monthEarnings = data.current_incoming
+        }
+        if(investmentResponse.data){
+          let data = investmentResponse.data[0]
+          console.log(data)
+          this.investmentBalance = data.investmentbalance?.value
+        }
+          
+  },
 }
 </script>
 
