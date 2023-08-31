@@ -1,7 +1,7 @@
 
 <template>
     <!-- ITEM -->
-    <div class="flex items-start justify-between text-center md:text-start px-6 md:px-3 mb-5">
+    <div class="flex items-start justify-between md:text-start px-6 md:px-3 mb-5">
           <div class="relative">
               <font-awesome-icon :icon="icon" :class="typeClass" />
               <div class="flex-start md:pl-10">

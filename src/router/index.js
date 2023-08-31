@@ -5,6 +5,7 @@ import DashboardProfile from '@/views/Profile.vue';
 import DashboardCredit from '@/views/Credit.vue';
 import DashboardBanking from '@/views/Banking.vue';
 import DashboardInvestments from '@/views/Investments.vue';
+import TravelHome from '@/views/Travel.vue';
 const routes = [
   {
     path: '/',
@@ -14,8 +15,9 @@ const routes = [
       { path: 'investments', name:"Investments", component: DashboardInvestments },
       { path: 'banking', name:"Banking", component: DashboardBanking },
       { path: 'credit', name:"Credit Cards", component: DashboardCredit},
-      { path: 'profile', name:"Profile", component: DashboardProfile }
-      // Adicione mais rotas conforme necessário
+      { path: 'profile', name:"Profile", component: DashboardProfile },
+      { path: 'travel', name: "Travel", component: TravelHome},
+      
     ]
   }
 ];

@@ -4,13 +4,13 @@
       "id": 1,
       "description": "Meta de renda passiva",
       "icon": "money-bill",
-      "toAport": 3,
-      "fromDate": "2023-8-24 1:51:29",
+      "toAport": 4,
+      "fromDate": "2023-8-31 15:21:57",
       "title": "Nubank RDB",
       "subtitle": "FIE",
       "profitPercentage": 12,
       "profitCalendarType": "months",
-      "fromBudget": 53897.32,
+      "fromBudget": 54076,
       "toBudget": 100000
     }
   ],
@@ -31,7 +31,7 @@
     }
   ],
   "creditcard": {
-    "current_statement": 2990.8
+    "current_statement": 5000
   },
   "banking": {
     "account_balance": 2773.36,

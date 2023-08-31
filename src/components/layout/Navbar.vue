@@ -49,6 +49,7 @@ export default {
       navLinks: [
         { to: '/', icon: 'home', text: 'Dashboard' },
         { to: '/banking', icon: 'landmark', text: 'Banking' },
+        { to: '/travel', icon: 'road', text: 'Travel Track' },
         { to: '/credit', icon: 'credit-card', text: 'Credit Cards' },
         { to: '/investments', icon: 'wallet', text: 'Investments' },
         { to: '/profile', icon: 'address-card', text: 'Profile' },
