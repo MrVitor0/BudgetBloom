@@ -10,7 +10,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 // Importe todos os ícones de marcas
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import axios from './services/api';
+import axios from './config/interceptor';
 
 // Adicione os ícones à biblioteca
 library.add(fas, fab, far);

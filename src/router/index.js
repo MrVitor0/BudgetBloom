@@ -6,25 +6,46 @@ import DashboardCredit from '@/views/Credit.vue';
 import DashboardBanking from '@/views/Banking.vue';
 import DashboardInvestments from '@/views/Investments.vue';
 import TravelHome from '@/views/Travel.vue';
+import PurpleLogin from '@/views/Login.vue';
+import store from '../store';
 const routes = [
   {
     path: '/',
-    component: Layout, // Use o Layout aqui
+    component: Layout,
     children: [
-      { path: '', name:"Home", component: DashboardHome },
-      { path: 'investments', name:"Investments", component: DashboardInvestments },
-      { path: 'banking', name:"Banking", component: DashboardBanking },
-      { path: 'credit', name:"Credit Cards", component: DashboardCredit},
-      { path: 'profile', name:"Profile", component: DashboardProfile },
-      { path: 'travel', name: "Travel", component: TravelHome},
-      
+      { path: 'Home', name:"Home", component: DashboardHome, meta: { requiresAuth: true } },
+      { path: '', name: "Travel", component: TravelHome, meta: { requiresAuth: true }},
+      { path: 'investments', name:"Investments", component: DashboardInvestments, meta: { requiresAuth: true } },
+      { path: 'banking', name:"Banking", component: DashboardBanking, meta: { requiresAuth: true } },
+      { path: 'credit', name:"Credit Cards", component: DashboardCredit, meta: { requiresAuth: true }},
+      { path: 'profile', name:"Profile", component: DashboardProfile, meta: { requiresAuth: true } },
     ]
-  }
+  },
+  {
+    path: '/',
+    children: [
+      { path: 'login', name:"Login", component: PurpleLogin, meta: { requiresAuth: false } },
+    ]
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !store.getters['auth/isAuthenticated']) {
+    console.log({
+      to: to,
+      getter: store.getters['auth/isAuthenticated'],
+    });
+    next('/login');
+  } else {
+    next();
+  }
+});
+
+
 
 export default router;

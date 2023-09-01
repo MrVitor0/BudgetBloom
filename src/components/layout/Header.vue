@@ -14,8 +14,8 @@
         </div>
         <div class="mr-4">
             <font-awesome-icon icon="user" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openUserSettings" />
-            <font-awesome-icon icon="bell" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openNotifications" />
-            <font-awesome-icon icon="gear" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openAppSettings" />
+            <font-awesome-icon icon="wrench" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openNotifications" />
+            <font-awesome-icon @click="logout" icon="sign-out" class="text-xl text-purple-700 cursor-pointer pl-4"  />
         </div>
       </div>
     </nav>
@@ -25,6 +25,7 @@
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   import BBInputHandler from '../form/common/BBInputHandler.vue';
   import BBTextInput from '@/components/form/BBTextInput.vue';
+  import PWUtils from '@/utils/PWUtils';
   export default {
     name: 'DashboardHeader',
     components: {
@@ -46,8 +47,10 @@
       }
     },
     methods: {
-      openSettings() {
-        // Replace with logic to open settings
+      logout(){
+        this.$store.dispatch('auth/logout')
+        PWUtils.PWNotification('success', 'Logout Successful!')
+        this.$router.push({ name: 'Login' })
       }
     }
   }

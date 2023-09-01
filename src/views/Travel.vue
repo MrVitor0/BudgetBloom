@@ -76,7 +76,6 @@
    import TransferItem from '@/components/cards/common/TransferItem.vue';
    import BBMoney from '@/utils/BBMoney';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-   import { mapActions } from 'vuex';
    export default {
      name: 'DashboardCredit',
      components: {
@@ -136,7 +135,6 @@
         console.log(this.statements)
      },
      methods: {
-        ...mapActions('modal', ['showInputModal']), // Importante: "modal" é o namespace do módulo no store
         async updateCurrentStatement(newStatement){
             this.statements.current_statement = newStatement
         },
@@ -144,12 +142,16 @@
             this.statements.current_statement = newStatement
         },
         async fetchStatementData(){
-            const response = await this.$api.get('/creditcard')
-            return response.data
+            // const response = await this.$api.get('/creditcard')
+            // return response.data
+            //use getter to get the data
+            let data = await this.$store.dispatch('auth/fetchUserData')
+            console.log(data)
+            return 0;
         },
         showModal(modalIndex) {
           this.currentModal = modalIndex;
-          this.showInputModal();
+          this.$store.dispatch('modal/showInputModal', true);
         },
      },
      computed: {
