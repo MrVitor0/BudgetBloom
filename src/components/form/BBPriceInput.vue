@@ -44,7 +44,9 @@ export default {
   },
   methods: {
     updateValue(event) {
-      this.formattedValue = BBMoney.toCurrency(event.target.value);
+      let value = BBMoney.toCurrency(event.target.value)
+      this.formattedValue = value;
+      this.$emit('update', value);
     },
     formatValue() {
       if (this.formattedValue) {

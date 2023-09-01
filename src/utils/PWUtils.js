@@ -81,15 +81,6 @@ class PWUtils {
         })
         return response.isConfirmed;
     }
-
-
-    /**
-     * @returns {array}
-     */
-    static async MultiplesInputSwal() {
-       
-        
-    }
 }
 
 export default PWUtils;

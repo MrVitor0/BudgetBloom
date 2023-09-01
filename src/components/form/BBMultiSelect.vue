@@ -4,37 +4,31 @@
         :mode="mode"
         placeholder="Júlia, Antônio, João, Mari"
         v-model="value"
-        :options="fetchUsers"
+        :options="options"
         label="name"
-        valueProp="name"
+        valueProp="id"
       />
   </template>
   
   <script>
     import Multiselect from '@vueform/multiselect'
-    import PWUtils from '@/utils/PWUtils'
     export default {
       components: {
         Multiselect,
+      },
+      props: {
+        options: {
+          type: [Object, Function],
+          required: true
+        }
       },
       data() {
         return {
           value: null,
           mode: 'tags',
-          options: [],
         }
       },
-      methods : {
-        async fetchUsers() {
-          try {
-            const response = await this.$api.get('/api/user/list')
-            this.options = response.data
-          } catch (error) {
-            PWUtils.PWNotification('error', error.message)
-          }
-          return this.options
-        },
-      },
+   
       watch: {
         value() {
          if(this.value.length > 1){
