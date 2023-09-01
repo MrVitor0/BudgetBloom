@@ -1,9 +1,11 @@
 import AuthService from '@/services/authService'; // Crie um serviço para gerenciar a autenticação e chamadas de API
 import jwtDecode from 'jwt-decode'; 
+
 const state = {
     isAuthenticated: localStorage.getItem('IS_AUTHENTICATED_KEY') || sessionStorage.getItem('IS_AUTHENTICATED_KEY') || false,
     token: localStorage.getItem('USER_AUTH_KEY') || sessionStorage.getItem('USER_AUTH_KEY') || null,
     user: null,
+    persist: false,
   };
 
 const mutations = {
@@ -17,6 +19,10 @@ const mutations = {
   setUser(state, user) {
     state.user = user;
   },
+  setPersist(state, persist) {
+    state.persist = persist;
+    localStorage.setItem('PERSIST_OPT', persist);
+  },
   setToken(state, token) {
     state.token = token;
     if(!token){
@@ -27,11 +33,18 @@ const mutations = {
 };
 
 const actions = {
+    updateToken({ commit}, token) {
+        commit('setToken', token);
+        const decodedToken = jwtDecode(token);
+        commit('setUser', decodedToken);
+        AuthService.storeTokenLocally(token);
+    },
     async login({ commit }, { email, password, persist }) {
      try {
         const token = await AuthService.login(email, password);
         commit('setIsAuthenticated', true);
         commit('setToken', token);
+        commit('setPersist', persist);
         const decodedToken = jwtDecode(token);
         if (AuthService.isTokenExpired(token)) {
             commit('setUser', null); 
@@ -40,9 +53,9 @@ const actions = {
             commit('setUser', decodedToken);
         }
         if (persist) {
-        AuthService.storeTokenLocally(token);
+           AuthService.storeTokenLocally(token);
         } else {
-        AuthService.storeTokenSession(token);
+           AuthService.storeTokenSession(token);
         }
         return Promise.resolve('Login successful');
     } catch (error) {

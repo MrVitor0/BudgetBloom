@@ -13,8 +13,9 @@ const routes = [
     path: '/',
     component: Layout,
     children: [
-      { path: 'Home', name:"Home", component: DashboardHome, meta: { requiresAuth: true } },
       { path: '', name: "Travel", component: TravelHome, meta: { requiresAuth: true }},
+      { path: 'Home', name:"Home", component: DashboardHome, meta: { requiresAuth: true } },
+     
       { path: 'investments', name:"Investments", component: DashboardInvestments, meta: { requiresAuth: true } },
       { path: 'banking', name:"Banking", component: DashboardBanking, meta: { requiresAuth: true } },
       { path: 'credit', name:"Credit Cards", component: DashboardCredit, meta: { requiresAuth: true }},

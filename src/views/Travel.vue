@@ -132,7 +132,6 @@
      },
      async mounted() {
         this.statements = await this.fetchStatementData()
-        console.log(this.statements)
      },
      methods: {
         async updateCurrentStatement(newStatement){
@@ -142,12 +141,16 @@
             this.statements.current_statement = newStatement
         },
         async fetchStatementData(){
-            // const response = await this.$api.get('/creditcard')
-            // return response.data
-            //use getter to get the data
-            let data = await this.$store.dispatch('auth/fetchUserData')
-            console.log(data)
-            return 0;
+            try {
+                let data = await this.$api.get('/api/user/profile')
+                console.log(data)
+            } catch (error) {
+                console.log(error)
+            }
+            // //use getter to get the data
+            // let data = await this.$store.dispatch('auth/fetchUserData')
+            // console.log(data)
+             return 0;
         },
         showModal(modalIndex) {
           this.currentModal = modalIndex;

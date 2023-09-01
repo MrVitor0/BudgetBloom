@@ -24,10 +24,10 @@ export default {
   },
   storeTokenLocally(token) {
     localStorage.setItem('USER_AUTH_KEY', token);
-    localStorage.setItem('IS_AUTHENTICATED_KEY', 'true');
+    localStorage.setItem('IS_AUTHENTICATED_KEY', true);
   },
   storeTokenSession(token) {
     sessionStorage.setItem('USER_AUTH_KEY', token);
-    sessionStorage.setItem('IS_AUTHENTICATED_KEY', 'true');
+    sessionStorage.setItem('IS_AUTHENTICATED_KEY', true);
   },
 };
