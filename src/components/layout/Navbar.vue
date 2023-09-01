@@ -8,9 +8,10 @@
       </div>
       <!-- Div que ficará à extrema direita -->
       <div class="flex items-center">
-        <button @click="toggleSidebar" class="block md:hidden pr-3 my-4">
-          <font-awesome-icon icon="home" class="text-black" />
-          <span class="pl-2 text-black">Menu</span>
+        <button @click="toggleSidebar" class="block md:hidden  my-4">
+          <div class="flex-shrink-0 rounded-md shadow p-3  w-12 items-center text-center">
+              <font-awesome-icon icon="home" class="text-gray-500 font-medium"/>
+          </div> 
         </button>
       </div>
     </div>

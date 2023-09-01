@@ -29,7 +29,7 @@ apiClient.interceptors.response.use(response => {
     if (token) {
       try {
         // Faça uma requisição para renovar o token usando o token
-        const response = await apiClient.post(`/api/auth/refresh-token`);
+        const response = await axios.post(`${BASE_URL}/api/auth/refresh-token`, { token });
         const newToken = response.data.token;
         // Atualize o token no store
         store.dispatch('auth/updateToken', newToken);
