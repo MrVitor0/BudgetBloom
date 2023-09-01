@@ -1,5 +1,4 @@
 <template>
-    
       <Multiselect  
         class="block border-none focus:bg-gray-100 w-full cursor-pointer "
         :mode="mode"
@@ -7,9 +6,8 @@
         v-model="value"
         :options="fetchUsers"
         label="name"
-        valueProp="id"
+        valueProp="name"
       />
-    
   </template>
   
   <script>
@@ -30,7 +28,6 @@
         async fetchUsers() {
           try {
             const response = await this.$api.get('/api/user/list')
-            console.log(response.data)
             this.options = response.data
           } catch (error) {
             PWUtils.PWNotification('error', error.message)

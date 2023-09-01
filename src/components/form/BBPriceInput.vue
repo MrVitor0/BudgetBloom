@@ -7,6 +7,7 @@
       :placeholder="placeholder"
       :id="inputId"
       :disabled="disabled"
+      inputmode="numeric"
     />
 </template>
 

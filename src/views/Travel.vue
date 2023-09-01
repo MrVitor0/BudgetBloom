@@ -18,7 +18,7 @@
                 </div>
             </div>
             <!-- ACCOUNT BALANCE -->
-            <div class="w-full md:w-1/2 lg:w-1/3 md:mb-5 mb-2 md:ml-3">
+            <div class="w-full md:w-1/2 lg:w-1/3 md:mb-5 mb-2 md:ml-10">
                 <div class="flex justify-center items-center bg-white rounded-lg shadow p-4 h-full">
                     <div class="flex flex-col items-center text-center mt-26">
                         <div class="rounded-md bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-500 transition duration-500 ease-in-out shadow">

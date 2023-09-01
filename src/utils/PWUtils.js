@@ -69,17 +69,26 @@ class PWUtils {
      * @param {*} type 
      * @returns {void}
      */
-    static async PWPopup(title, message, type = "warning") {
+    static async PWPopup(title, message, type = "warning", confirmButtonText = 'Yes!', cancelButtonText = 'No :(') {
        const response = await Swal.fire({
             icon: type,
             title: title,
             html: message,
             showConfirmButton: true,
-            confirmButtonText: 'Yes!',
+            confirmButtonText: confirmButtonText,
             showCancelButton: true,
-            cancelButtonText: 'No :(',
+            cancelButtonText: cancelButtonText,
         })
         return response.isConfirmed;
+    }
+
+
+    /**
+     * @returns {array}
+     */
+    static async MultiplesInputSwal() {
+       
+        
     }
 }
 

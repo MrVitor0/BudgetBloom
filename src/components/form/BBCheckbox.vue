@@ -18,7 +18,7 @@
             class="text-md  text-gray-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
             />
         </span>
-        <span class="ml-2 text-gray-700">Divide total amount</span>
+        <span class="ml-2 text-gray-700">{{ this.label }}</span>
         </label>
     </div>
 </template>
@@ -29,6 +29,10 @@ export default {
         FontAwesomeIcon,
     },
     props: {
+        label: {
+            type: String,
+            default: 'Sample Label',
+        },
         value: {
             type: Boolean,
             default: false,
@@ -39,8 +43,10 @@ export default {
             isChecked: true,
         };
     },
-    created() {
-        this.isChecked = this.value;
+    watch: {
+        value() {
+            this.isChecked = this.value;
+        },
     },
     methods: {
         HandleChange() {
