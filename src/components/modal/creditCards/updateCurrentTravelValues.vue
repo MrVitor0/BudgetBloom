@@ -7,7 +7,15 @@
       <div class="md:w-2/3 p-5 text-center md:text-start">
           <div>
               <h2 class="text-xl font-semibold mb-4">Adicionar nova compra</h2>
-              <label for="input" class="block mb-2">O Valor será divido entre quem?</label>
+              <label for="input" class="block mb-2">Informe os detalhes da compra.</label>
+              <div class="relative w-full mt-3">
+                <div class="absolute left-3 top-1/2 -translate-y-1/2">
+                  <FontAwesomeIcon icon="tags" class="text-lg pt-2 text-purple-400" />
+                </div>
+                <div class="flex w-full border ">
+                  <BBTextInput placeholder="Nome da compra" v-model="purchaseName" type="text" class="rounded-none ml-3 border-none"  /> 
+                </div>
+              </div>
               <div class="relative w-full mt-3">
                 <div class="absolute left-3 top-1/2 -translate-y-1/2">
                   <FontAwesomeIcon icon="users" class="text-md text-purple-400" />
@@ -83,6 +91,7 @@ export default {
     return {
       isChecked: true,
       inputValue: 0,
+      purchaseName: "",
       usersEnvolved: [],
       usersList: [],
       userValues: [],
@@ -174,28 +183,63 @@ export default {
     /**
      * @description Submit the input to the API
      * @returns {void}
-    */
+     */
     async submitInput() {
-      //In the case of the user unselect or never select the checkbox
-      if(this.isChecked){
-        this.updateUsers()
+      try {
+        if(this.isChecked){
+          this.updateUsers()
+        }
+        this.validateInput();
+        this.$api.post("/api/travel/purchase/create", {
+          name: this.purchaseName,
+          amount: BBMoney.toDouble(this.inputValue),
+          debts: this.userValues.map(user => {
+            return {
+              id: user.id,
+              amount: user.value
+            }
+          })
+        }).then((result) => {
+          console.log(result);
+          this.hideModal();
+          PWUtils.PWNotification('success', 'Compra adicionada com sucesso!');
+        }).catch((err) => {
+          throw new Error(err.message);
+        });
+      } catch (error) {
+        console.error(error);
+        PWUtils.PWNotification('error', error.message);
+      }
+    },
+    validateInput() {
+      const purchaseTotal = BBMoney.toDouble(this.inputValue);
+      const sum = this.calculateSumWithTwoDecimals();
+      const centThreshold = 0.05; // Limite de 1 centavo de diferença
+
+      // Verifica se a diferença entre a soma e o total da compra é maior que o limite de 1 centavo
+      if (Math.abs(sum - purchaseTotal) > centThreshold) {
+        throw new Error('A soma dos valores não é igual ao valor total da compra');
       }
 
-      let purchaseTotal = BBMoney.toDouble(this.inputValue)
-      //check if the sum count of user.value is equal to the purchaseTotal
-      let sum = 0
-      for (let user of this.userValues){
-        sum += BBMoney.toDouble(user.value)
+      if (this.purchaseName === '') {
+        throw new Error('Por favor informe o nome da compra');
       }
-      if(sum != purchaseTotal){
-        PWUtils.PWNotification('error', 'A soma dos valores não é igual ao valor total da compra')
-        return;
+
+      if (this.usersEnvolved.length === 0) {
+        throw new Error('Por favor selecione os usuários envolvidos');
       }
-      console.log({
-        sum: sum,
-        purchaseTotal: purchaseTotal
-      })
-      console.log(this.userValues)
+
+      if (this.inputValue === 0) {
+        throw new Error('Por favor informe o valor da compra');
+      }
+    },
+    calculateSumWithTwoDecimals() {
+      return this.userValues.reduce((sum, user) => {
+        user.value = BBMoney.toDouble(user.value);
+        // Limitar o valor a duas casas decimais
+        const limitedValue = parseFloat(user.value.toFixed(2));
+        return sum + limitedValue;
+      }, 0);
     },
     hideModal() {
       this.$store.dispatch('modal/hideInputModal');
