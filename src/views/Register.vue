@@ -19,6 +19,16 @@
                       <h1 class="text-2xl my-2 font-medium text-white"><span class="text-purple-300 pl-1">Purple</span>Wallet</h1>
                     </div>
                     <form @submit.prevent="signIn">
+                       <div class="mt-5">
+                        <div class="relative">
+                          <div class="absolute left-3 top-1/2 -translate-y-1/2">
+                            <FontAwesomeIcon icon="envelope" class="text-lg pt-2 text-purple-400" />
+                          </div>
+                          <div class="flex w-full">
+                            <BBTextInput type="text" placeholder="Vitor Hugo" required v-model="name" class="rounded-md" /> 
+                          </div>
+                        </div>
+                      </div>
                       <div class="mt-5">
                         <div class="relative">
                           <div class="absolute left-3 top-1/2 -translate-y-1/2">
@@ -39,10 +49,9 @@
                           </div>
                         </div>
                       </div>
-                   
                       <div class="text-center mt-6">
-                        <BasicButton label text="Entrar" icon="right-to-bracket" />
-                        <BasicButton class="mt-3" @click="redirect_register()" text="Criar nova conta" icon="users" />
+                        <BasicButton text="Cadastar-se" icon="right-to-bracket" />
+                        <BasicButton class="mt-3" @click="redirect_login()" text="Já tenho uma conta" icon="users" />
                       </div>
                     </form>
                   </div>
@@ -65,17 +74,27 @@
     data() {
         return {
             rememberMe: true,
+            name: '',
             email: '',
             password: '',
         };
     },
     methods: {
-       redirect_register(){
-        this.$router.push({ name: "Register" });
+       redirect_login(){
+        this.$router.push({ name: "Login" });
        },
         async signIn() {
             try {
-                let response = await this.$store.dispatch("auth/login", { email: this.email, password: this.password, persist: true }); // Call the Vuex action
+                //check if name has at least 3 characters
+                if(this.name.length < 5){
+                    PWUtils.PWNotification('error', 'O nome deve ter pelo menos 5 caracteres');
+                    return;
+                }
+                if(this.password.length < 6){
+                    PWUtils.PWNotification('error', 'A senha deve ter pelo menos 6 caracteres');
+                    return;
+                }
+                let response = await this.$store.dispatch("auth/register", { name: this.name, email: this.email, password: this.password, persist: true }); // Call the Vuex action
                 PWUtils.PWNotification('success', response);
                 this.$router.push({ name: "Travel" });
             }

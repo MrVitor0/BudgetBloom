@@ -49,11 +49,12 @@ export default {
     return {
       navLinks: [
         { to: '/', icon: 'home', text: 'Dashboard' },
-        { to: '/banking', icon: 'landmark', text: 'Banking' },
-        { to: '/credit', icon: 'credit-card', text: 'Credit Cards' },
-        { to: '/investments', icon: 'wallet', text: 'Investments' },
-        { to: '/profile', icon: 'address-card', text: 'Profile' },
-        { to: '/home', icon: 'road', text: 'Travel Track' },
+        { to: '/logout', icon: 'door-open', text: 'Desconectar'}
+        // { to: '/banking', icon: 'landmark', text: 'Banking' },
+        // { to: '/credit', icon: 'credit-card', text: 'Credit Cards' },
+        // { to: '/investments', icon: 'wallet', text: 'Investments' },
+        // { to: '/profile', icon: 'address-card', text: 'Profile' },
+        // { to: '/home', icon: 'road', text: 'Travel Track' },
         // Add more links here
       ],
     };

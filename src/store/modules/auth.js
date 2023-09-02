@@ -39,7 +39,7 @@ const actions = {
         commit('setUser', decodedToken);
         AuthService.storeTokenLocally(token);
     },
-    async login({ commit }, { email, password, persist }) {
+  async login({ commit }, { email, password, persist }) {
      try {
         const token = await AuthService.login(email, password);
         commit('setIsAuthenticated', true);
@@ -50,7 +50,7 @@ const actions = {
             commit('setUser', null); 
             return Promise.reject('Token has expired');
         } else {
-            commit('setUser', decodedToken);
+            commit('setUser', decodedToken.user);
         }
         if (persist) {
            AuthService.storeTokenLocally(token);
@@ -62,6 +62,29 @@ const actions = {
         return Promise.reject(error.message || 'Login failed');
     }
   },
+  async register({ commit }, {name, email, password, persist }) {
+    try {
+       const token = await AuthService.register(name, email, password);
+       commit('setIsAuthenticated', true);
+       commit('setToken', token);
+       commit('setPersist', persist);
+       const decodedToken = jwtDecode(token);
+       if (AuthService.isTokenExpired(token)) {
+           commit('setUser', null); 
+           return Promise.reject('Token has expired');
+       } else {
+           commit('setUser', decodedToken.user);
+       }
+       if (persist) {
+          AuthService.storeTokenLocally(token);
+       } else {
+          AuthService.storeTokenSession(token);
+       }
+       return Promise.resolve('Registration Successful');
+   } catch (error) {
+       return Promise.reject(error.message || 'Registration failed');
+   }
+  },         
   async fetchUserData({ commit, state }) {
     if (!state.user) {
       const token = state.token || localStorage.getItem('USER_AUTH_KEY') || sessionStorage.getItem('USER_AUTH_KEY');

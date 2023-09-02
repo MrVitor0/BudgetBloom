@@ -16,6 +16,19 @@ export default {
     }
   },
 
+  async register(name, email, password) {
+    try {
+      const response = await PurpleInterceptor.post('/api/auth/register', { name, email, password });
+      if (response.status === 200) {
+        const token = response.data?.token;
+        return token;
+      } else {
+        throw new Error(response.data?.message || 'Login failed');
+      }
+    } catch (error) {
+      throw new Error(error.response?.data?.message || 'Login failed');
+    }
+  },
 
   isTokenExpired(token) {
     const decodedToken = jwtDecode(token);

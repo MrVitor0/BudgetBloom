@@ -49,22 +49,27 @@
                     </div>
                 </div>
                 <hr class="h-px mx-3 bg-purple-200 border-0 mb-5" />
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-  <div class="max-h-[15rem] overflow-y-auto">
-    <!-- ITEM -->
-    <div class="last-purchase-item" v-for="(item, index) in transferItems" :key="index">
-      <LastPurchase
-        :name="item.travelPurchase?.name"
-        :method="item.method"
-        :type="item.type"
-        :date="formatDate(item.travelPurchase?.createdAt)"
-        :value="formatCurrency(item.amount)"
-        :total="formatCurrency(item.travelPurchase?.total_amount)"
-      />
-    </div>
-    <!-- ITEM -->
-  </div>
-</div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-h-[15rem] overflow-y-auto">
+                        <!-- ITEM -->
+                        <div v-if="transferItems.length >= 1" >
+                            <div class="last-purchase-item" v-for="(item, index) in transferItems" :key="index">
+                                <LastPurchase
+                                    :name="item.travelPurchase?.name"
+                                    :method="item.method"
+                                    :type="item.type"
+                                    :date="formatDate(item.travelPurchase?.createdAt)"
+                                    :value="formatCurrency(item.amount)"
+                                    :total="formatCurrency(item.travelPurchase?.total_amount)"
+                                />
+                            </div>
+                        </div>
+                        <div v-else>
+                            <p class="text-center text-BBDark">Nenhuma compra realizada</p>
+                        </div>
+                        <!-- ITEM -->
+                    </div>
+                </div>
             </div>
         </div>
        <!-- Modals-->

@@ -6,8 +6,11 @@ import DashboardCredit from '@/views/Credit.vue';
 import DashboardBanking from '@/views/Banking.vue';
 import DashboardInvestments from '@/views/Investments.vue';
 import TravelHome from '@/views/Travel.vue';
+import Logout from '@/views/Logout.vue';
 import PurpleLogin from '@/views/Login.vue';
+import PurpleRegister from '@/views/Register.vue';
 import store from '../store';
+
 const routes = [
   {
     path: '/',
@@ -26,7 +29,14 @@ const routes = [
     path: '/',
     children: [
       { path: 'login', name:"Login", component: PurpleLogin, meta: { requiresAuth: false } },
+      { path: 'register', name:"Register", component: PurpleRegister, meta: { requiresAuth: false } },
     ]
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: Logout,
+    meta: { requiresAuth: true },
   },
 ];
 
