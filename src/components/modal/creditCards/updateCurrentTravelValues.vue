@@ -7,13 +7,22 @@
       <div class="md:w-2/3 p-5 text-center md:text-start">
           <div>
               <h2 class="text-xl font-semibold mb-4">Adicionar nova compra</h2>
+
               <label for="input" class="block mb-2">Informe os detalhes da compra.</label>
-              <div class="relative w-full mt-3">
-                <div class="absolute left-3 top-1/2 -translate-y-1/2">
-                  <FontAwesomeIcon icon="tags" class="text-lg pt-2 text-purple-400" />
+              <div class="flex items-center mt-5">
+                <div class="relative w-1/2 mr-1 ">
+                  <div class="absolute left-3 top-1/2 -translate-y-1/2">
+                    <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
+                  </div>
+                  <BBPriceInput v-model="inputValue" class="pl-8 flex-grow" />
                 </div>
-                <div class="flex w-full border ">
-                  <BBTextInput placeholder="Nome da compra" v-model="purchaseName" type="text" class="rounded-none ml-3 border-none"  /> 
+                <div class="relative w-1/2">
+                  <div class="absolute left-3 top-1/2 -translate-y-1/2">
+                    <FontAwesomeIcon icon="tags" class="text-lg pt-2 text-purple-400" />
+                  </div>
+                  <div class="flex w-full border">
+                    <BBTextInput placeholder="Título (Tag)" v-model="purchaseName" type="text" class="rounded-none border-none" />
+                  </div>
                 </div>
               </div>
               <div class="relative w-full mt-3">
@@ -24,30 +33,27 @@
                   <BBMultiSelect class="ml-10 w-full" :options="fetchUsers"  type="Month" v-model="usersEnvolved" /> 
                 </div>
               </div>
-              <div class="relative w-full mt-3">
-                <div class="absolute left-3 top-1/2 -translate-y-1/2">
-                  <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
-                </div>
-                <BBPriceInput v-model="inputValue" class="pl-8" />
-              </div>
-
-              <div v-if="!isChecked && userValues.length > 1">
+              <div v-if="!isChecked && userValues.length > 1" >
                 <label class="block mb-2 mt-3">Valor por pessoa:</label>
                 <div v-for="(user, index) in userValues" :key="index" class="relative w-full">
-                  <div>
-                    <div class="relative w-full mt-3">
+                  <div class="flex items-center mt-5">
+                    <div class="relative w-1/2  mr-1 ">
                       <div class="absolute left-3 top-1/2 -translate-y-1/2">
-                        <FontAwesomeIcon icon="user" class="text-md text-purple-400" />
+                        <FontAwesomeIcon icon="user" class="text-lg pt-2 text-purple-400" />
                       </div>
-                      <div class="flex w-full bg-gray-200 ">
-                        <BBTextInput type="text" icon="user" class="rounded-none no-right-border " readonly :value="user.name" /> 
-                        <BBPriceInput :inputId="`currency-input${user.id}`" @update="handleUpdate($event, user.id)" :value="user.value" class="no-left-border" />
+                      <div class="flex w-full border">
+                        <BBTextInput type="text" icon="user" class="rounded-none" readonly :value="user.name" /> 
                       </div>
                     </div>
-                </div>
+                    <div class="relative w-1/2">
+                      <div class="absolute left-3 top-1/2 -translate-y-1/2">
+                        <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
+                      </div>
+                      <BBPriceInput :inputId="`currency-input${user.id}`" @update="handleUpdate($event, user.id)" :value="user.value" class="pl-6 no-left-border" />
+                    </div>
+                  </div>
                 </div>
               </div>
-
               <div class="relative w-full mt-3"> 
                 <BBCheckbox :value="isChecked" label="Dividir o valor igualmente" @update="(value) => this.isChecked = value" />
               </div>
@@ -218,19 +224,19 @@ export default {
 
       // Verifica se a diferença entre a soma e o total da compra é maior que o limite de 1 centavo
       if (Math.abs(sum - purchaseTotal) > centThreshold) {
-        throw new Error('A soma dos valores não é igual ao valor total da compra');
+        throw new Error('A soma dos valores não é igual ao valor total da compra.');
       }
 
       if (this.purchaseName === '') {
-        throw new Error('Por favor informe o nome da compra');
+        throw new Error('Informe o nome da compra.');
       }
 
       if (this.usersEnvolved.length === 0) {
-        throw new Error('Por favor selecione os usuários envolvidos');
+        throw new Error('Selecione os usuários envolvidos.');
       }
 
       if (this.inputValue === 0) {
-        throw new Error('Por favor informe o valor da compra');
+        throw new Error('Informe o valor da compra.');
       }
     },
     calculateSumWithTwoDecimals() {
