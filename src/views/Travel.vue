@@ -6,10 +6,10 @@
             <div class="w-full md:w-2/2 lg:w-1/3 mb-5 md:bg-purple-100 rounded-lg">
                <img src="@/assets/cardbg4.png" class="rounded- w-screen h-full  border-t border-gray-500 rounded-lg">
                 <div class="relative flex flex-col flex-auto min-w-0 -mt-36 pt-12 md:pt-0 md:-mt-36 overflow-hidden break-words border-0  rounded-2xl bg-clip-border ">
-                    <p class="pl-2 text-white text-5xl ">R$ {{ currentStatement }}</p>
+                    <p class="pl-2 text-white text-5xl ">R$ {{ currentDebtsAmount }}</p>
                     <div class="flex">
                     <div class="flex flex-col">
-                        <p class="pl-3 text-purple-200 text-2xl">Vitor Hugo</p>
+                        <p class="pl-3 text-purple-200 text-2xl">{{ userName }}</p>
                     </div>
                     <div class="flex flex-col ml-auto">
                         <p class="pl-3 mr-2 md:mr-6 text-purple-200 text-2xl capitalize">{{ currentMonth }}/23</p>
@@ -49,21 +49,26 @@
                     </div>
                 </div>
                 <hr class="h-px mx-3 bg-purple-200 border-0 mb-5" />
-                <!-- ITEM -->
-                <TransferItem
-                    v-for="(item, index) in transferItems"
-                    :key="index"
-                    :name="item.name"
-                    :method="item.method"
-                    :type="item.type"
-                    :date="item.date"
-                    :value="item.value"
-                />
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                   <div class="max-h-[15rem] overflow-y-auto">
+                    <!-- ITEM -->
+                    <LastPurchase
+                        v-for="(item, index) in transferItems"
+                        :key="index"
+                        :name="item.travelPurchase?.name"
+                        :method="item.method"
+                        :type="item.type"
+                        :date="formatDate(item.travelPurchase?.createdAt)"
+                        :value="formatCurrency(item.amount)"
+                        :total="formatCurrency(item.travelPurchase?.total_amount)"
+                    />
+                  </div>  
+                </div>  
             </div>
         </div>
        <!-- Modals-->
        <BBModal>
-            <updateCurrentTravelValues  @updateStatement="updateStatement" v-if="this.currentModal == 1" />
+            <updateCurrentTravelValues  @updateDebtsAmount="updateDebtsAmount" v-if="this.currentModal == 1" />
         </BBModal>
      </div>
      <!-- PROFILE SETTINGS AREA -->
@@ -72,14 +77,15 @@
    import BasicButton from '@/components/button/BasicButton';
    import BBModal from '@/components/modal/BBModal.vue';
    import updateCurrentTravelValues from '@/components/modal/creditCards/updateCurrentTravelValues';
-   import TransferItem from '@/components/cards/common/TransferItem.vue';
+   import LastPurchase from '@/components/cards/common/LastPurchase.vue';
    import BBMoney from '@/utils/BBMoney';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+   import PWUtils from '@/utils/PWUtils';
    export default {
      name: 'DashboardCredit',
      components: {
             BasicButton,
-            TransferItem,
+            LastPurchase,
             BBModal,
             updateCurrentTravelValues,
             FontAwesomeIcon,
@@ -87,69 +93,47 @@
      data() {
        return {
          progress: 95,
-         statements: {},
+         userName: 'N/A',
+         debts_amount: 0,
          isModalVisible: true,
          currentModal: null,
-         transferItems: [
-            {
-                name: 'Vitor Hugo',
-                method: 'Pix',
-                type: 'Outgoing',
-                date: '12/03/2023',
-                value: 'R$1000,00'
-            },
-            {
-                name: 'Elisyum LTDA',
-                method: 'Pix',
-                type: 'Received',
-                date: '11/03/2023',
-                value: 'R$1000,00'
-            },
-            {
-                name: 'Robert Jr',
-                method: 'Pix',
-                type: 'Outgoing',
-                date: '12/03/2023',
-                value: 'R$1000,00'
-            },
-            {
-                name: "Urubu's Pix Bank",
-                method: 'Pix',
-                type: 'Received',
-                date: '12/03/2023',
-                value: 'R$2000,69'
-            },
-            {
-                name: "Urubu's Pix Bank",
-                method: 'Pix',
-                type: 'Received',
-                date: '12/03/2023',
-                value: 'R$2000,69'
-            },
-        ]
+         transferItems: []
        };
      },
      async mounted() {
-        this.statements = await this.fetchStatementData()
+        await this.fetchStatementData()
+        await this.getUser()
      },
      methods: {
-        async updateCurrentStatement(newStatement){
-            this.statements.current_statement = newStatement
+        formatDate(date){
+            return PWUtils.formatDate(date)
         },
-        async updateStatement(newStatement){
-            this.statements.current_statement = newStatement
+        formatCurrency(value){
+            return "R$" + BBMoney.toCurrency(value)
+        },
+        updateDebtsAmount(){
+            this.fetchStatementData()
+        },
+        getUser(){
+            this.$store.dispatch('auth/fetchUserData').then((result) => {
+                console.log(result)
+                this.userName = result.name
+            }).catch((err) => {
+                throw new Error(err)
+            });
         },
         async fetchStatementData(){
             try {
-                let data = await this.$api.get('/api/user/profile')
-                console.log(data)
+                this.$api.get('/api/travel/purchase/retrieve').then((result) => {
+                   console.log(result)
+                   this.debts_amount = result.data.total_debts
+                   this.transferItems = result.data.purchases
+                }).catch((err) => {
+                    throw new Error(err)
+                });
             } catch (error) {
-                console.log(error)
+               PWUtils.PWNotification('error', error.message)
             }
-            // //use getter to get the data
-            // let data = await this.$store.dispatch('auth/fetchUserData')
-            // console.log(data)
-             return 0;
         },
         showModal(modalIndex) {
           this.currentModal = modalIndex;
@@ -157,8 +141,8 @@
         },
      },
      computed: {
-        currentStatement(){
-            return  BBMoney.toCurrency(this.statements.current_statement);
+        currentDebtsAmount(){
+            return BBMoney.toCurrency(this.debts_amount);
         },
         currentMonth() {
             const date = new Date();

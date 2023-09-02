@@ -200,9 +200,9 @@ export default {
             }
           })
         }).then((result) => {
-          console.log(result);
-          this.hideModal();
+          this.$emit('updateDebtsAmount', result)
           PWUtils.PWNotification('success', 'Compra adicionada com sucesso!');
+          this.hideModal();
         }).catch((err) => {
           throw new Error(err.message);
         });

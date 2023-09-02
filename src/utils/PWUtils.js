@@ -3,9 +3,13 @@ class PWUtils {
 
     static formatDate(date) {
         const dateObject = new Date(date);
-        return `${dateObject.getDate()}/${dateObject.getMonth() + 1}/${dateObject.getFullYear()}`;
+        const month = dateObject.getMonth() + 1;
+        const day = dateObject.getDate();
+        const year = dateObject.getFullYear();
+        const hours = dateObject.getHours();
+        const minutes = dateObject.getMinutes().toString().padStart(2, '0');
+        return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year} ${hours}:${minutes}`;
     }
-
     static validateInvestmentObject(investmentObject) {
         if(investmentObject?.description && investmentObject?.title && investmentObject?.icon && investmentObject?.toAport && investmentObject?.fromDate && investmentObject?.subtitle && investmentObject?.fromBudget && investmentObject?.toBudget){
             return true;
