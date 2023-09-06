@@ -1,6 +1,6 @@
 <template>
     <!-- ADD NEW INVESTMENT AREA --> 
-    <div class="mt-1 ">
+    <div class="mt-1">
         <div class="flex p-2 md:pl-5 flex-wrap md:-mx-4 ">
             <!-- START OVERVIEW AREA -->
             <div class="w-full md:w-2/2 lg:w-1/3 mb-5 md:bg-purple-100 rounded-lg ">
@@ -114,6 +114,7 @@
      data() {
        return {
          totalDebts: 0,
+         totalEarnings: 0,
          progress: 95,
          userName: 'N/A',
          debts_amount: 0,
@@ -162,7 +163,10 @@
             try {
                 this.$api.get('/api/travel/purchase/retrieve/receives').then((result) => {
                    this.earningsList = result.data.response
-                   console.log(this.earningsList)
+                   const totalEarnings = this.earningsList.reduce((accumulator, earnings) => {
+                    return accumulator + earnings.trl_debts_amount;
+                    }, 0); 
+                    this.totalEarnings = totalEarnings
                 }).catch((err) => {
                     throw new Error(err)
                 });
@@ -177,7 +181,9 @@
      },
      computed: {
         currentDebtsAmount(){
-            return BBMoney.toCurrency(this.debts_amount);
+            let value = this.debts_amount > this.totalEarnings 
+            let signal = value ? '-' : ''
+            return signal + BBMoney.toCurrency(this.totalEarnings - this.debts_amount);
         },
         currentMonth() {
             const date = new Date();

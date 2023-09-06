@@ -48,8 +48,8 @@ export default {
   data() {
     return {
       navLinks: [
-        { to: '/', icon: 'home', text: 'Dashboard' },
-        { to: '/debitos', icon: 'bank', text: 'Seus Débitos' },
+        { to: '/', icon: 'bank', text: 'Seus Gastos' },
+        { to: '/debitos', icon: 'piggy-bank', text: 'Seus Débitos' },
         { to: '/logout', icon: 'door-open', text: 'Desconectar'}
         // { to: '/banking', icon: 'landmark', text: 'Banking' },
         // { to: '/credit', icon: 'credit-card', text: 'Credit Cards' },
