@@ -5,9 +5,8 @@
           <img src="@/assets/bbtravel.png" alt="Imagem" class="max-w-full h-auto rounded-l-2xl" />
       </div>
       <div class="md:w-2/3 p-5 text-center md:text-start">
-          <div>
+          <div v-if="purchaseStep === 1">
               <h2 class="text-xl font-semibold mb-4">Adicionar nova compra</h2>
-
               <label for="input" class="block mb-2">Informe os detalhes da compra.</label>
               <div class="flex items-center mt-5">
                 <div class="relative w-1/2 mr-1 ">
@@ -58,19 +57,39 @@
                 <BBCheckbox :value="isChecked" label="Dividir o valor igualmente" @update="(value) => this.isChecked = value" />
               </div>
           </div>
-
+          <div v-else-if="purchaseStep === 2">
+            <h2 class="text-xl font-semibold mb-4">Detalhes Adicionais</h2>
+            <label for="input" class="block ">Os valores serão enviados a quem?</label>
+            <p class="text-xs">Ao clicar em <b>salvar</b> os valores informados serão registrados como débitos à pessoa que for informada nesta caixa.</p>
+            <div class="flex items-center mt-5">
+              <div class="w-screen relative mr-1 ">
+                <div class="absolute left-3 top-1/2 -translate-y-1/2">
+                  <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
+                </div>
+                <BBSelectInput  
+                    v-model="payTarget"
+                    labelKey="name"
+                    valueKey="id"
+                    :options="userValues"
+                    placeholder="Informe o pagador"
+                    class="pl-8 flex-grow" />
+              </div>
+            </div>
+          </div>
           <div class="mt-4">
               <button
                   class="bg-purple-800 text-white px-4 py-2 rounded-md  hover:bg-purple-700"
-                  @click="submitInput"
+                  @click="submitForm(purchaseStep)"
               >
-                  Armazenar  <FontAwesomeIcon class="pl-1" icon="save" />
+                  {{ purchaseStep < maxPurchaseStep ? "Avançar" : "Salvar" }} 
+                  <FontAwesomeIcon v-if="purchaseStep < maxPurchaseStep" class="pl-1" icon="arrow-right" />
+                  <FontAwesomeIcon v-else class="pl-1" icon="save" />
               </button>
               <button
                   class="ml-2 border px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300"
                   @click="closeModal"
               >
-                  Fechar <FontAwesomeIcon class="pl-1" icon="times" />
+              {{ purchaseStep == 1 ? "Fechar" : "Cancelar" }} <FontAwesomeIcon class="pl-1" icon="times" />
               </button>
           </div>
       </div>
@@ -85,19 +104,25 @@ import BBMoney from '@/utils/BBMoney'
 import PWUtils from '@/utils/PWUtils'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BBTextInput from '@/components/form/BBTextInput.vue';
+import BBSelectInput from '@/components/form/BBSelectInput.vue';
 export default {
   components: {
     FontAwesomeIcon,
     BBMultiSelect,
     BBCheckbox,
     BBPriceInput,
-    BBTextInput
+    BBTextInput,
+    BBSelectInput
 },
   data() {
     return {
+      purchaseStep: 1,
+      maxPurchaseStep: 2,
+      //General
       isChecked: true,
       inputValue: 0,
       purchaseName: "",
+      payTarget: null,
       usersEnvolved: [],
       usersList: [],
       userValues: [],
@@ -186,19 +211,23 @@ export default {
           }
         }
     },
-    /**
-     * @description Submit the input to the API
-     * @returns {void}
-     */
-    async submitInput() {
-      try {
+
+    async RunStepOne(){
         if(this.isChecked){
           this.updateUsers()
         }
         this.validateInput();
-        this.$api.post("/api/travel/purchase/create", {
+    },
+    async RunStepTwo(){
+        if(this.isChecked){
+          this.updateUsers()
+        }
+        console.log(this.payTarget)
+        this.validateInput();
+        await this.$api.post("/api/travel/purchase/create", {
           name: this.purchaseName,
           amount: BBMoney.toDouble(this.inputValue),
+          payerId: this.payTarget,
           debts: this.userValues.map(user => {
             return {
               id: user.id,
@@ -210,8 +239,23 @@ export default {
           PWUtils.PWNotification('success', 'Compra adicionada com sucesso!');
           this.hideModal();
         }).catch((err) => {
-          throw new Error(err.message);
+          throw new Error(err?.response?.data?.error);
         });
+    },
+    /**
+     * @description Submit the input to the API
+     * @param {Number} _purchaseStep
+     * @returns {void}
+     */
+    async submitForm(_purchaseStep) {
+      try {
+        if(_purchaseStep === 1){
+          await this.RunStepOne();
+          this.purchaseStep++;
+        }
+        else if(_purchaseStep === 2){
+          await this.RunStepTwo()
+        }
       } catch (error) {
         console.error(error);
         PWUtils.PWNotification('error', error.message);
@@ -237,6 +281,12 @@ export default {
 
       if (this.inputValue === 0) {
         throw new Error('Informe o valor da compra.');
+      }
+
+      if(this.purchaseStep === 2){
+        if(!this.payTarget){
+          throw new Error('Informe o pagador.');
+        }
       }
     },
     calculateSumWithTwoDecimals() {

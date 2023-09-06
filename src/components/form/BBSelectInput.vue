@@ -8,7 +8,7 @@
     v-model="selectedOption"
   >
     <option disabled :value="null">{{ placeholder }}</option>
-    <option v-for="option in options" :key="option.value" :value="option.value">{{ option.label }}</option>
+    <option v-for="option in options" :key="option[valueKey]" :value="option[valueKey]">{{ option[labelKey] }}</option>
   </select>
 </template>
 
@@ -23,6 +23,14 @@ export default {
     }, 
     value: String,
     placeholder: String,
+    labelKey: {
+      type: String,
+      default: 'label', // Use 'label' as default key for labels
+    },
+    valueKey: {
+      type: String,
+      default: 'value', // Use 'value' as default key for values
+    },
   },
   data() {
     return {
@@ -49,7 +57,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* Add custom styling here if needed */
-</style>

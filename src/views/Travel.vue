@@ -72,6 +72,41 @@
                 </div>
             </div>
         </div>
+        <!-- RECENT TRANSACTIONS -->
+        <div class="w-full md:pl-1 px-2 flex-wrap pt-5">
+            <div class="bg-white rounded-lg shadow py-4 h-full">
+                <div class="flex items-start justify-between text-center px-4 pb-4 md:p-3">
+                    <div class="flex-start">
+                        <p class="text-xl text-BBDark">Seus Débitos</p>
+                    </div>
+                    <div class="flex-end">
+                        <font-awesome-icon title="View More" icon="landmark-flag" class="text-BBPurple text-2xl cursor-pointer pr-3" />
+                    </div>
+                </div>
+                <hr class="h-px mx-3 bg-purple-200 border-0 mb-5" />
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-h-[15rem] overflow-y-auto">
+                        <!-- ITEM -->
+                        <div v-if="debtsList.length >= 1" >
+                            <div class="last-purchase-item" v-for="(item, index) in debtsList" :key="index">
+                                <LastDebts
+                                    :name="item?.name" 
+                                     method="pix"
+                                     type="s"
+                                    :date="formatDate(item?.lastCreatedAt)"
+                                    :value="formatCurrency(item?.amount)"
+                                    :total="item?.last_purchase"
+                                />
+                            </div>
+                        </div>
+                        <div v-else>
+                            <p class="text-center text-BBDark">Nenhuma compra realizada</p>
+                        </div>
+                        <!-- ITEM -->
+                    </div>
+                </div>
+            </div>
+        </div>
        <!-- Modals-->
        <BBModal>
             <updateCurrentTravelValues  @updateDebtsAmount="updateDebtsAmount" v-if="this.currentModal == 1" />
@@ -84,6 +119,7 @@
    import BBModal from '@/components/modal/BBModal.vue';
    import updateCurrentTravelValues from '@/components/modal/creditCards/updateCurrentTravelValues';
    import LastPurchase from '@/components/cards/common/LastPurchase.vue';
+   import LastDebts from '@/components/cards/common/LastDebts.vue';
    import BBMoney from '@/utils/BBMoney';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
    import PWUtils from '@/utils/PWUtils';
@@ -92,6 +128,7 @@
      components: {
             BasicButton,
             LastPurchase,
+            LastDebts,  
             BBModal,
             updateCurrentTravelValues,
             FontAwesomeIcon,
@@ -103,11 +140,13 @@
          debts_amount: 0,
          isModalVisible: true,
          currentModal: null,
-         transferItems: []
+         transferItems: [],
+         debtsList: [],
        };
      },
      async mounted() {
         await this.fetchStatementData()
+        await this.fetchDebtsTableData()
         await this.getUser()
      },
      methods: {
@@ -127,6 +166,19 @@
             }).catch((err) => {
                 throw new Error(err)
             });
+        },
+        async fetchDebtsTableData(){
+            try {
+                this.$api.get('/api/travel/purchase/retrieve/debts').then((result) => {
+                   console.log(result)
+                   this.debtsList = result.data.debts
+                   
+                }).catch((err) => {
+                    throw new Error(err)
+                });
+            } catch (error) {
+               PWUtils.PWNotification('error', error.message)
+            }
         },
         async fetchStatementData(){
             try {

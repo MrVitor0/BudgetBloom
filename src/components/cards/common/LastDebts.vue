@@ -6,12 +6,12 @@
               <font-awesome-icon :icon="icon" :class="typeClass" />
               <div class="flex-start md:pl-10">
                 <p class="text-xs md:text-end text-BBDark font-bold">{{ name }}</p>
-                <p class="text-xs text-purple-700 text-center md:text-end"><b><font-awesome-icon icon="money-bill-transfer" class="text-xs cursor-pointer mr-1 pt-2" /></b>Sua parte: {{ value }}</p>
+                <p class="text-xs text-purple-700 text-center md:text-end"><b><font-awesome-icon icon="money-bill-transfer" class="text-xs cursor-pointer mr-1 pt-2" /></b>A pagar: {{ value }}</p>
               </div>
           </div>
           <div class="flex-end">
               <p class="text-xs md:text-end text-BBDark">  <font-awesome-icon icon="calendar-days" class="text-gray-500 text-md cursor-pointer mr-1" />{{ date }}</p>
-              <p class="text-start text-xs text-gray-400 md:text-end"><b><font-awesome-icon icon="money-bill-transfer" class="text-xs cursor-pointer mr-1 pt-2" /></b>{{ total }}</p>
+              <p class="text-start text-xs text-gray-400 md:text-end"><b><font-awesome-icon icon="tag" class="text-xs cursor-pointer mr-1 pt-2" /></b>{{ total }}</p>
           </div>
       </div>
       <!-- ITEM -->
