@@ -55,9 +55,11 @@
                         <div v-if="transferItems.length >= 1" >
                             <div class="last-purchase-item" v-for="(item, index) in transferItems" :key="index">
                                 <LastPurchase
+                                    @onInteract="handleClick(item?.travelPurchase?.purchase_id)"
                                     :name="item.travelPurchase?.name"
                                     :method="item.method"
                                     :type="item.type"
+                                    :id="item?.travelPurchase?.purchase_id"
                                     :date="formatDate(item.travelPurchase?.createdAt)"
                                     :value="formatCurrency(item.amount)"
                                     :total="formatCurrency(item.travelPurchase?.total_amount)"
@@ -113,6 +115,19 @@
         await this.getUser()
      },
      methods: {
+        async handleClick(id) {
+            const response = await PWUtils.PWPopup('Aviso', 'Deseja realmente excluir essa compra?', 'warning', 'Sim', 'Não')
+            if(response){
+                this.$api.delete(`/api/travel/purchase/delete/${id}`).then((result) => {
+                    console.log(result)
+                    PWUtils.PWNotification('success', 'Compra excluída com sucesso!')
+                    this.fetchStatementData()
+                }).catch((err) => {
+                    PWUtils.PWNotification('error', err.response.data.error)
+                });
+            }
+            
+        },
         formatDate(date){
             return PWUtils.formatDate(date)
         },

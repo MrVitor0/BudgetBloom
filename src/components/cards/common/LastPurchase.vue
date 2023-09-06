@@ -1,7 +1,7 @@
 
 <template>
     <!-- ITEM -->
-    <div class="flex items-start justify-between md:text-start px-6 md:px-3 mb-5">
+    <div class="flex items-start justify-between md:text-start px-6 md:px-3 mb-5" @click="handleClick(id)">
           <div class="relative">
               <font-awesome-icon :icon="icon" :class="typeClass" />
               <div class="flex-start md:pl-10">
@@ -22,6 +22,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 export default {
   name: 'TransferItem',
   props: {
+      id: {
+          type: String,
+          default: null
+      },
       name: {
           type: String,
           default: 'N/A'
@@ -54,6 +58,11 @@ export default {
  
       typeClass(){
         return this.type.toLowerCase() == 'received' ? "md:absolute hidden md:block text-purple-700 text-3xl cursor-pointer pt-2" : "md:absolute hidden md:block text-purple-400 text-3xl cursor-pointer pt-2"
+      }
+  },
+  methods: {
+      handleClick(id) {
+         this.$emit('onInteract', id);
       }
   },
   components: {

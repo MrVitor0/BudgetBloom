@@ -23,7 +23,7 @@
             <div class="bg-white rounded-lg shadow py-4 h-full">
                 <div class="flex items-start justify-between text-center px-4 pb-4 md:p-3 ">
                     <div class="flex-start">
-                        <p class="text-xl text-BBDark">Seus Débitos</p>
+                        <p class="text-xl text-BBDark">Meus Débitos</p>
                     </div>
                     <div class="flex-end">
                         <font-awesome-icon title="View More" icon="landmark-flag" class="text-BBPurple text-2xl cursor-pointer pr-3" />
@@ -58,7 +58,7 @@
             <div class="bg-white rounded-lg shadow py-4 h-full">
                 <div class="flex items-start justify-between text-center px-4 pb-4 md:p-3 ">
                     <div class="flex-start">
-                        <p class="text-xl text-BBDark">A receber</p>
+                        <p class="text-xl text-BBDark">Meus Estornos</p>
                     </div>
                     <div class="flex-end">
                         <font-awesome-icon title="View More" icon="landmark-flag" class="text-BBPurple text-2xl cursor-pointer pr-3" />
