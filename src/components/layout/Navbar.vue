@@ -10,7 +10,7 @@
       <div class="flex items-center">
         <button @click="toggleSidebar" class="block md:hidden  my-4">
           <div class="flex-shrink-0 rounded-md shadow p-3  w-12 items-center text-center">
-              <font-awesome-icon icon="home" class="text-gray-500 font-medium"/>
+              <font-awesome-icon icon="bars" class="text-gray-500 font-medium"/>
           </div> 
         </button>
       </div>
@@ -49,6 +49,7 @@ export default {
     return {
       navLinks: [
         { to: '/', icon: 'home', text: 'Dashboard' },
+        { to: '/debitos', icon: 'bank', text: 'Seus Débitos' },
         { to: '/logout', icon: 'door-open', text: 'Desconectar'}
         // { to: '/banking', icon: 'landmark', text: 'Banking' },
         // { to: '/credit', icon: 'credit-card', text: 'Credit Cards' },

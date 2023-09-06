@@ -1,9 +1,9 @@
 <template>
     <!-- ADD NEW INVESTMENT AREA --> 
-    <div class="mt-1">
-        <div class="flex p-2 md:pl-5 flex-wrap md:-mx-4">
+    <div class="mt-1 ">
+        <div class="flex p-2 md:pl-5 flex-wrap md:-mx-4 ">
             <!-- START OVERVIEW AREA -->
-            <div class="w-full md:w-2/2 lg:w-1/3 mb-5 md:bg-purple-100 rounded-lg">
+            <div class="w-full md:w-2/2 lg:w-1/3 mb-5 md:bg-purple-100 rounded-lg ">
                <img src="@/assets/cardbg4.png" class="rounded- w-screen h-full  border-t border-gray-500 rounded-lg">
                 <div class="relative flex flex-col flex-auto min-w-0 -mt-36 pt-12 md:pt-0 md:-mt-36 overflow-hidden break-words border-0  rounded-2xl bg-clip-border ">
                     <p class="pl-2 text-white text-5xl ">R$ {{ currentDebtsAmount }}</p>
@@ -17,50 +17,64 @@
                     </div>
                 </div>
             </div>
-            <!-- ACCOUNT BALANCE -->
-            <div class="w-full md:w-1/2 lg:w-1/3 md:mb-5 mb-2 md:ml-10">
-                <div class="flex justify-center items-center bg-white rounded-lg shadow p-4 h-full">
-                    <div class="flex flex-col items-center text-center mt-26">
-                        <div class="rounded-md bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-500 transition duration-500 ease-in-out shadow">
-                        <font-awesome-icon icon="basket-shopping" class="text-white text-5xl p-6" />
+        </div>
+        <!-- RECENT TRANSACTIONS -->
+        <div class="w-full md:pl-1 px-2 flex-wrap mb-5 ">
+            <div class="bg-white rounded-lg shadow py-4 h-full">
+                <div class="flex items-start justify-between text-center px-4 pb-4 md:p-3 ">
+                    <div class="flex-start">
+                        <p class="text-xl text-BBDark">Seus Débitos</p>
+                    </div>
+                    <div class="flex-end">
+                        <font-awesome-icon title="View More" icon="landmark-flag" class="text-BBPurple text-2xl cursor-pointer pr-3" />
+                    </div>
+                </div>
+                <hr class="h-px mx-3 bg-purple-200 border-0 mb-5" />
+                <div class="md:max-w-none mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-h-[15rem] overflow-y-auto">
+                        <!-- ITEM -->
+                        <div v-if="debtsList.length >= 1" >
+                            <div class="last-purchase-item" v-for="(item, index) in debtsList" :key="index">
+                                <LastDebts
+                                    :name="item?.name" 
+                                     method="pix"
+                                     type="s"
+                                    :date="formatDate(item?.lastCreatedAt)"
+                                    :value="formatCurrency(item?.amount)"
+                                    :total="item?.last_purchase"
+                                />
+                            </div>
                         </div>
-                        <div class="text-md text-gray-700 font-medium mt-2">
-                            Adicionar nova compra
+                        <div v-else>
+                            <p class="text-center text-BBDark">Nenhuma compra realizada</p>
                         </div>
-                        <div class="text-xs font-light text-gray-500 mb-5 mt-1">
-                            Uma nova compra foi realizada? <br/> Cadastre e mantenha os valores atualizados!
-                        </div>
-                        <div class="w-64">
-                            <BasicButton  @click="showModal(1)" active="true" text="Adicionar Compra" icon="cart-plus" />
-                        </div>  
+                        <!-- ITEM -->
                     </div>
                 </div>
             </div>
         </div>
         <!-- RECENT TRANSACTIONS -->
-        <div class="w-full md:pl-1 px-2 flex-wrap mb-2">
+        <div class="w-full md:pl-1 px-2 flex-wrap mb-5 ">
             <div class="bg-white rounded-lg shadow py-4 h-full">
-                <div class="flex items-start justify-between text-center px-4 pb-4 md:p-3">
+                <div class="flex items-start justify-between text-center px-4 pb-4 md:p-3 ">
                     <div class="flex-start">
-                        <p class="text-xl text-BBDark">Últimas Compras</p>
+                        <p class="text-xl text-BBDark">A receber</p>
                     </div>
                     <div class="flex-end">
-                        <font-awesome-icon title="View More" icon="fa-brands fa-pix" class="text-BBPurple text-2xl cursor-pointer pr-3" />
+                        <font-awesome-icon title="View More" icon="landmark-flag" class="text-BBPurple text-2xl cursor-pointer pr-3" />
                     </div>
                 </div>
                 <hr class="h-px mx-3 bg-purple-200 border-0 mb-5" />
-                <div class="md:max-w-none max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
+                <div class="md:max-w-none mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="max-h-[15rem] overflow-y-auto">
                         <!-- ITEM -->
-                        <div v-if="transferItems.length >= 1" >
-                            <div class="last-purchase-item" v-for="(item, index) in transferItems" :key="index">
-                                <LastPurchase
-                                    :name="item.travelPurchase?.name"
-                                    :method="item.method"
-                                    :type="item.type"
-                                    :date="formatDate(item.travelPurchase?.createdAt)"
-                                    :value="formatCurrency(item.amount)"
-                                    :total="formatCurrency(item.travelPurchase?.total_amount)"
+                        <div v-if="earningsList.length >= 1" >
+                            <div class="last-purchase-item" v-for="(item, index) in earningsList" :key="index">
+                                <LastEarnings
+                                    :name="item?.user_name" 
+                                    :date="formatDate(item?.trl_purchase_createdAt)"
+                                    :value="formatCurrency(item?.trl_debts_amount)"
+                                    :total="item?.trl_last_purchase_name"
                                 />
                             </div>
                         </div>
@@ -80,24 +94,26 @@
      <!-- PROFILE SETTINGS AREA -->
    </template>
    <script>
-   import BasicButton from '@/components/button/BasicButton';
+ 
    import BBModal from '@/components/modal/BBModal.vue';
    import updateCurrentTravelValues from '@/components/modal/creditCards/updateCurrentTravelValues';
-   import LastPurchase from '@/components/cards/common/LastPurchase.vue';
+   import LastDebts from '@/components/cards/common/LastDebts.vue';
+   import LastEarnings from '@/components/cards/common/LastEarnings.vue';
    import BBMoney from '@/utils/BBMoney';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
    import PWUtils from '@/utils/PWUtils';
    export default {
      name: 'DashboardCredit',
      components: {
-            BasicButton,
-            LastPurchase,
+            LastDebts,  
             BBModal,
+            LastEarnings,
             updateCurrentTravelValues,
             FontAwesomeIcon,
-      },
+     },
      data() {
        return {
+         totalDebts: 0,
          progress: 95,
          userName: 'N/A',
          debts_amount: 0,
@@ -105,11 +121,12 @@
          currentModal: null,
          transferItems: [],
          debtsList: [],
+         earningsList: [],
        };
      },
      async mounted() {
-        await this.fetchStatementData()
         await this.fetchDebtsTableData()
+        await this.fetchEarningsTableData()
         await this.getUser()
      },
      methods: {
@@ -118,9 +135,6 @@
         },
         formatCurrency(value){
             return "R$" + BBMoney.toCurrency(value)
-        },
-        updateDebtsAmount(){
-            this.fetchStatementData()
         },
         getUser(){
             this.$store.dispatch('auth/fetchUserData').then((result) => {
@@ -134,6 +148,7 @@
             try {
                 this.$api.get('/api/travel/purchase/retrieve/debts').then((result) => {
                    console.log(result)
+                   this.debts_amount = result.data.total_debts
                    this.debtsList = result.data.debts
                    
                 }).catch((err) => {
@@ -143,12 +158,11 @@
                PWUtils.PWNotification('error', error.message)
             }
         },
-        async fetchStatementData(){
+        async fetchEarningsTableData(){
             try {
-                this.$api.get('/api/travel/purchase/retrieve').then((result) => {
-                   console.log(result)
-                   this.debts_amount = result.data.total_debts
-                   this.transferItems = result.data.purchases
+                this.$api.get('/api/travel/purchase/retrieve/receives').then((result) => {
+                   this.earningsList = result.data.response
+                   console.log(this.earningsList)
                 }).catch((err) => {
                     throw new Error(err)
                 });

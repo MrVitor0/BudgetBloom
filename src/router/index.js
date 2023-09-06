@@ -6,6 +6,7 @@ import DashboardCredit from '@/views/Credit.vue';
 import DashboardBanking from '@/views/Banking.vue';
 import DashboardInvestments from '@/views/Investments.vue';
 import TravelHome from '@/views/Travel.vue';
+import DebtsHome from '@/views/Debts.vue';
 import Logout from '@/views/Logout.vue';
 import PurpleLogin from '@/views/Login.vue';
 import PurpleRegister from '@/views/Register.vue';
@@ -18,6 +19,7 @@ const routes = [
     children: [
       { path: '', name: "Travel", component: TravelHome, meta: { requiresAuth: true }},
       { path: 'Home', name:"Home", component: DashboardHome, meta: { requiresAuth: true } },
+      { path: 'debitos', name:"debitos", component: DebtsHome, meta: { requiresAuth: true } },
      
       { path: 'investments', name:"Investments", component: DashboardInvestments, meta: { requiresAuth: true } },
       { path: 'banking', name:"Banking", component: DashboardBanking, meta: { requiresAuth: true } },
