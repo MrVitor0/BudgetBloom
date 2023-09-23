@@ -77,7 +77,7 @@
             try {
                 let response = await this.$store.dispatch("auth/login", { email: this.email, password: this.password, persist: true }); // Call the Vuex action
                 PWUtils.PWNotification('success', response);
-                this.$router.push({ name: "Travel" });
+                this.$router.push({ name: "Home" });
             }
             catch (error) {
                 PWUtils.PWNotification('error', error);

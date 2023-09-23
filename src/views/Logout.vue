@@ -9,7 +9,7 @@ export default {
   name: 'LogoutPage',
   async created() {
     await this.$store.dispatch('auth/logout');
-    this.$router.push('/login');
+    this.$router.push({ name: 'Login' });
   },
 };
 </script>

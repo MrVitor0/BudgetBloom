@@ -7,6 +7,7 @@ import DashboardBanking from '@/views/Banking.vue';
 import DashboardInvestments from '@/views/Investments.vue';
 import TravelHome from '@/views/Travel.vue';
 import DebtsHome from '@/views/Debts.vue';
+import PurpleLanding from '@/views/Landing.vue';
 import Logout from '@/views/Logout.vue';
 import PurpleLogin from '@/views/Login.vue';
 import PurpleRegister from '@/views/Register.vue';
@@ -17,23 +18,36 @@ const routes = [
     path: '/',
     component: Layout,
     children: [
-      { path: '', name: "Travel", component: TravelHome, meta: { requiresAuth: true }},
-      { path: 'Home', name:"Home", component: DashboardHome, meta: { requiresAuth: true } },
-      { path: 'debitos', name:"debitos", component: DebtsHome, meta: { requiresAuth: true } },
-     
-      { path: 'investments', name:"Investments", component: DashboardInvestments, meta: { requiresAuth: true } },
-      { path: 'banking', name:"Banking", component: DashboardBanking, meta: { requiresAuth: true } },
-      { path: 'credit', name:"Credit Cards", component: DashboardCredit, meta: { requiresAuth: true }},
-      { path: 'profile', name:"Profile", component: DashboardProfile, meta: { requiresAuth: true } },
+      {
+        path: '/dashboard',
+        meta: { requiresAuth: true },
+        children: [
+          { path: '', name: "Home", component: DashboardHome }, // Adicione uma rota vazia para renderizar DashboardHome
+          {
+            path: '/contas',
+            meta: { requiresAuth: true },
+            children: [
+              { path: 'gastos', name: "Spends", component: TravelHome },
+              { path: 'debitos', name: "Debts", component: DebtsHome },
+            ]
+          },
+          { path: 'investments', name: "Investments", component: DashboardInvestments },
+          { path: 'banking', name: "Banking", component: DashboardBanking },
+          { path: 'credit', name: "CreditCards", component: DashboardCredit },
+          { path: 'profile', name: "Profile", component: DashboardProfile },
+        ]
+      },
     ]
   },
   {
-    path: '/',
+    path: '/auth',
+    meta: { requiresAuth: false },
     children: [
-      { path: 'login', name:"Login", component: PurpleLogin, meta: { requiresAuth: false } },
-      { path: 'register', name:"Register", component: PurpleRegister, meta: { requiresAuth: false } },
+      { path: 'login', name:"Login", component: PurpleLogin },
+      { path: 'register', name:"Register", component: PurpleRegister },
     ]
   },
+  { path: '', name:"Landing", component: PurpleLanding, meta: { requiresAuth: false } },
   {
     path: '/logout',
     name: 'Logout',
@@ -53,7 +67,9 @@ router.beforeEach((to, from, next) => {
       to: to,
       getter: store.getters['auth/isAuthenticated'],
     });
-    next('/login');
+    next({ name: 'Login' });
+  } else if (!to.meta.requiresAuth && store.getters['auth/isAuthenticated']) {
+    next({ name: 'Home' });
   } else {
     next();
   }
