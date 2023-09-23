@@ -25,7 +25,7 @@
               <font-awesome-icon :icon="link.icon" class="text-gray-500 font-medium" :class="{ 'text-white font-medium': link.to === currentRoute }" />
             </div> 
             <div class="flex-grow">
-              <p class="text-gray-500 font-medium" ><span :class="{ 'text-gray-800 font-bold': link.to === currentRoute }">{{ link.text }}</span></p>
+              <p class="text-gray-500 font-medium" ><span :class="{ 'text-gray-800 font-bold': link.to === currentRoute }">{{ $t(link.text) }}</span></p>
             </div>
           </div>
         </router-link>
@@ -48,15 +48,14 @@ export default {
   data() {
     return {
       navLinks: [
-        { to: '/', icon: 'bank', text: 'Seus Gastos' },
-        { to: '/debitos', icon: 'piggy-bank', text: 'Seus Débitos' },
-        { to: '/logout', icon: 'door-open', text: 'Desconectar'}
-        // { to: '/banking', icon: 'landmark', text: 'Banking' },
-        // { to: '/credit', icon: 'credit-card', text: 'Credit Cards' },
-        // { to: '/investments', icon: 'wallet', text: 'Investments' },
-        // { to: '/profile', icon: 'address-card', text: 'Profile' },
-        // { to: '/home', icon: 'road', text: 'Travel Track' },
-        // Add more links here
+        { to: '/home', icon: 'home', text: 'navbar.dashboard' },
+        { to: '/', icon: 'bank', text: 'navbar.spends' },
+        { to: '/debitos', icon: 'piggy-bank', text: 'navbar.debts' },
+        { to: '/banking', icon: 'landmark', text: 'navbar.banking' },
+        { to: '/credit', icon: 'credit-card', text: 'navbar.credit' },
+        { to: '/investments', icon: 'wallet', text: 'navbar.investments' },
+        { to: '/profile', icon: 'address-card', text: 'navbar.profile' },
+        { to: '/logout', icon: 'door-open', text: 'navbar.disconnect'},
       ],
     };
   },

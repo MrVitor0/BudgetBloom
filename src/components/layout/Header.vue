@@ -13,6 +13,7 @@
           </BBInputHandler>
         </div>
         <div class="mr-4">
+            <font-awesome-icon icon="language" class="text-xl text-purple-700 cursor-pointer pl-4 hover:text-purple-800" @click="changeLanguage()" />
             <font-awesome-icon icon="user" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openUserSettings" />
             <font-awesome-icon icon="wrench" class="text-xl text-purple-700 cursor-pointer pl-4" @click="openNotifications" />
             <font-awesome-icon @click="logout" icon="sign-out" class="text-xl text-purple-700 cursor-pointer pl-4"  />
@@ -51,7 +52,10 @@
         this.$store.dispatch('auth/logout')
         PWUtils.PWNotification('success', 'Logout Successful!')
         this.$router.push({ name: 'Login' })
-      }
+      },
+      changeLanguage(){
+        this.$i18n.locale = this.$i18n.locale === 'en' ? 'pt' : 'en'
+      },
     }
   }
   </script>

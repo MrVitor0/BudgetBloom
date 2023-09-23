@@ -1,0 +1,12 @@
+{   
+    "navbar": {
+        "dashboard": "Início",
+        "spends": "Seus Gastos",
+        "debts": "Seus Devedores",
+        "banking": "Bancos",
+        "credit": "Cartões",
+        "investments": "Investimentos",
+        "profile": "Seu Perfil",
+        "disconnect": "Desconectar"
+    }
+}

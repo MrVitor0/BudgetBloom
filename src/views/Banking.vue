@@ -43,10 +43,10 @@
                         <div class="w-64">
                             <BasicButton @click="showModal(0)" active="true" text="Add Incoming" icon="square-plus" />
                         </div>  
-                        <div class="w-64">
+                        <div class="w-64 pt-1">
                             <BasicButton @click="showModal(1)" active="true" text="Add Expanse" icon="square-minus" />
                         </div>  
-                        <div class="w-64">
+                        <div class="w-64 pt-1">
                             <BasicButton @click="showModal(2)" active="true" text="Adjust Account Balance" icon="wrench" />
                         </div>  
                     </div>
