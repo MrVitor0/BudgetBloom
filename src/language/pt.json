@@ -9,5 +9,31 @@
         "profile": "Seu Perfil",
         "travel": "Meus Gastos",
         "disconnect": "Desconectar"
+    },
+    "banking": {
+        "CREDIT_CARD": "Cartão de Crédito",
+        "DEBIT_CARD": "Cartão de Débito",
+        "MONEY": "Dinheiro",
+        "UNKNOWN": "Não Catalogado",
+        "DEPOSIT": "Depósito",
+        "WITHDRAW": "Saque",
+        "TRANSFER": "Transferência/Ted",
+        "page": {
+            "recent_transactions": "Transações Recentes",
+            "account_balance": "Saldo da Conta",
+            "edit_account_balance": "Editar Saldo da Conta",
+            "edit_account_balance_description": "Edite o saldo atual de sua conta.",
+            "add_transaction": "Adicionar Transação",
+            "add_transaction_description": "Adicione uma nova transação a sua conta.",
+            "add_expanse": "Adicionar Despesa/Gasto",
+            "adjust_balance": "Ajustar Saldo da Conta"
+        },
+        "cards": {
+            "transactions_subtitle": "Estes são os seus ",
+            "transactions_description": "Este é o seu saldo atual.",
+            "earnings": "ganhos",
+            "expenses": "gastos",
+            "undefined": ""
+        }
     }
 }

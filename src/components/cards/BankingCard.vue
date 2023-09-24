@@ -6,11 +6,11 @@
                         <font-awesome-icon :icon="icon" class="text-5xl text-purple-700 m-5" />
                     </div> 
                     <div class="flex-grow ml-5 my-2 md:mt-0">
-                        <p class="text-gray-600 text-xs capitalize">{{ type == !type ? currentMonth : 'Account Balance' }} <b>{{ type }}</b> <span  v-if="percentage !== 0"><span :class="spanClass" >{{ percentage >= 0 ? "+" : ""  }}{{ percentage }}%</span><span class="text-gray-400 text-sm ml-1">Since Last Month</span></span></p>
+                        <p class="text-gray-600 text-xs capitalize">{{ type == !type ? currentMonth : $t('banking.page.account_balance') }} <b>{{ $t('banking.cards.'+type) }}</b> <span  v-if="percentage !== 0"><span :class="spanClass" >{{ percentage >= 0 ? "+" : ""  }}{{ percentage }}%</span><span class="text-gray-400 text-sm ml-1">Since Last Month</span></span></p>
                         <h2 class="text-xl font-semibold mb-2">R${{ balance }}</h2>
                         <p class="text-gray-600 text-xs" v-if="percentage !== 0">Your {{ (type).toLowerCase() }} {{ percentage >= 0 ? 'increased' : 'decreased' }} by {{percentage}}%</p>
-                        <p class="text-gray-600 text-xs" v-else-if="!type">This is your account balance</p>
-                        <p class="text-gray-600 text-xs" v-else>These are your {{ (type).toLowerCase() }}</p>
+                        <p class="text-gray-600 text-xs" v-else-if="!type">{{ $t('banking.cards.transactions_description') }}</p>
+                        <p class="text-gray-600 text-xs" v-else>{{ $t('banking.cards.transactions_subtitle') }} {{ $t('banking.cards.' + (type).toLowerCase()) }}</p>
                     </div>
             </div>
         </div>

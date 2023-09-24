@@ -7,8 +7,8 @@
                     <img src="@/assets/bgvector.png" class="rounded- w-screen h-64 hidden md:block border-t border-gray-500 rounded-t-lg">
                 <BankingCard :amount="this.banking_data.account_balance" icon="bank" class="md:-mt-52"/>
                 <!-- MONTH BALANCE -->
-                <BankingCard :amount="this.banking_data.current_incoming" type="Earnings" :percentage="0" />
-                <BankingCard :amount="this.banking_data.current_expenses" type="Expenses" :percentage="0" />
+                <BankingCard :amount="this.banking_data.current_incoming" type="earnings" :percentage="0" />
+                <BankingCard :amount="this.banking_data.current_expenses" type="expenses" :percentage="0" />
                 <!-- MONTH BALANCE -->
             </div>
             <!-- Monthly Planning -->
@@ -35,19 +35,19 @@
                         <font-awesome-icon icon="money-check" class="text-white text-5xl p-6" />
                         </div>
                         <div class="text-md text-gray-700 font-medium mt-2">
-                        Edit Account Balance
+                          {{ $t("banking.page.edit_account_balance") }}
                         </div>
                         <div class="text-xs font-light text-gray-500 mb-5 mt-1">
-                        Your balance doesn't match your real balance? <br/> Update it here!
+                        {{ $t('banking.page.edit_account_balance_description') }}
                         </div>
                         <div class="w-64">
-                            <BasicButton @click="showModal(0)" active="true" text="Add Incoming" icon="square-plus" />
+                            <BasicButton @click="showModal(0)" active="true" :text="$t('banking.page.add_transaction')" icon="square-plus" />
                         </div>  
                         <div class="w-64 pt-1">
-                            <BasicButton @click="showModal(1)" active="true" text="Add Expanse" icon="square-minus" />
+                            <BasicButton @click="showModal(1)" active="true" :text="$t('banking.page.add_expanse')" icon="square-minus" />
                         </div>  
                         <div class="w-64 pt-1">
-                            <BasicButton @click="showModal(2)" active="true" text="Adjust Account Balance" icon="wrench" />
+                            <BasicButton @click="showModal(2)" active="true" :text="$t('banking.page.adjust_balance')" icon="wrench" />
                         </div>  
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                 <div class="bg-white rounded-lg shadow py-4 h-full">
                     <div class="flex items-start justify-between text-center px-4 pb-4 md:p-3">
                         <div class="flex-start">
-                            <p class="text-xl text-BBDark">Recent Transactions</p>
+                            <p class="text-xl text-BBDark">{{ $t("banking.page.recent_transactions") }}</p>
                         </div>
                         <div class="flex-end">
                             <font-awesome-icon title="View More" icon="eye" class="text-BBPurple text-2xl cursor-pointer pr-3" />
@@ -67,13 +67,14 @@
                     <hr class="h-px mx-3 bg-purple-200 border-0 mb-5" />
                     <!-- ITEM -->
                     <TransferItem
-                        v-for="(item, index) in transferItems"
+                        v-for="(item, index) in banking_data.transactions.banking"
                         :key="index"
                         :name="item.name"
-                        :method="item.method"
-                        :type="item.type"
-                        :date="item.date"
-                        :value="item.value"
+                        :method="$t(item.type_transaction)"
+                        :type="$t(item.type_payment)"
+                        :typeF="item.type_transaction"
+                        :date="item.createdAt"
+                        :value="item.amount"
                     />
                 </div>
             </div>
@@ -121,14 +122,17 @@
          banking_data: {
             account_balance: 0,
             current_incoming: 0,
-            current_expenses: 0
+            current_expenses: 0,
+            transactions: {}
          }
        };
      },
      async mounted() {
-        const response = await this.$api.get("/banking")
+        const response = await this.$api.get("/api/banking/user/transaction/list")
+        console.log(response)
         if(response.data)
             this.banking_data = response.data
+           
      },
      methods: {
        ...mapActions('modal', ['showInputModal', 'hideInputModal']),

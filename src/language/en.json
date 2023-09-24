@@ -9,5 +9,31 @@
         "profile": "Profile",
         "travel": "Travel",
         "disconnect": "Logout"
+    },
+    "banking": {
+        "CREDIT_CARD": "Credit Card",
+        "DEBIT_CARD": "Debit Card",
+        "MONEY": "Bank Account",
+        "UNKNOWN": "Unknown",
+        "DEPOSIT": "Deposit",
+        "WITHDRAW": "Withdraw",
+        "TRANSFER": "Transfer",
+        "page": {
+            "recent_transactions": "Recent Transactions",
+            "account_balance": "Account Balance",
+            "edit_account_balance": "Edit Account Balance",
+            "edit_account_balance_description": "Edit your account balance to reflect your current balance.",
+            "add_transaction": "Add Transaction",
+            "add_transaction_description": "Add a new transaction to your account.",
+            "add_expanse": "Add Expanse",
+            "adjust_balance": "Adjust Balance"
+        },
+        "cards": {
+            "transactions_subtitle": "Estes são os seus ",
+            "transactions_description": "Este é o seu saldo atual.",
+            "earnings": "ganhos",
+            "expenses": "gastos",
+            "undefined": ""
+        }
     }
 }
