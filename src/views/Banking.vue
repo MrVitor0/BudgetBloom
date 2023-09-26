@@ -46,8 +46,8 @@
                         <div class="w-64 pt-1">
                             <BasicButton @click="showModal(1)" active="true" :text="$t('banking.page.add_expanse')" icon="square-minus" />
                         </div>  
-                        <div class="w-64 pt-1">
-                            <BasicButton @click="showModal(2)" active="true" :text="$t('banking.page.adjust_balance')" icon="wrench" />
+                        <div class="w-64 pt-1 cursor-not-allowed">
+                            <BasicButton disabled active="true" :text="$t('banking.page.adjust_balance')" icon="wrench" />
                         </div>  
                     </div>
                 </div>
@@ -148,13 +148,17 @@
          * Update the current incoming in the banking account.
          * @param {object} response
          */
-        updateIncoming(response) {
+        async updateIncoming(response) {
             if (typeof response.hardEdit === "boolean" && response.hardEdit) {
                 this.banking_data.current_incoming = response.value;
             } else {
+                //update this.banking_data.transactions adding response.payload
+                const response = await this.$api.get("/api/banking/user/transaction/list")
                 console.log(response)
-                this.banking_data.current_incoming += response.value;
-                this.banking_data.account_balance += response.value;
+                if(response.data)
+                    this.banking_data = response.data
+                // this.banking_data.current_incoming += response.value;
+                // this.banking_data.account_balance += response.value;
             }
         },
         
@@ -162,17 +166,22 @@
          *  Update the current expenses in the banking account.
          * @param {object} response 
        */
-        updateExpenses(response) {
+        async updateExpenses(response) {
             console.log(response)
             if (typeof response.hardEdit === "boolean" && response.hardEdit) {
                 this.banking_data.current_expenses = response.value;
             } else {
-                this.banking_data.current_expenses += response.value;
-                let account_balance = this.banking_data.account_balance - response.value;
-                if (account_balance < 0) {
-                    account_balance = 0;
-                }
-                this.banking_data.account_balance = account_balance;
+                //update this.banking_data.transactions adding response.payload
+                const response = await this.$api.get("/api/banking/user/transaction/list")
+                console.log(response)
+                if(response.data)
+                    this.banking_data = response.data
+                // this.banking_data.current_expenses += response.value;
+                // let account_balance = this.banking_data.account_balance - response.value;
+                // if (account_balance < 0) {
+                //     account_balance = 0;
+                // }
+                // this.banking_data.account_balance = account_balance;
             }
         },
        showModal(modal) {

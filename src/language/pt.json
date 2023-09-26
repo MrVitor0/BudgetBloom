@@ -34,6 +34,22 @@
             "earnings": "ganhos",
             "expenses": "gastos",
             "undefined": ""
+        },
+        "incoming_card": {
+            "title": "Adicionar Transação",
+            "description": "Quanto e quando você recebeu?",
+            "button_one": "Adicionar transação",
+            "button_two": "Editar Saldo",
+            "button_three": "Cancelar",
+            "placeholder": "Informe o título (ex: Salário)"
+        },
+        "expanses_card": {
+            "title": "Adicionar Transação",
+            "description": "Quando e quanto você gastou?",
+            "button_one": "Adicionar transação",
+            "button_two": "Editar Saldo",
+            "placeholder": "Informe o título (ex: Shopping)",
+            "button_three": "Cancelar"
         }
     }
 }

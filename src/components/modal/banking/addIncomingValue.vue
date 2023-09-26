@@ -6,8 +6,8 @@
         </div>
         <div class="md:w-2/3 p-5 text-center md:text-start">
             <div>
-                <h2 class="text-xl font-semibold mb-4">Edit Incoming Value</h2>
-                <label for="input" class="block mb-2">How much you receive?</label>
+                <h2 class="text-xl font-semibold mb-4">{{ $t('banking.incoming_card.title') }}</h2>
+                <label for="input" class="block mb-2">{{ $t('banking.incoming_card.description') }}</label>
                 <div class="relative w-full mt-3">
                   <div class="absolute left-3 top-1/2 -translate-y-1/2">
                     <FontAwesomeIcon icon="calendar-days" class="text-md text-purple-400" />
@@ -17,6 +17,12 @@
                     <div class="border-r border-gray-300 my-3 "></div> 
                     <BBDateInput type="Year" v-model="yearInput"  />
                   </div>
+                </div>
+                <div class="relative w-full mt-3">
+                  <div class="absolute left-3 top-1/2 -translate-y-1/2">
+                    <FontAwesomeIcon icon="bookmark" class="text-md text-purple-400" />
+                  </div>
+                  <BBTextInput :placeholder="$t('banking.incoming_card.placeholder')" v-model="transactionName" class="pl-8" />
                 </div>
                 <div class="relative w-full mt-3">
                   <div class="absolute left-3 top-1/2 -translate-y-1/2">
@@ -30,21 +36,22 @@
                     class="bg-purple-800 text-white px-4 py-2 w-full mt-1 md:mt-0 md:w-auto rounded-md  hover:bg-purple-700"
                     @click="submitInput(false)"
                 >
-                    Increase Incoming  <FontAwesomeIcon class="pl-1" icon="plus-square" />
+                  {{ $t('banking.incoming_card.button_one') }}  <FontAwesomeIcon class="pl-1" icon="plus-square" />
                 </button>
                 <br class="md:hidden" />
-                <button
-                    class="md:ml-2 border text-white px-4 py-2 w-full mt-1 md:mt-0 md:w-auto rounded-md bg-purple-800 hover:bg-purple-800"
-                    @click="submitInput(true)"
-                >
-                     Edit Incoming <FontAwesomeIcon class="pl-1" icon="edit" />
-                </button> <br class="md:hidden" />
                 <button
                     class="md:ml-2 border px-4 py-2 w-full mt-1 md:mt-0 md:w-auto rounded-md bg-gray-200 hover:bg-gray-300"
                     @click="hideModal"
                 >
-                    Close <FontAwesomeIcon class="pl-1" icon="times" />
+                   {{ $t('banking.incoming_card.button_three') }} <FontAwesomeIcon class="pl-1" icon="times" />
                 </button>
+                <button
+                    class="md:ml-2 border text-white px-4 py-2 cursor-not-allowed w-full mt-1 md:mt-0 md:w-auto rounded-md bg-gray-300 hover:bg-gray-300"
+                    disabled
+                    @click="submitInput(true)"
+                >
+                   {{ $t('banking.incoming_card.button_two') }} <FontAwesomeIcon class="pl-1" icon="edit" />
+                </button> <br class="md:hidden" />
             </div>
         </div>
     </div>
@@ -57,6 +64,7 @@
   import BBMoney from '@/utils/BBMoney'
   import PWUtils from '@/utils/PWUtils'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+  import BBTextInput from '@/components/form/BBTextInput.vue';
   export default {
     props: {
       banking_data: {
@@ -71,12 +79,14 @@
       }
     },
     components: {
-      FontAwesomeIcon,
-      BBDateInput,
-      BBPriceInput,
-    },
+    FontAwesomeIcon,
+    BBDateInput,
+    BBPriceInput,
+    BBTextInput
+},
     data() {
       return {
+        transactionName: '',
         inputValue: 0,
         monthInput: (new Date()).getMonth() + 1,
         yearInput: (new Date()).getFullYear(),
@@ -85,29 +95,25 @@
     methods: {
       ...mapActions('modal', ['hideInputModal']),
       async submitInput(hardEdit = false) {
-        //!!! This is temporary, will be changed in the future
-        const today = new Date();
-        const currentMonth = today.getMonth() + 1;
-        const currentYear = today.getFullYear();
-        //!!! This is temporary, will be changed in the future
-        if (this.monthInput === currentMonth && this.yearInput === currentYear && this.inputValue !== '' && this.inputValue !== undefined && this.inputValue !== null) {
+        console.log({
+          inputValue: this.inputValue,
+          transactionName: this.transactionName
+        })
+
+        if (this.monthInput && this.yearInput && this.inputValue && this.transactionName ) {
             const inputValue = BBMoney.toDouble(this.inputValue);
-            const updatedData = {
-              ...this.banking_data,
-              account_balance: this.banking_data.account_balance + inputValue,
-              current_incoming: this.banking_data.current_incoming + inputValue,
-            };
-            if (hardEdit) {
-              let response =  await PWUtils.PWPopup('Are you sure?', 'This will directly edit the current incoming value.');
-              if(!response) 
-                    return;
-              updatedData.current_incoming = inputValue;
-            }
             try {
-              const response = await this.$api.put('banking', updatedData);
+              let payload = {
+                type_transaction: 'DEPOSIT',
+                type_payment: 'MONEY',
+                name: this.transactionName,
+                amount: inputValue,
+              }
+              const response = await this.$api.post('api/banking/user/transaction/create', payload);
               PWUtils.PWNotification('success', 'Incoming Updated!');
               this.$emit('update', {
                 value: inputValue,
+                payload: payload,
                 hardEdit: hardEdit,
               });
               this.hideModal();

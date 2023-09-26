@@ -78,13 +78,13 @@ export default {
   },
   computed: {
       icon() {
-          return this.typeF == "banking.DEPOSIT" || this.typeF == "banking.TRANSFER" ? 'circle-arrow-up' : 'circle-arrow-down';
+          return this.typeF == "banking.DEPOSIT"  ? 'circle-arrow-up' : 'circle-arrow-down';
       },
       moneyClass(){
-          return this.typeF == "banking.DEPOSIT" || this.typeF == "banking.TRANSFER" ? "text-xs text-purple-400 text-center md:text-end" : "text-xs text-purple-700 text-center md:text-end"
+          return this.typeF == "banking.DEPOSIT"  ? "text-xs text-purple-400 text-center md:text-end" : "text-xs text-purple-700 text-center md:text-end"
       },
       typeClass(){
-        return this.typeF == "banking.DEPOSIT" || this.typeF == "banking.TRANSFER" ? "md:absolute hidden md:block text-purple-700 text-3xl cursor-pointer pt-2" : "md:absolute hidden md:block text-purple-400 text-3xl cursor-pointer pt-2"
+        return this.typeF == "banking.DEPOSIT"  ? "md:absolute hidden md:block text-purple-700 text-3xl cursor-pointer pt-2" : "md:absolute hidden md:block text-purple-400 text-3xl cursor-pointer pt-2"
       }
   },
   components: {

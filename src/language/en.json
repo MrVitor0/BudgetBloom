@@ -34,6 +34,22 @@
             "earnings": "ganhos",
             "expenses": "gastos",
             "undefined": ""
+        },
+        "incoming_card": {
+            "title": "Edit Incoming Value",
+            "description": "How much you receive?",
+            "button_one": "Increase Incoming",
+            "button_two": "Edit Incoming",
+            "button_three": "Close",
+            "placeholder": "Informe the title (ex: Earnings)"
+        },
+        "expanses_card": {
+            "title": "Edit Expanse Value",
+            "description": "How much you spend?",
+            "button_one": "Add transaction",
+            "button_two": "Edit budget",
+            "button_three": "Cancel",
+            "placeholder": "Informe the title (ex: Spends)"
         }
     }
 }
