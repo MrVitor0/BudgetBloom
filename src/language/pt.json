@@ -20,6 +20,7 @@
         "TRANSFER": "Transferência/Ted",
         "page": {
             "recent_transactions": "Transações Recentes",
+            "recent_puchases": "Compras Recentes",
             "account_balance": "Saldo da Conta",
             "edit_account_balance": "Editar Saldo da Conta",
             "edit_account_balance_description": "Edite o saldo atual de sua conta.",

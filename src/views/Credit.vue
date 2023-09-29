@@ -6,7 +6,7 @@
                 <div class="w-full md:w-2/2 lg:w-1/3 mb-5 md:bg-purple-100 rounded-lg">
                     <img src="@/assets/cardbg3.png" class="rounded- w-screen h-full  border-t border-gray-500 rounded-lg">
                     <div class="relative flex flex-col flex-auto min-w-0 -mt-36 pt-12 md:pt-0 md:-mt-36 overflow-hidden break-words border-0  rounded-2xl bg-clip-border ">
-                        <p class="pl-3 text-white text-5xl ">R$ {{ currentStatement }}</p>
+                        <p class="pl-3 text-white text-5xl ">R$ {{ currentBillAmount }}</p>
                         <div class="flex">
                             <div class="flex flex-col">
                                 <p class="pl-3 text-purple-200 text-2xl">Vitor Hugo</p>
@@ -36,6 +36,7 @@
                     </div>
                 </div>
             </div>
+             
             <!-- ACCOUNT BALANCE -->
             <div class="w-full md:w-1/2 lg:w-1/3 mb-5">
                 <div class="flex justify-center items-center bg-white rounded-lg shadow p-4 h-full">
@@ -58,19 +59,45 @@
        </div>
        <div>
             <div class="flex p-2 md:pl-5 flex-wrap md:-mx-4">
-                <!-- START OVERVIEW AREA -->
-                <div class="w-full md:w-1/2 lg:w-1/3 mb-5  rounded-lg">
-                    <CreditCardChartCard class="h-full" />
+               <!-- RECENT TRANSACTIONS -->
+               <div class="w-full  mb-2 md:w-1/2 rounded-lg">
+                <div class="bg-white rounded-lg shadow py-4 h-full">
+                    <div class="flex items-start justify-between text-center px-4 pb-4 md:p-3">
+                        <div class="flex-start">
+                            <p class="text-xl text-BBDark">{{ $t("banking.page.recent_puchases") }}</p>
+                        </div>
+                        <div class="flex-end">
+                            <font-awesome-icon title="View More" icon="eye" class="text-BBPurple text-2xl cursor-pointer pr-3" />
+                            <font-awesome-icon icon="file-circle-plus" class="text-BBPurple text-2xl cursor-pointer" />
+                        </div>
+                    </div>
+                    <hr class="h-px mx-3 bg-purple-200 border-0 mb-5" />
+                    <!-- ITEM -->
+                    <CreditPurchases
+                        v-for="(item, index) in currentStatement.credit"
+                        :key="index"
+                        :name="item.name"
+                        :reference="item.reference"
+                        :typeF="'banking.DEPOSIT'"
+                        :date="item.reference"
+                        :value="item.amount"
+                    />
                 </div>
-                <div class="w-full md:w-1/2 lg:w-2/3 mb-5 px-3  rounded-lg">
-                    <InfoCard 
-                    heading="Built by developers"
-                    subheading="PurpleWallet"
-                    content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus incidunt ut officiis explicabo inventore."
-                    linkText="View More"
-                    icon="arrow-right"
-                  />
-                </div>
+            </div>
+            <!-- START OVERVIEW AREA -->
+            <div class="w-full md:w-1/2 md:pl-2 mb-2 ">
+                <CreditCardChartCard class="h-full" />
+            </div>
+            <div class="w-full mb-2">
+                <InfoCard 
+                heading="Built by developers"
+                subheading="PurpleWallet"
+                content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus incidunt ut officiis explicabo inventore."
+                linkText="View More"
+                icon="arrow-right"
+                class="rounded-xl"
+                />
+            </div>
            </div>      
        </div>
 
@@ -86,11 +113,11 @@
    import BasicButton from '@/components/button/BasicButton';
    import CreditCardChartCard from '@/components/charts/CreditCardChartCard';
    import InfoCard from '@/components/cards/InfoCard';
-  
+   import CreditPurchases from '@/components/cards/common/CreditPurchases';
    import BBModal from '@/components/modal/BBModal.vue';
    import updateCurrentStatement from '@/components/modal/creditCards/updateCurrentStatement';
    import updateOlderStatements from '@/components/modal/creditCards/updateOlderStatements';
-
+   import PWUtils from '@/utils/PWUtils';
    import BBMoney from '@/utils/BBMoney';
    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
    import { mapActions } from 'vuex';
@@ -99,62 +126,27 @@
      components: {
             BasicButton,
             InfoCard,
-
+            CreditPurchases,
             BBModal,
             updateCurrentStatement,
             updateOlderStatements,
-
             CreditCardChartCard,
-            FontAwesomeIcon,
+            FontAwesomeIcon
       },
      data() {
        return {
          progress: 95,
-         statements: {},
          isModalVisible: true,
          currentModal: null,
-         transferItems: [
-            {
-                name: 'Vitor Hugo',
-                method: 'Pix',
-                type: 'Outgoing',
-                date: '12/03/2023',
-                value: 'R$1000,00'
-            },
-            {
-                name: 'Elisyum LTDA',
-                method: 'Pix',
-                type: 'Received',
-                date: '11/03/2023',
-                value: 'R$1000,00'
-            },
-            {
-                name: 'Robert Jr',
-                method: 'Pix',
-                type: 'Outgoing',
-                date: '12/03/2023',
-                value: 'R$1000,00'
-            },
-            {
-                name: "Urubu's Pix Bank",
-                method: 'Pix',
-                type: 'Received',
-                date: '12/03/2023',
-                value: 'R$2000,69'
-            },
-            {
-                name: "Urubu's Pix Bank",
-                method: 'Pix',
-                type: 'Received',
-                date: '12/03/2023',
-                value: 'R$2000,69'
-            },
-        ]
+
+
+         currentBillAmount: 0.0,
+         currentStatement: {},
+         statements: [],
        };
      },
      async mounted() {
-        this.statements = await this.fetchStatementData()
-        console.log(this.statements)
+        await this.fetchStatementData()
      },
      methods: {
         ...mapActions('modal', ['showInputModal']), // Importante: "modal" é o namespace do módulo no store
@@ -165,8 +157,24 @@
             this.statements.current_statement = newStatement
         },
         async fetchStatementData(){
-            const response = await this.$api.get('/creditcard')
-            return response.data
+            const response = await this.$api.get('/api/credit/user/bill/purchase/list')
+            let currentDate = PWUtils.getCurrentDate('credit');
+            if (response.data) {
+                // Extract year and month from currentDate
+                const currentDateYearMonth = currentDate.slice(0, 7); // Assuming currentDate is in 'YYYY-MM-DD' format
+                let currentStatement = response.data.find(item => item.reference.slice(0, 7) === currentDateYearMonth);
+                if (currentStatement) {
+                    this.currentBillAmount = BBMoney.toCurrency(currentStatement.amount);
+                    this.currentStatement = currentStatement;
+                    this.statements = response.data;
+                } else {
+                    PWUtils.PWNotification('error', 'Error', 'No data found for the current year and month');
+                }
+            } else {
+                PWUtils.PWNotification('error', 'Error', 'Error while fetching data');
+            }
+
+            this.statements = response.data
         },
         showModal(modalIndex) {
           this.currentModal = modalIndex;
@@ -174,9 +182,6 @@
         },
      },
      computed: {
-        currentStatement(){
-            return  BBMoney.toCurrency(this.statements.current_statement);
-        },
         currentMonth() {
             const date = new Date();
             const month = date.toLocaleString('default', { month: 'long' });

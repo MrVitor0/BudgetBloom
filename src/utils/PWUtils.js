@@ -39,9 +39,14 @@ class PWUtils {
      * @description This method is used to get the current date
      * @returns {String}
      */
-    static getCurrentDate() {
-        const date = new Date();
-        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    static getCurrentDate(type = false, _date = false) {
+        const date = !_date ? new Date() : _date;
+        switch (type) {
+            case 'credit':
+                return new Date(date.getFullYear(), date.getMonth(), 1).toISOString();
+            default:
+                return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+        }
     }
 
     /**
@@ -66,6 +71,7 @@ class PWUtils {
                 title: title
         })
     }
+
 
     /**
      * @description This method is used to show a popup
