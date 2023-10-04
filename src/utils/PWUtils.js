@@ -44,6 +44,8 @@ class PWUtils {
         switch (type) {
             case 'credit':
                 return new Date(date.getFullYear(), date.getMonth(), 1).toISOString();
+            case 'credit-last':
+                return new Date(date.getFullYear(), date.getMonth(), 0).toISOString();
             default:
                 return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
         }

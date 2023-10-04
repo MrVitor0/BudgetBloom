@@ -11,8 +11,8 @@
           <div class="flex-end">
               <p :class="moneyClass"><b><font-awesome-icon icon="money-bill-transfer" class="text-md cursor-pointer mr-1 pt-2" /></b>{{ moneyFormat(value) }}</p>
           </div>
-      </div>
-      <!-- ITEM -->
+    </div>
+    <!-- ITEM -->
 </template>
 
 <script>

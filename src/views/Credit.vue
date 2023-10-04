@@ -38,7 +38,7 @@
             </div>
              
             <!-- ACCOUNT BALANCE -->
-            <div class="w-full md:w-1/2 lg:w-1/3 mb-5">
+            <div class="w-full md:w-1/2 lg:w-1/3 mb-2 lg:mb-5">
                 <div class="flex justify-center items-center bg-white rounded-lg shadow p-4 h-full">
                     <div class="flex flex-col items-center text-center mt-26">
                         <div class="rounded-md bg-gradient-to-tr from-purple-900 to-purple-500 hover:from-purple-800 hover:to-purple-500 transition duration-500 ease-in-out shadow">
@@ -73,20 +73,26 @@
                     </div>
                     <hr class="h-px mx-3 bg-purple-200 border-0 mb-5" />
                     <!-- ITEM -->
-                    <CreditPurchases
-                        v-for="(item, index) in currentStatement.credit"
-                        :key="index"
-                        :name="item.name"
-                        :reference="item.reference"
-                        :typeF="'banking.DEPOSIT'"
-                        :date="item.reference"
-                        :value="item.amount"
-                    />
+                    <div  v-if="currentStatement?.credit">
+                        <CreditPurchases
+                            v-for="(item, index) in currentStatement.credit"
+                            :key="index"
+                            :name="item.name"
+                            :reference="item.reference"
+                            :typeF="'banking.DEPOSIT'"
+                            :date="item.reference"
+                            :value="item.amount"
+                        />
+                    </div>
+                    <div v-else class="flex justify-center items-center text-center lg:text-start">
+                        <p class="text-gray-500 text-md lg:mx-0 mx-5">No purchases found for the current year and month</p>
+                    </div>
+                    <!-- ITEM -->
                 </div>
             </div>
             <!-- START OVERVIEW AREA -->
-            <div class="w-full md:w-1/2 md:pl-2 mb-2 ">
-                <CreditCardChartCard class="h-full" />
+            <div class="w-full md:w-1/2 md:pl-2 mb-2 lg:mt-0 mt-3">
+                <CreditCardChartCard :statements="statements" class="h-full" />
             </div>
             <div class="w-full mb-2">
                 <InfoCard 
@@ -138,9 +144,7 @@
          progress: 95,
          isModalVisible: true,
          currentModal: null,
-
-
-         currentBillAmount: 0.0,
+         currentBillAmount: 0,
          currentStatement: {},
          statements: [],
        };
@@ -159,22 +163,21 @@
         async fetchStatementData(){
             const response = await this.$api.get('/api/credit/user/bill/purchase/list')
             let currentDate = PWUtils.getCurrentDate('credit');
+           
             if (response.data) {
                 // Extract year and month from currentDate
                 const currentDateYearMonth = currentDate.slice(0, 7); // Assuming currentDate is in 'YYYY-MM-DD' format
                 let currentStatement = response.data.find(item => item.reference.slice(0, 7) === currentDateYearMonth);
                 if (currentStatement) {
-                    this.currentBillAmount = BBMoney.toCurrency(currentStatement.amount);
                     this.currentStatement = currentStatement;
-                    this.statements = response.data;
                 } else {
-                    PWUtils.PWNotification('error', 'Error', 'No data found for the current year and month');
+                    //PWUtils.PWNotification('warning', 'No purchases found for the current year and month');
                 }
+                this.currentBillAmount = BBMoney.toCurrency(currentStatement?.amount || 0);
             } else {
-                PWUtils.PWNotification('error', 'Error', 'Error while fetching data');
+                PWUtils.PWNotification('error', 'Error while fetching data');
             }
-
-            this.statements = response.data
+           this.statements = response?.data || [];
         },
         showModal(modalIndex) {
           this.currentModal = modalIndex;

@@ -52,5 +52,15 @@
             "placeholder": "Informe o título (ex: Shopping)",
             "button_three": "Cancelar"
         }
+    }, 
+    "credit": {
+        "charts": {
+            "title": "Faturas Anteriores",
+            "info": {
+                "comparisson": "maior",
+                "comparisson_two": "menor",
+                "description": "que o último mês"
+            }
+        }
     }
 }

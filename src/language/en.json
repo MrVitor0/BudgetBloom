@@ -51,5 +51,15 @@
             "button_three": "Cancel",
             "placeholder": "Informe the title (ex: Spends)"
         }
+    },
+    "credit": {
+        "charts": {
+            "title": "Past Bills",
+            "info": {
+                "comparisson": "bigger",
+                "comparisson_two": "less",
+                "description": "than the last month"
+            }
+        }
     }
 }
