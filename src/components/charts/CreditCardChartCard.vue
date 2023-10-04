@@ -11,6 +11,7 @@
   import { ref, onMounted, onBeforeUnmount, watch, computed } from 'vue';
   import Chart from 'chart.js/auto';
   import PWUtils from '@/utils/PWUtils';
+  import BBMoney from '@/utils/BBMoney';
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   export default {
   props: {
@@ -82,12 +83,12 @@
               callbacks: {
                 label: function (context) {
                   const value = context.parsed.y;
-                  return `Fatura: ${value}`;
+                  return `Fatura: R$${BBMoney.toCurrency(value)}`;
                 },
                 title: function (context) {
                   const date = context[0].parsed.x;
                   //get the month name from the index
-                  let monthName = new Date(0, date - 1).toLocaleString(undefined, { month: 'long' });
+                  let monthName = new Date(0, date).toLocaleString(undefined, { month: 'long' });
                   monthName = monthName.charAt(0).toUpperCase() + monthName.slice(1);
                   return `${monthName}`;
                 },
