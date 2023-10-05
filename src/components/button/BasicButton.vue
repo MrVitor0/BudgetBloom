@@ -5,7 +5,7 @@
       :style="{ transition: clicked ? 'background 0.5s ease-in-out' : '' }"
     >
      <font-awesome-icon v-if="icon !== 'hide'" :icon="icon" class="text-white pr-3" />
-      <span class="text-white hover:text-white">{{ text }}</span>
+      <span class="text-white hover:text-white">{{ $t(text) }}</span>
     </button>
     <span
       v-else
@@ -13,7 +13,7 @@
       :style="{ transition: clicked ? 'background 0.5s ease-in-out' : '' }"
     >
     <font-awesome-icon v-if="icon !== 'hide'" :icon="icon" class="text-white pr-3" />
-      <span class="text-white hover:text-white">{{ text }}</span>
+      <span class="text-white hover:text-white">{{ $t(text) }}</span>
     </span>
   </template>
 

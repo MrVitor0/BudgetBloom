@@ -42,12 +42,13 @@
       if(currentStatement > lastMonthStatement){
         return {
           greater: true,
-          difference: ((currentStatement - lastMonthStatement) / lastMonthStatement) * 100
+          difference: Math.round(((currentStatement - lastMonthStatement) / lastMonthStatement) * 100)
         }
       }
+      
       return {
         greater: false,
-        difference: ((lastMonthStatement - currentStatement) / lastMonthStatement) * 100
+        difference: Math.round(((lastMonthStatement - currentStatement) / lastMonthStatement) * 100)
       }
     });
 
@@ -115,18 +116,19 @@
       }
     });
     //create a method
-    function filterData(statement){
-      let filteredData = []
-      for (let i = 1; i <= 12; i++) {
-        let month = i < 10 ? '0' + i : i
-        let monthData = statement.find(item => item.reference.slice(5, 7) === month)
-        if (monthData) {
-          filteredData.push(monthData.amount)
-        } else {
-          filteredData.push(0)
+    function filterData(statement) {
+      const filteredData = Array(12).fill(0);
+
+      statement.forEach((item) => {
+        const month = parseInt(item.reference.slice(5, 7), 10);
+        if (!isNaN(month) && month >= 1 && month <= 12) {
+          // Verifique se o mês está dentro do intervalo válido (1 a 12)
+          filteredData[month - 1] = item.amount;
         }
-      }
-      return filteredData
+      });
+
+      console.log(filteredData);
+      return filteredData;
     }
     function getMonthLabels() {
       const date = new Date(0); // Use uma data de exemplo (por exemplo, janeiro)
@@ -146,6 +148,7 @@
 
     // Watcher para atualizar os dados do gráfico quando statements mudar
     watch(() => props.statements, (newStatements) => {
+      console.log('statements changed', newStatements);
       if (stockChart) {
         //for each month, from 01 to 12 get the corresponding "amount" value, if doesn't exist, set to 0
         stockChart.data.datasets[0].data = filterData(newStatements); 

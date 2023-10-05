@@ -25,17 +25,20 @@
                           <font-awesome-icon icon="calendar-days" class="text-white text-5xl p-6" />
                         </div>
                         <div class="text-md text-gray-700 font-medium mt-2">
-                          Update Current Credit Statement
+                            {{ $t('credit.cards.current_statements.title') }}
                         </div>
                         <div class="text-xs font-light text-gray-500 mb-5 mt-1">
-                           Your balance doesn't match your real balance? <br/> Update it here!
+                            {{ $t('credit.cards.current_statements.description') }}
                         </div>
                         <div class="w-64">
-                          <BasicButton @click="showModal(0)" active="true" text="Increase Statement" icon="edit" />
+                          <BasicButton @click="showModal(0)" active="true" text="credit.cards.current_statements.button" icon="edit" />
                         </div> 
                     </div>
                 </div>
             </div>
+
+
+       
              
             <!-- ACCOUNT BALANCE -->
             <div class="w-full md:w-1/2 lg:w-1/3 mb-2 lg:mb-5">
@@ -45,13 +48,13 @@
                         <font-awesome-icon icon="calendar-plus" class="text-white text-5xl p-6" />
                         </div>
                         <div class="text-md text-gray-700 font-medium mt-2">
-                        Update Older Statements
+                            {{ $t('credit.cards.past_statements.title') }}
                         </div>
                         <div class="text-xs font-light text-gray-500 mb-5 mt-1">
-                        Your balance doesn't match your real balance? <br/> Update it here!
+                            {{ $t('credit.cards.past_statements.description') }}
                         </div>
                         <div class="w-64">
-                        <BasicButton  @click="showModal(1)" active="true" text="Update Statement" icon="edit" />
+                        <BasicButton  @click="showModal(1)" active="true" text="credit.cards.past_statements.button" icon="edit" />
                         </div>  
                     </div>
                 </div>
@@ -109,7 +112,7 @@
 
        <!-- Modals-->
        <BBModal>
-            <updateCurrentStatement @updateCurrentStatement="updateCurrentStatement" :currentStatement="this.statements.current_statement" v-if="this.currentModal == 0" />
+            <updateCurrentStatement @updateCurrentStatement="updateCurrentStatement" :currentStatement="this.currentStatement" v-if="this.currentModal == 0" />
             <updateOlderStatements  @updateStatement="updateStatement" v-if="this.currentModal == 1" />
         </BBModal>
      </div>
@@ -155,7 +158,16 @@
      methods: {
         ...mapActions('modal', ['showInputModal']), // Importante: "modal" é o namespace do módulo no store
         async updateCurrentStatement(newStatement){
-            this.statements.current_statement = newStatement
+            //find in this.statements the one that corresponds to the current month
+            let currentDate = PWUtils.getCurrentDate('credit');
+            // Extract year and month from currentDate
+            const currentDateYearMonth = currentDate.slice(0, 7); // Assuming currentDate is in 'YYYY-MM-DD' format
+            //find the index of the current statement and update in the array
+            let index = this.statements.findIndex(item => item.reference.slice(0, 7) === currentDateYearMonth)
+            this.statements[index] = newStatement
+
+            console.log(this.statements, newStatement?.amount)
+            this.currentBillAmount = BBMoney.toCurrency(newStatement?.amount || 0);
         },
         async updateStatement(newStatement){
             this.statements.current_statement = newStatement

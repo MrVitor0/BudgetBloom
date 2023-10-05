@@ -54,6 +54,32 @@
         }
     }, 
     "credit": {
+        "cards": {
+            "current_statements": {
+                "title": "Informar nova compra",
+                "description": "Fez uma nova compra no crédito? Adicione a sua fatura atual.",
+                "button": "Adicionar compra",
+                "popup": {
+                    "title": "Adicionar compra",
+                    "label1": {
+                        "text": "Qual o nome da compra?",
+                        "placeholder": "Informe o título (ex: Lanchonete)"
+                    },
+                    "label2": {
+                        "text": "Qual o valor?"
+                    },
+                    "description": "Informe o valor total da sua fatura atual."
+                }
+            },
+            "past_statements": {
+                "title": "Atualizar fatura anterior",
+                "description": "Compra não informada? Informe diretamente o valor total ou unitário por aqui.",
+                "button": "Atualizar fatura"
+            },
+            "button": "Salvar",
+            "close": "Fechar",
+            "warning": "Por favor, preencha todos os campos."
+        },
         "charts": {
             "title": "Faturas Anteriores",
             "info": {

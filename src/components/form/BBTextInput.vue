@@ -3,7 +3,7 @@
         :id="inputId"
         :type="type"
         :class="inputClasses"
-        :placeholder="placeholder"
+        :placeholder="$t(placeholder)"
         @focus="isFocused = true"
         @blur="isFocused = false"
         v-model="inputValue"
