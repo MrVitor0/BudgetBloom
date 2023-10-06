@@ -74,10 +74,26 @@
             "past_statements": {
                 "title": "Atualizar fatura anterior",
                 "description": "Compra não informada? Informe diretamente o valor total ou unitário por aqui.",
-                "button": "Atualizar fatura"
+                "button": "Atualizar fatura",
+                "popup": {
+                    "title": "Adicionar compra",
+                    "label1": {
+                        "text": "Qual é o mês da fatura?",
+                        "placeholder": "Informe o título (ex: Lanchonete)"
+                    },
+                    "label2": {
+                        "text": "Qual o nome da compra?",
+                        "placeholder": "Informe o título (ex: Lanchonete)"
+                    },
+                    "label3": {
+                        "text": "Qual o valor?"
+                    },
+                    "description": "Informe o valor total da sua fatura atual."
+                }
             },
             "button": "Salvar",
             "close": "Fechar",
+            "saved" : "Salvo com sucesso!",
             "warning": "Por favor, preencha todos os campos."
         },
         "charts": {
@@ -85,6 +101,7 @@
             "info": {
                 "comparisson": "maior",
                 "comparisson_two": "menor",
+                "lot": "Muito",
                 "description": "que o último mês"
             }
         }

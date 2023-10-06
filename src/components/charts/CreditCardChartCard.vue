@@ -1,8 +1,8 @@
 <template>
     <div class="rounded-lg bg-white shadow-md p-6">
       <h2 class="text-xl font-semibold">{{ $t('credit.charts.title') }}</h2>
-      <h1 class="text-gray-500 mb-2"  v-if="billStatistics?.greater"> <font-awesome-icon icon="arrow-up" class="text-md pr-1 text-red-500" /> <b>{{ billStatistics?.difference }}% {{ $t('credit.charts.info.comparisson') }}</b>  {{ $t('credit.charts.info.description') }}</h1>
-       <h1 class="text-gray-500 mb-2" v-else > <font-awesome-icon icon="arrow-down" class="text-md pr-1 text-green-500" /> <b>{{ billStatistics?.difference }}% {{ $t('credit.charts.info.comparisson_two') }}</b>  {{ $t('credit.charts.info.description') }}</h1>
+      <h1 class="text-gray-500 mb-2"  v-if="billStatistics?.greater"> <font-awesome-icon icon="arrow-up" class="text-md pr-1 text-red-500" /> <b>{{ $t(billStatistics?.difference || '0%') }} {{ $t('credit.charts.info.comparisson') }}</b>  {{ $t('credit.charts.info.description') }}</h1>
+       <h1 class="text-gray-500 mb-2" v-else > <font-awesome-icon icon="arrow-down" class="text-md pr-1 text-green-500" /> <b>{{ $t(billStatistics?.difference || '0%') }} {{ $t('credit.charts.info.comparisson_two') }}</b>  {{ $t('credit.charts.info.description') }}</h1>
       <canvas ref="chartCanvas"></canvas>
     </div>
   </template>
@@ -39,18 +39,37 @@
       const lastMonthYearMonth = lastMonthDate.slice(0, 7); // Assuming currentDate is in 'YYYY-MM-DD' format
       let currentStatement = (props.statements.find(item => item.reference.slice(0, 7) === currentDateYearMonth))?.amount || 0
       let lastMonthStatement = (props.statements.find(item => item.reference.slice(0, 7) === lastMonthYearMonth))?.amount || 0;
-      if(currentStatement > lastMonthStatement){
+      if (lastMonthStatement === 0) {
         return {
-          greater: true,
-          difference: Math.round(((currentStatement - lastMonthStatement) / lastMonthStatement) * 100)
+          greater: false,
+          difference: 0
         }
       }
-      
+      let difference = Math.round(((currentStatement - lastMonthStatement) / lastMonthStatement) * 100);
+      // Limit difference to a maximum of 200%
+      difference = Math.min(difference, 200);
+      if (currentStatement > lastMonthStatement) {
+        return {
+          greater: true,
+          difference: difference == 200 ? "credit.charts.info.lot" : difference + "%"
+        }
+      }
       return {
         greater: false,
-        difference: Math.round(((lastMonthStatement - currentStatement) / lastMonthStatement) * 100)
+        difference: difference == 200 ? "credit.charts.info.lot" : difference + "%"
       }
     });
+
+
+    const isCurrentMonth = (value, index) => {
+      //check witch month is the current, using the number, then check if index i is equal to the current month
+      let date = new Date();
+      let month = date.getMonth();
+      if (month == index) {
+        return true;
+      }
+      
+    };
 
 
     onMounted(() => {
@@ -66,9 +85,10 @@
           datasets: [
             {
               label: 'Bill',
-              data: data, // Inicialmente vazio, será preenchido pelos dados de props.statements
+              data: data, 
               borderColor: '#a855f7',
               fill: true,
+              pointBackgroundColor: data.map((value,index) => isCurrentMonth(value, index) ? '#ca3167' : '#a855f7'), // Define a cor do ponto condicionalmente
             },
           ],
         },
@@ -118,7 +138,6 @@
     //create a method
     function filterData(statement) {
       const filteredData = Array(12).fill(0);
-
       statement.forEach((item) => {
         const month = parseInt(item.reference.slice(5, 7), 10);
         if (!isNaN(month) && month >= 1 && month <= 12) {
@@ -127,7 +146,7 @@
         }
       });
 
-      console.log(filteredData);
+      //console.log(filteredData);
       return filteredData;
     }
     function getMonthLabels() {
@@ -148,7 +167,7 @@
 
     // Watcher para atualizar os dados do gráfico quando statements mudar
     watch(() => props.statements, (newStatements) => {
-      console.log('statements changed', newStatements);
+     // console.log('statements changed', newStatements);
       if (stockChart) {
         //for each month, from 01 to 12 get the corresponding "amount" value, if doesn't exist, set to 0
         stockChart.data.datasets[0].data = filterData(newStatements); 

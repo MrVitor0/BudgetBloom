@@ -113,7 +113,7 @@
        <!-- Modals-->
        <BBModal>
             <updateCurrentStatement @updateCurrentStatement="updateCurrentStatement" :currentStatement="this.currentStatement" v-if="this.currentModal == 0" />
-            <updateOlderStatements  @updateStatement="updateStatement" v-if="this.currentModal == 1" />
+            <updateOlderStatements  @updateStatement="updateStatement" :statements="this.statements"  v-if="this.currentModal == 1" />
         </BBModal>
      </div>
      <!-- PROFILE SETTINGS AREA -->
@@ -164,32 +164,58 @@
             const currentDateYearMonth = currentDate.slice(0, 7); // Assuming currentDate is in 'YYYY-MM-DD' format
             //find the index of the current statement and update in the array
             let index = this.statements.findIndex(item => item.reference.slice(0, 7) === currentDateYearMonth)
-            this.statements[index] = newStatement
-
-            console.log(this.statements, newStatement?.amount)
+             //if index does not exist, create a new statement
+             if(index == -1){
+                this.statements.push(newStatement)
+            }else{
+                this.statements[index] = newStatement
+            }
             this.currentBillAmount = BBMoney.toCurrency(newStatement?.amount || 0);
+            this.currentStatement =  newStatement;
+
+            console.log({
+                all: this.statements,
+                old: this.currentStatement
+            })
         },
         async updateStatement(newStatement){
-            this.statements.current_statement = newStatement
+            //find in this.statements the one that corresponds to the current month
+            let purchaseDate = newStatement.month;
+            // Extract year and month from currentDate
+            const currentDateYearMonth = purchaseDate.slice(0, 7); // Assuming currentDate is in 'YYYY-MM-DD' format
+            //find the index of the current statement and update in the array
+            let index = this.statements.findIndex(item => item.reference.slice(0, 7) === currentDateYearMonth)
+            //if index does not exist, create a new statement
+            if(index == -1){
+                this.statements.push(newStatement)
+            }else{
+                this.statements[index] = newStatement
+            }
+            //check if is the same month
+            if(currentDateYearMonth == PWUtils.getCurrentDate('credit').slice(0, 7)){
+                this.currentBillAmount = BBMoney.toCurrency(newStatement?.amount || 0);
+                this.currentStatement =  this.statements.find(item => item.reference.slice(0, 7) === currentDateYearMonth);
+            }
+            console.log({
+                all: this.statements,
+                old: this.currentStatement
+            })
         },
         async fetchStatementData(){
             const response = await this.$api.get('/api/credit/user/bill/purchase/list')
             let currentDate = PWUtils.getCurrentDate('credit');
-           
-            if (response.data) {
+            if (response?.data?.results.length > 0) {
                 // Extract year and month from currentDate
                 const currentDateYearMonth = currentDate.slice(0, 7); // Assuming currentDate is in 'YYYY-MM-DD' format
-                let currentStatement = response.data.find(item => item.reference.slice(0, 7) === currentDateYearMonth);
+                let currentStatement = response?.data?.results.find(item => item.reference.slice(0, 7) === currentDateYearMonth);
                 if (currentStatement) {
                     this.currentStatement = currentStatement;
-                } else {
-                    //PWUtils.PWNotification('warning', 'No purchases found for the current year and month');
                 }
                 this.currentBillAmount = BBMoney.toCurrency(currentStatement?.amount || 0);
-            } else {
-                PWUtils.PWNotification('error', 'Error while fetching data');
+            }else{
+                this.currentBillAmount = BBMoney.toCurrency(0);
             }
-           this.statements = response?.data || [];
+           this.statements = response?.data?.results || [];
         },
         showModal(modalIndex) {
           this.currentModal = modalIndex;

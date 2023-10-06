@@ -72,21 +72,14 @@
       async submitInput() {
         if(this.inputValue && typeof this.currentStatement == 'object'){
           let inputValue = BBMoney.toDouble(this.inputValue)
-          let currentAmount = BBMoney.toDouble(this.currentStatement.amount)
+          let currentAmount = BBMoney.toDouble(this.currentStatement?.amount || 0)
           if(typeof currentAmount !== 'number') currentAmount = 0
 
           let result = BBMoney.toDouble(currentAmount + inputValue)
           let name = this.nameInput
-          console.log({
-            inputValue,
-            currentAmount,
-            currentStatement: this.currentStatement,
-            name,
-         
-          })
 
 
-          let credit = this.currentStatement.credit
+          let credit = this.currentStatement?.credit || []
           const response = await this.$api.post('/api/credit/user/bill/purchase/create', {
             name: name,
             amount: inputValue,
@@ -104,6 +97,10 @@
             createdAt: response?.data?.bill.updatedAt,
           })
 
+          //get current month and year number
+          let month = (new Date()).getMonth() + 1 //getMonth() returns 0-11
+          let year = (new Date()).getFullYear()
+
 
           let newStatement = {
             amount: result,
@@ -111,7 +108,7 @@
             id: response?.data?.bill.id,
             isClosed: false,
             isPaid: false,
-            month: this.currentStatement.month,
+            month: PWUtils.createNewBillDate(month, year),
             reference: response?.data?.bill.reference,
             updatedAt: response?.data?.bill.updatedAt,
             createdAt: response?.data?.bill.createdAt,

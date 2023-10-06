@@ -52,6 +52,25 @@ class PWUtils {
     }
 
     /**
+     * @description This method is used to format a date
+     * @param {*} month 
+     * @param {*} year 
+     * @returns 
+     */
+    static createNewBillDate(month, year){
+        try {
+            month = parseInt(month);
+            year = parseInt(year);
+            if(month < 1 || month > 12 || year < 2000 || year > 2100){
+                return false;
+            }
+            return new Date(year, month, 0).toISOString();
+        } catch (error) {
+            throw new Error('Invalid month or year');
+        }
+    }
+
+    /**
      * @description This method is used to show a notification
      * @param {*} title 
      * @param {*} type 

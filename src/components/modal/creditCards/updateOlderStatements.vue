@@ -6,9 +6,9 @@
         </div>
         <div class="md:w-2/3 p-5 text-center md:text-start">
             <div>
-                <h2 class="text-xl font-semibold mb-4">Update Older Statements</h2>
-                <label for="input" class="block mb-2">How much to increase?</label>
-                <div class="relative w-full mt-3">
+                <h2 class="text-xl font-semibold mb-4">{{ $t('credit.cards.past_statements.popup.title') }}</h2>
+                <label for="input" class="block my-2">{{ $t('credit.cards.past_statements.popup.label1.text') }}</label>
+                <div class="relative w-full">
                   <div class="absolute left-3 top-1/2 -translate-y-1/2">
                     <FontAwesomeIcon icon="calendar-days" class="text-md text-purple-400" />
                   </div>
@@ -18,7 +18,18 @@
                     <BBDateInput type="Year" v-model="yearInput"  />
                   </div>
                 </div>
-                <div class="relative w-full mt-3">
+
+                <label for="input" class="block my-2">{{ $t('credit.cards.past_statements.popup.label2.text') }}</label>
+                <div class="relative w-full">
+                  <div class="absolute left-3 top-1/2 -translate-y-1/2">
+                    <FontAwesomeIcon icon="tag" class="text-md text-purple-400" />
+                  </div>
+                  <BBTextInput placeholder="credit.cards.current_statements.popup.label1.placeholder" v-model="nameInput" class="pl-8" />
+                </div>
+             
+
+                <label for="input" class="block my-2">{{ $t('credit.cards.past_statements.popup.label3.text') }}</label>
+                <div class="relative w-full ">
                   <div class="absolute left-3 top-1/2 -translate-y-1/2">
                     <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                   </div>
@@ -30,13 +41,13 @@
                     class="bg-purple-800 text-white px-4 py-2 rounded-md  hover:bg-purple-700"
                     @click="submitInput"
                 >
-                    Save  <FontAwesomeIcon class="pl-1" icon="save" />
+                {{ $t('credit.cards.button') }}  <FontAwesomeIcon class="pl-1" icon="save" />
                 </button>
                 <button
                     class="ml-2 border px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300"
                     @click="closeModal"
                 >
-                    Close <FontAwesomeIcon class="pl-1" icon="times" />
+                {{ $t('credit.cards.close') }} <FontAwesomeIcon class="pl-1" icon="times" />
                 </button>
             </div>
         </div>
@@ -48,12 +59,14 @@
   import BBDateInput from '@/components/form/BBDateInput';
   import BBMoney from '@/utils/BBMoney'
   import PWUtils from '@/utils/PWUtils'
+  import BBTextInput from '@/components/form/BBTextInput.vue';
   import { mapActions } from 'vuex';
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   export default {
     components: {
       FontAwesomeIcon,
       BBDateInput,
+      BBTextInput,
       BBPriceInput,
     },
     data() {
@@ -63,37 +76,62 @@
         yearInput: (new Date()).getFullYear(),
       };
     },
+    props: {
+      statements: {
+        type: Object,
+        default:  () => ({})
+      },
+    },
     methods: {
       ...mapActions('modal', ['hideInputModal']),
       async submitInput() {
-        //!!! This is temporary, will be changed in the future
-        //check if the year and the month are the same as the current date
-        let today = new Date();
-        let currentMonth = today.getMonth() + 1;
-        let currentYear = today.getFullYear();
+        if(this.inputValue && typeof this.statements == 'object' && this.monthInput && this.yearInput){
 
-        console.log({
-          monthInput: this.monthInput,
-          yearInput: this.yearInput,
-          currentMonth: currentMonth,
-          currentYear: currentYear
-        })
+          let inputValue = BBMoney.toDouble(this.inputValue)
 
-        if(this.monthInput == currentMonth && this.yearInput == currentYear){
-          if(this.inputValue !== '' && this.inputValue !== undefined && this.inputValue !== null){
-            let inputValue = BBMoney.toDouble(this.inputValue)
-            const response = await this.$api.put('creditcard', {
-              current_statement:  inputValue
-            })
-            PWUtils.PWNotification('success', 'Statement Saved!');
-            this.$emit('updateStatement', inputValue);
-            this.hideModal();
-            return response
-          }else{
-            PWUtils.PWNotification('warning', 'Please fill all the fields!');
+          let date = PWUtils.createNewBillDate(this.monthInput, this.yearInput)
+          const _date = date.slice(0, 7); // Assuming currentDate is in 'YYYY-MM-DD' format
+          //find the index of the current statement and update in the array
+          let index = this.statements.findIndex(item => item.reference.slice(0, 7) === _date)
+
+          let currentAmount = BBMoney.toDouble(this.statements[index]?.amount || 0)
+          if(typeof currentAmount !== 'number') currentAmount = 0
+          let result = BBMoney.toDouble(currentAmount + inputValue)
+          let name = this.nameInput
+       
+          let credit = this.statements[index]?.credit || []
+          const response = await this.$api.post('/api/credit/user/bill/purchase/create', {
+            name: name,
+            amount: inputValue,
+            reference: date
+          })
+          credit.push({
+            amount: response?.data?.purchase.amount,
+            name: response?.data?.purchase.name,
+            id: response?.data?.purchase.id,
+            id_credit: response?.data?.bill.id,
+            reference: response?.data?.purchase.reference,
+            updatedAt: response?.data?.bill.updatedAt,
+            //because the createdAt is the same as the bill updatedAt
+            createdAt: response?.data?.bill.updatedAt,
+          })
+          let newStatement = {
+            amount: result,
+            credit: credit,
+            id: response?.data?.bill.id,
+            isClosed: false,
+            isPaid: false,
+            month: date,
+            reference: response?.data?.bill.reference,
+            updatedAt: response?.data?.bill.updatedAt,
+            createdAt: response?.data?.bill.createdAt,
           }
+          PWUtils.PWNotification('success', this.$t('credit.cards.saved'));
+          this.$emit('updateStatement', newStatement);
+          this.hideModal();
+          return response
         }else{
-          this.hideModal()
+          PWUtils.PWNotification('warning', this.$t('credit.cards.warning'));
         }
       },
       hideModal() {
