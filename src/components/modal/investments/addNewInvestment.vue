@@ -7,10 +7,10 @@
       <div class="md:w-2/3 p-5 text-center md:text-start">
           <div>
               <!-- Investment Name -->
-              <h2 class="text-xl font-semibold mb-4">Add New Investment</h2>
-              <label for="input" class="block mb-2">How much to increase?</label>
+              <h2 class="text-xl font-semibold mb-4">{{ $t('investments.popup.title') }}</h2>
+              <label for="input" class="block mb-2">{{ $t('investments.popup.description') }}</label>
               <BBInputHandler>
-                <BBTextInput v-model="investmentName" placeholder="Itaú Unibanco S.a" icon="bank" class="mb-2" />
+                <BBTextInput v-model="investmentName" :placeholder="$t('investments.popup.label1.placeholder')" icon="bank" class="mb-2" />
               </BBInputHandler>
               <!--INVESTMENT TYPE -->
               <div class="relative w-full">
@@ -21,21 +21,21 @@
                   <BBSelectInput
                     v-model="investmentType"
                     :options="investmentOptions"
-                    placeholder="Select an investment"
+                    :placeholder="$t('investments.popup.label2.placeholder')"
                     class="mb-2 pl-9"
                   />
               </div>
               <!--INITIAL VALUES -->
               <div class="md:flex md:mb-3">
                 <div class="relative w-full pr-2 text-start ">
-                  <label for="input" class="block mb-1 mt-3">What is the initial aport?</label>
+                  <label for="input" class="block mb-1 mt-3">{{ $t('investments.popup.label3.text') }}</label>
                   <div class="absolute left-3 pt-11 -translate-y-1/2">
                     <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                   </div>
                   <BBPriceInput v-model="aport" class="pl-8 rounded-lg" />
                 </div>
                 <div class="relative w-full text-start">
-                  <label for="input" class="block mb-1 mt-3">What is the objetive?</label>
+                  <label for="input" class="block mb-1 mt-3">{{ $t('investments.popup.label4.text') }}</label>
                   <div class="absolute left-3 pt-11 -translate-y-1/2">
                     <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                   </div>
@@ -51,7 +51,7 @@
                   <BBTextArea 
                     v-model="description" 
                     maxlength="75"
-                    placeholder="Please, inform a short comment. Up to 75 characters."
+                    :placeholder="$t('investments.popup.label5.placeholder')"
                   />
               </div>
           </div>
@@ -60,13 +60,13 @@
                   class="bg-purple-800 text-white px-4 py-2 rounded-md  hover:bg-purple-700"
                   @click="submitInput"
               >
-                  Save  <FontAwesomeIcon class="pl-1" icon="save" />
+                  {{ $t('investments.generic.save') }}  <FontAwesomeIcon class="pl-1" icon="save" />
               </button>
               <button
                   class="ml-2 border px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300"
                   @click="closeModal"
               >
-                  Close <FontAwesomeIcon class="pl-1" icon="times" />
+              {{ $t('investments.generic.close') }} <FontAwesomeIcon class="pl-1" icon="times" />
               </button>
           </div>
       </div>

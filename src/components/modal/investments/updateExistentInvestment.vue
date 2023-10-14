@@ -7,8 +7,8 @@
       <div class="md:w-2/3 p-5 text-center md:text-start">
           <div>
               <!-- Investment Name -->
-              <h2 class="text-xl font-semibold mb-4">Track New Aport</h2>
-              <label for="input" class="block mb-2">What is the investment?</label>
+              <h2 class="text-xl font-semibold mb-4">{{ $t('investments.texts.track_aport') }}</h2>
+              <label for="input" class="block mb-2">{{  $t('investments.texts.track_aport_description') }}</label>
               <!--INVESTMENT TYPE -->
               <div class="relative w-full">
                   <!-- Adicionando um ícone ao lado do input original -->
@@ -18,14 +18,14 @@
                   <BBSelectInput
                     v-model="investmentSelection"
                     :options="investmentOptions"
-                    placeholder="Select an investment"
+                    :placeholder="$t('investments.popup.label2.placeholder')"
                     class="mb-2 pl-9"
                   />
               </div>
               <!--INITIAL VALUES -->
               <div class="md:flex md:mb-3">
                 <div class="relative w-full pr-2 text-start ">
-                  <label for="input" class="block mb-1 mt-3">How much is the new aport?</label>
+                  <label for="input" class="block mb-1 mt-3">{{ $t('investments.popup.label3.text') }}</label>
                   <div class="absolute left-3 pt-10 -translate-y-1/2">
                     <FontAwesomeIcon icon="money-bill-trend-up" class="text-md text-purple-400" />
                   </div>
@@ -38,13 +38,13 @@
                   class="bg-purple-800 text-white px-4 py-2 rounded-md  hover:bg-purple-700"
                   @click="submitInput"
               >
-                  Save  <FontAwesomeIcon class="pl-1" icon="save" />
+                  {{ $t('investments.generic.save') }}  <FontAwesomeIcon class="pl-1" icon="save" />
               </button>
               <button
                   class="ml-2 border px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300"
                   @click="closeModal"
               >
-                  Close <FontAwesomeIcon class="pl-1" icon="times" />
+                  {{ $t('investments.generic.close') }} <FontAwesomeIcon class="pl-1" icon="times" />
               </button>
           </div>
       </div>

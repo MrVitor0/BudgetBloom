@@ -111,6 +111,42 @@
             "progress": "Progresso Geral",
             "streak": "Dias Investindo",
             "balance": "Total Investido"
+        },
+        "texts": {
+            "track_investment": "Acompanhar Investimento",
+            "track_investment_description": "Fez um novo investimento? Adicione ele aqui.",
+            "add_investment": "Adicionar Investimento",
+
+            "track_aport": "Acompanhar Aporte",
+            "track_aport_description": "Fez um novo Aporte? Adicione ele aqui.",
+            "add_aport": "Adicionar Aporte"
+        },
+        "popup": {
+            "title": "Adicionar Investmento",
+            "description": "Preencha os campos abaixo para adicionar um novo investimento.",
+            "label1": {
+                "text": "Qual o nome do investimento?",
+                "placeholder": "Informe o título (ex: Itaú Unibanco S.a)"
+            },
+            "label2": {
+                "placeholder": "Selecione um investimento"
+            },
+            "label3": {
+                "text": "Quanto foi aportado?"
+            },
+            "label4": {
+                "text": "Qual a meta?"
+            },
+            "label5": {
+                "placeholder": "Por favor, informe uma breve descrição de até 75 caracteres."
+            }
+        },
+        "generic": {
+            "completed": "Concluído",
+            "total_days": "Total de dias",
+            "start_date": "Data de Início",
+            "save": "Salvar",
+            "close": "Fechar"
         }
     }
 }

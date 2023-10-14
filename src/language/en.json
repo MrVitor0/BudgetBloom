@@ -61,5 +61,48 @@
                 "description": "than the last month"
             }
         }
+    },
+    "investments": {
+        "cards": {
+            "progress": "General Progress",
+            "streak": "Days",
+            "balance": "Total Balance"
+        },
+        "texts": {
+            "track_investment": "Track Investment",
+            "track_investment_description": "Did a new investment? Add it here.",
+            "add_investment": "Add a Investment",
+
+            "track_aport": "Track Aport",
+            "track_aport_description": "Did a new aport? Add it here.",
+            "add_aport": "Add a Aport"
+        },
+        "popup": {
+            "title": "Add a new investment",
+            "description": "Please, fill the fields below to add a new investment.",
+            "label1": {
+                "text": "What is the name of the investment?",
+                "placeholder": "Inform the name of the investment"
+            },
+            "label2": {
+                "placeholder": "Choose the type of investment"
+            },
+            "label3": {
+                "text": "How much you invested?"
+            },
+            "label4": {
+                "text": "Your meta is to reach how much?"
+            },
+            "label5": {
+                "placeholder": "Please, add a description up to 75 characters."
+            }
+        },
+        "generic": {
+            "completed": "completed",
+            "total_days": "Total days",
+            "start_date": "Start date",
+            "save": "Save",
+            "close": "Close"
+        }
     }
 }

@@ -21,13 +21,13 @@
             <div class="bg-gray-200 rounded-xl p-3  mr-1">
                 <h2 class="text-sm font-semibold text-gray-800">R${{ aport }} <span class="text-gray-600">/ R${{ objective }}</span></h2>
                 <div class="flex-end pt-1">
-                    <h2 class="text-sm font-semibold text-gray-800"><BasicPill size="sm" color="bg-success" text-color="text-green-800" icon="hide" :text="i_progress + '% Completed'"  /></h2>          
+                    <h2 class="text-sm font-semibold text-gray-800"><BasicPill size="sm" color="bg-success" text-color="text-green-800" icon="hide" :text="i_progress + '% ' + $t('investments.generic.completed')"  /></h2>          
                 </div>
             </div>
             <div class="flex-grow" />
             <div class="flex-end bg-gray-200 rounded-xl p-3">
-              <h2 class="text-sm font-semibold text-gray-700 ">Start Date: <span class="text-gray-600">{{  formatDate(createdAt) }}</span></h2>
-              <p class="text-gray-600">Total Days: {{ calcDays(createdAt) }}</p>
+              <h2 class="text-sm font-semibold text-gray-700 ">{{ $t('investments.generic.start_date') }}: <span class="text-gray-600">{{  formatDate(createdAt) }}</span></h2>
+              <p class="text-gray-600">{{ $t('investments.generic.total_days') }}: {{ calcDays(createdAt) }}</p>
             </div>
           </div>
           <div class="pt-2 pb-2 pl-1 whitespace-normal">

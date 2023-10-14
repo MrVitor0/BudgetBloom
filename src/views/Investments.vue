@@ -19,13 +19,13 @@
                 <font-awesome-icon icon="money-bill-trend-up" class="text-white text-5xl p-6" />
                 </div>
                 <div class="text-md text-gray-700 font-medium mt-2">
-                  Track New Investment
+                  {{ $t('investments.texts.track_investment') }}
                 </div>
                 <div class="text-xs font-light text-gray-500 mb-5 mt-1">
-                  Want to add a new investment to track? Click the button below.
+                  {{ $t('investments.texts.track_investment_description') }}
                 </div>
                 <div class="w-64">
-                    <BasicButton @click="showModal(0)"  active="true" text="Add New Investment" icon="plus" />
+                    <BasicButton @click="showModal(0)"  active="true" :text="$t('investments.texts.add_investment')" icon="plus" />
                 </div>  
             </div>
           </div>
@@ -40,13 +40,13 @@
                 <font-awesome-icon icon="money-bill-transfer" class="text-white text-5xl p-6" />
                 </div>
                 <div class="text-md text-gray-700 font-medium mt-2">
-                  Track New Apport
+                  {{ $t('investments.texts.track_aport') }}
                 </div>
                 <div class="text-xs font-light text-gray-500 mb-5 mt-1">
-                  Want to update your apport? Click the button below.
+                  {{ $t('investments.texts.track_aport_description') }}
                 </div>
                 <div class="w-64">
-                    <BasicButton @click="showModal(1)" text="Update Investment" icon="pen-to-square" />
+                    <BasicButton @click="showModal(1)" :text=" $t('investments.texts.add_aport')" icon="pen-to-square" />
                 </div> 
             </div>
           </div>
