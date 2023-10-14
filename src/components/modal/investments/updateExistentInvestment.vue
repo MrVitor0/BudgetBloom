@@ -29,20 +29,8 @@
                   <div class="absolute left-3 pt-10 -translate-y-1/2">
                     <FontAwesomeIcon icon="money-bill-trend-up" class="text-md text-purple-400" />
                   </div>
-                  <BBPriceInput v-model="initialAport" class="pl-9 rounded-lg" />
+                  <BBPriceInput v-model="aport" class="pl-9 rounded-lg" />
                 </div>
-              </div>
-              <!--SHORT DESCRIPTION -->
-              <div class="relative w-full">
-                  <!-- Adicionando um ícone ao lado do input original -->
-                  <div class="absolute left-3 top-2">
-                    <font-awesome-icon icon="comment" class="text-md text-purple-400" />
-                  </div>
-                  <BBTextArea 
-                    v-model="description" 
-                    maxlength="75"
-                    placeholder="Please, inform a short comment. Up to 75 characters."
-                  />
               </div>
           </div>
           <div class="mt-4">
@@ -66,7 +54,6 @@
 <script>
 import BBPriceInput from '@/components/form/BBPriceInput';
 import BBSelectInput from '@/components/form/BBSelectInput.vue';
-import BBTextArea from '@/components/form/BBTextArea.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BBMoney from '@/utils/BBMoney'
 import { mapActions } from 'vuex';
@@ -76,7 +63,6 @@ export default {
     FontAwesomeIcon,
     BBPriceInput,
     BBSelectInput,
-    BBTextArea,
   },
   props: {
     data: {
@@ -93,17 +79,16 @@ export default {
   data() {
     return {
       //form
-      description: '',
       investmentSelection: '',
-      initialAport: 0,
+      aport: 0,
       investmentOptions: []
     };
   },
   mounted() {
     this.investmentOptions = this.investments.map((investment) => {
       return {
-        label: investment.title,
-        date: investment.fromDate,
+        label: investment.name,
+        date: investment.updatedAt,
         value: investment.id,
       }
     })
@@ -121,18 +106,17 @@ export default {
         return investment.id === this.investmentSelection;
       });
 
-      if(investment && this.initialAport) {
-          const initialAport = BBMoney.toDouble(this.initialAport);
-          const originalFromBudget = BBMoney.toDouble(investment.fromBudget)
-          const updatedInvestment = {
-            ...investment,
-            fromDate: PWUtils.getCurrentDate(),
-            toAport: parseFloat(investment.toAport) + 1,
-            fromBudget: BBMoney.toDouble(initialAport + originalFromBudget)
-          };
-          this.$api.put(`/investments/${updatedInvestment.id}`, updatedInvestment).then(() => {
+      if(investment && this.aport) {
+          const initialAport = BBMoney.toDouble(this.aport);
+          const originalFromBudget = BBMoney.toDouble(investment.aport)
+          this.$api.put(`/api/investment/edit/${investment.id}`, {
+            aport: BBMoney.toDouble(initialAport + originalFromBudget)
+          }).then(() => {
             PWUtils.PWNotification('success', 'Track Saved Successfully!');
-            this.$emit('updateTask', updatedInvestment);
+            this.$emit('updateTask', {
+              ...investment,
+              aport: initialAport + originalFromBudget
+            });
             this.hideModal();
           }).catch((error) => {
             console.error('Erro ao salvar aporte:', error);

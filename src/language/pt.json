@@ -105,5 +105,12 @@
                 "description": "que o último mês"
             }
         }
+    },
+    "investments": {
+        "cards": {
+            "progress": "Progresso Geral",
+            "streak": "Dias Investindo",
+            "balance": "Total Investido"
+        }
     }
 }

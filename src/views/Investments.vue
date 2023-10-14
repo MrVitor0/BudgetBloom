@@ -4,9 +4,9 @@
         <div class="flex flex-wrap md:-mx-4">
          <!-- OVERVIEW AREA -->
         <div class="w-full md:w-2/2 lg:w-1/3 px-4 mb-5">
-            <price-card class="mb-5" title="Investment Balance" :amount="investmentwallet.investmentbalance?.value"  icon="vault" color="purple" />
-            <price-card class="mb-5" title="Passive Earnings" :amount="investmentwallet.accountbalance?.value" :percentage="investmentwallet.accountbalance?.percentage" icon="money-check-dollar" color="purple" />
-            <price-card title="Passive Incoming" :amount="investmentwallet.passiveincoming?.value" :percentage="investmentwallet.passiveincoming.percentage" icon="piggy-bank" color="purple" />
+            <price-card class="mb-5" :title="$t('investments.cards.balance')" :amount="investmentwallet.balance"  icon="vault" color="purple" />
+            <price-card class="mb-5" :title="$t('investments.cards.progress')" noFormat :amount="investmentwallet.progress" icon="money-check-dollar" color="purple" />
+            <price-card :title="$t('investments.cards.streak')" noFormat :amount="investmentwallet.streak"  icon="piggy-bank" color="purple" />
         </div>
 
          <!-- OVERVIEW AREA -->
@@ -59,14 +59,14 @@
         <div class="flex flex-wrap scroll-row cursor-grabbing md:cursor-auto">
             <div class="md:w-1/2 lg:w-1/3 px-3"  v-for="investment in sortedInvestments"  :key="investment.id">
                 <PlanningCard 
-                  :title="investment.title"
-                  :icon="investment.icon"
+                  :name="investment.name"
+                  icon="earth"
                   :subtitle="getOptionLabel(investment.subtitle)"
                   :description="investment.description"
-                  :fromBudget="formatCurrency(investment.fromBudget)"
-                  :toBudget="formatCurrency(investment.toBudget)"
-                  :toAport="investment.toAport"
-                  :fromDate="investment.fromDate"
+                  :aport="formatCurrency(investment.aport)"
+                  :objective="formatCurrency(investment.objective)"
+                  :aports="this.investments.length"
+                  :createdAt="investment.createdAt"
                   @edit="EditExistentInvestment(investment)"
                   @delete="deleteInvestment(investment)"
                 />
@@ -115,9 +115,9 @@
     computed: {
       sortedInvestments() {
         if(this.investments.length < 1) return [];
-        return this.investments.slice().sort((a, b) => {
-            const dateA = this.convertToDate(a.fromDate);
-            const dateB = this.convertToDate(b.fromDate);
+          return this.investments.slice().sort((a, b) => {
+            const dateA = new Date(a.updatedAt);
+            const dateB = new Date(b.updatedAt);
             return dateB - dateA;
         });
       },
@@ -129,18 +129,9 @@
         investments: [],
         investmentsType: MockInvestmentsType,
         investmentwallet: {
-          accountbalance: {
-            value: 0,
-            percentage: 10,
-          },
-          investmentbalance: {
-            value: 0,
-            percentage: 10,
-          },
-          passiveincoming: {
-            value: 0,
-            percentage: 10,
-          },
+          balance: 0,
+          progress: 0,
+          streak: 0,
         },
         progress: 95,
         selectedValue: '',
@@ -155,32 +146,71 @@
         if (PWUtils.validateInvestmentObject(message)) {
           const index = this.investments.findIndex((investment) => investment.id === message.id);
           this.investments[index] = message;
+          this.investmentwallet.balance = this.aportSum();
+          this.investmentwallet.progress = this.calcProgress();
+          this.investmentwallet.streak = this.calcStreak();
         }
       },
       trackNew(message){
         if (PWUtils.validateInvestmentObject(message)) {
           this.investments.push(message);
+          this.investmentwallet.balance = this.aportSum();
+          this.investmentwallet.progress = this.calcProgress();
+          this.investmentwallet.streak = this.calcStreak();
         }
+        
       },
       editExistent(message){
         if (PWUtils.validateInvestmentObject(message)) {
           const index = this.investments.findIndex((investment) => investment.id === message.id);
           this.investments[index] = message;
+          this.investmentwallet.balance = this.aportSum();
+          this.investmentwallet.progress = this.calcProgress();
+          this.investmentwallet.streak = this.calcStreak();
         }
       },
       convertToDate(dateString) {
         const [day, month, year] = dateString.split('/');
         return new Date(`${year}-${month}-${day}`);
       },
+      aportSum() {
+        return this.investments.reduce((acc, investment) => {
+          return acc + investment.aport;
+        }, 0);
+      },
+      calcProgress(){
+        let aportSum = 0;
+        let objectiveSum = 0;
+        for (let i = 0; i < this.investments.length; i++) {
+          aportSum += this.investments[i].aport;
+          objectiveSum += this.investments[i].objective;
+        }
+        return PWUtils.progressPercentage(aportSum, objectiveSum) + '%';
+      },
+      calcStreak(){
+         //streak is the days between the first investment and today, if there is no investment, streak is 0, find in investments
+         for (let i = 0; i < this.investments.length; i++) {
+            let date = new Date(this.investments[i].createdAt);
+            let today = new Date();
+            let diff = Math.abs(today - date);
+            let days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            if (this.investmentwallet.streak < days) {
+              this.investmentwallet.streak = days;
+            }
+          }
+          return this.investmentwallet.streak;
+      },
       async fetchData() {
         try {
-          const [investmentsResponse, investmentWalletResponse] = await Promise.all([
-            this.$api.get('/investments'),
-            this.$api.get('/investWallet')
-          ]);
+          const response = await this.$api.get('/api/investment/wallet/list/all');
 
-          this.investments = investmentsResponse.data;
-          this.investmentwallet = investmentWalletResponse.data[0];
+          console.log(response.data);
+
+          this.investments = response?.data?.investments;
+          this.investmentwallet.balance = response?.data?.amount;
+          //progress is the sum of all "aport" and "objective" of all investments divided by the number of investments
+          this.investmentwallet.progress = this.calcProgress();
+          this.investmentwallet.streak = this.calcStreak();
         } catch (error) {
           console.error('Erro ao carregar dados:', error);
         }
@@ -201,8 +231,14 @@
         this.showInputModal();
       },
       deleteInvestment(data) {
-        this.$api.delete(`/investments/${data.id}`).then(() => {
-          this.investments = this.investments.filter((investment) => investment.id !== data.id);
+        this.$api.delete(`/api/investment/delete/${data.id}`).then(() => {
+          //delete from array
+          const index = this.investments.findIndex((investment) => investment.id === data.id);
+          this.investments.splice(index, 1);
+          this.investmentwallet.balance = this.aportSum();
+          this.investmentwallet.progress = this.calcProgress();
+          this.investmentwallet.streak = this.calcStreak();
+          
           PWUtils.PWNotification('success', 'Investment Deleted!');
         }).catch(() => {
           PWUtils.PWNotification('error', 'Something went wrong!');

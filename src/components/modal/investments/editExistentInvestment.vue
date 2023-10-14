@@ -43,18 +43,6 @@
                     <BBPriceInput :value="nearestObjetive" v-model="nearestObjetive" class="pl-8 rounded-lg" />
                   </div>
                 </div>
-                 <!-- Investment Profit -->
-                 <div class="md:flex md:mb-3">
-                  <BBInputHandler icon="percentage" class="pr-1">
-                        <BBPriceInput :value="profitPercentage" v-model="profitPercentage" class="pl-8 rounded-lg" />
-                 </BBInputHandler>
-                  <div class="relative w-full text-start">
-                    <div class="absolute left-3 pt-11 -translate-y-1/2">
-                      <FontAwesomeIcon icon="calendar" class="text-md text-purple-400" />
-                    </div>
-                    <BBSelectInput :value="profitCalendarType" v-model="profitCalendarType" :options="profitCalendarTypeOptions" placeholder="Time Yield" class="mb-2 pl-9" />
-                  </div>
-                </div>
                 <!--SHORT DESCRIPTION -->
                 <div class="relative w-full">
                     <!-- Adicionando um ícone ao lado do input original -->
@@ -117,18 +105,10 @@
       return {
         //form
         description: this.data.description,
-        investmentName: this.data.title,
+        investmentName: this.data.name,
         investmentType: this.data.subtitle,
-        initialAport: BBMoney.toRaw(this.data.fromBudget),
-        nearestObjetive: BBMoney.toRaw(this.data.toBudget),
-
-        profitPercentage: this.data.profitPercentage,
-        profitCalendarType: this.data.profitCalendarType,
-        profitCalendarTypeOptions: [
-          { value: 'months', label: 'Per Year' },
-          { value: 'years', label: 'Per Month' },
-        ],
-
+        initialAport: BBMoney.toRaw(this.data.aport),
+        nearestObjetive: BBMoney.toRaw(this.data.objective),
         investmentOptions: investmentsType,
       };
     },
@@ -137,21 +117,16 @@
       submitInput() {
         let data = {
             id: this.data.id,
-            description: this.description,
-            icon: this.data.icon,
-            toAport: this.data.toAport,
-            fromDate: PWUtils.getCurrentDate(),
-            title: this.investmentName,
+            name: this.investmentName,
             subtitle: this.investmentType,
-
-            profitPercentage:  BBMoney.toDouble(this.profitPercentage),
-            profitCalendarType: this.profitCalendarType == null ? 'months' : this.profitCalendarType,
-
-            fromBudget: BBMoney.toDouble(this.initialAport),
-            toBudget: BBMoney.toDouble(this.nearestObjetive),
+            description: this.description,
+            aport: BBMoney.toDouble(this.initialAport),
+            objective: BBMoney.toDouble(this.nearestObjetive),
+            createdAt: this.data.createdAt,
+            updatedAt: PWUtils.getCurrentDate(),
         }
-        if (this.description && this.investmentName && this.investmentType && this.initialAport && this.nearestObjetive && this.profitPercentage && this.profitCalendarType) {
-          this.$api.put(`/investments/${this.data.id}`, data ).then(() => {
+        if (this.description && this.investmentName && this.investmentType && this.initialAport && this.nearestObjetive ) {
+          this.$api.put(`/api/investment/edit/${this.data.id}`, data ).then(() => {
             PWUtils.PWNotification('success', 'Investment Updated!');
             this.$emit('updateTask', data);
             this.hideModal();

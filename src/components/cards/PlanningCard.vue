@@ -6,7 +6,7 @@
               <font-awesome-icon :icon="icon" class="text-5xl text-purple-700" />
             </div> 
             <div class="flex-grow ml-1">
-              <h2 class="text-xl font-semibold text-gray-800">{{ title }}</h2>
+              <h2 class="text-xl font-semibold text-gray-800">{{ name }}</h2>
               <p class="text-gray-600">{{ subtitle }}</p>
             </div>
             <div class="self-start hidden md:block" @click="EditCurrentCard(id)">
@@ -19,33 +19,25 @@
           <!-- Body -->
           <div class="flex mt-5  ">
             <div class="bg-gray-200 rounded-xl p-3  mr-1">
-                <h2 class="text-sm font-semibold text-gray-800">R${{ fromBudget }} <span class="text-gray-600">/ R${{ toBudget }}</span></h2>
-                <p class="text-gray-600">Total Budget</p>
+                <h2 class="text-sm font-semibold text-gray-800">R${{ aport }} <span class="text-gray-600">/ R${{ objective }}</span></h2>
+                <div class="flex-end pt-1">
+                    <h2 class="text-sm font-semibold text-gray-800"><BasicPill size="sm" color="bg-success" text-color="text-green-800" icon="hide" :text="i_progress + '% Completed'"  /></h2>          
+                </div>
             </div>
             <div class="flex-grow" />
             <div class="flex-end bg-gray-200 rounded-xl p-3">
-              <h2 class="text-sm font-semibold text-gray-700 ">Start Date: <span class="text-gray-600">{{  formatDate(fromDate) }}</span></h2>
-              <p class="text-gray-600">Total Days: {{ calcDays(fromDate) }}</p>
+              <h2 class="text-sm font-semibold text-gray-700 ">Start Date: <span class="text-gray-600">{{  formatDate(createdAt) }}</span></h2>
+              <p class="text-gray-600">Total Days: {{ calcDays(createdAt) }}</p>
             </div>
           </div>
           <div class="pt-2 pb-2 pl-1 whitespace-normal">
             <h2 class="text-sm font-semibold text-gray-600">{{ description }}</h2>
           </div>
           <hr />
-          <!-- Footer -->
-          <div class="flex mt-5 ">
-            <div class="p-3">
-                <h2 class="text-sm font-semibold text-gray-800">Aport Count: {{ toAport }}</h2>
-            </div>
-            <div class="flex-grow" />
-            <div class="flex-end pt-1">
-                <h2 class="text-sm font-semibold text-gray-800"><BasicPill size="sm" color="bg-success" text-color="text-green-800" icon="hide" :text="progress + '% Completed'"  /></h2>          
-            </div>
-          </div>
           <!-- ProgressBar -->
-          <div class="flex mt-1">
+          <div class="flex mt-2">
             <div class="w-full bg-gray-200 rounded-lg overflow-hidden">
-                <div class="bg-purple-500 h-2" :style="{ width: progress + '%' }"> 35</div>
+                <div class="bg-purple-500 h-2" :style="{ width: i_progress + '%' }"></div>
             </div>
           </div>
               
@@ -68,7 +60,7 @@ export default {
         type: String,
         default: () => 'earth'
     },
-    title: {
+    name: {
         type: String,
         default: () => 'Planning Card'
     },
@@ -80,26 +72,23 @@ export default {
         type: String,
         default: () => 'Planning Description'
     },
-    fromBudget: {
+    aport: {
         type: String,
         default: () => '0'
     },
-    toBudget: {
+    objective: {
         type: String,
         default: () => '0'
     },
-    fromDate: {
+    createdAt: {
         type: String,
         default: () => '00/00/0000'
     },
-    toAport: {
-        type: String,
-        default: () => '0'
-    },
-    progress: {
-        type: String,
-        default: () => '10'
-    },
+  },
+  computed: {
+    i_progress() {
+      return PWUtils.progressPercentage(this.aport, this.objective);
+    }
   },
   methods: {
     calcDays(date) {

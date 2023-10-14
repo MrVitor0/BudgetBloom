@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import BBMoney from './BBMoney';
 class PWUtils {
 
     static formatDate(date) {
@@ -11,11 +12,21 @@ class PWUtils {
         return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year} ${hours}:${minutes}`;
     }
     static validateInvestmentObject(investmentObject) {
-        if(investmentObject?.description && investmentObject?.title && investmentObject?.icon && investmentObject?.toAport && investmentObject?.fromDate && investmentObject?.subtitle && investmentObject?.fromBudget && investmentObject?.toBudget){
+        if(investmentObject?.description && investmentObject?.name && investmentObject?.aport && investmentObject?.subtitle && investmentObject?.objective){
             return true;
         }
         return false
     }
+
+    static progressPercentage(aport, objective) {
+        let result = (BBMoney.toDouble(aport) / BBMoney.toDouble(objective)) * 100
+        result = Math.round(result * 100) / 100;
+        if(isNaN(result)) return 0;
+        //check if result is greater than 100
+        if(result > 100) return 100;
+        return result.toFixed(2);
+    }
+
     /**
      * @description This method is used to get the value of a given key from the query string
      * @param {*} options 
@@ -23,7 +34,11 @@ class PWUtils {
      * @returns {Object}
      */
     static findOptionByValue(options, value) {
-        return options.find(option => option.value === value);
+        let result = options.find(option => option.value === value)
+        if (!result) {
+            result = { value: 'N/A', label: value }
+        }
+        return result;
     }
 
     static getCurrentMonth() {

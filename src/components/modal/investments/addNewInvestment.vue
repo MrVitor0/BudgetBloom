@@ -32,26 +32,14 @@
                   <div class="absolute left-3 pt-11 -translate-y-1/2">
                     <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                   </div>
-                  <BBPriceInput v-model="initialAport" class="pl-8 rounded-lg" />
+                  <BBPriceInput v-model="aport" class="pl-8 rounded-lg" />
                 </div>
                 <div class="relative w-full text-start">
                   <label for="input" class="block mb-1 mt-3">What is the objetive?</label>
                   <div class="absolute left-3 pt-11 -translate-y-1/2">
                     <FontAwesomeIcon icon="dollar-sign" class="text-md text-purple-400" />
                   </div>
-                  <BBPriceInput v-model="nearestObjetive" class="pl-8 rounded-lg" />
-                </div>
-              </div>
-              <!-- Investment Profit -->
-                <div class="md:flex md:mb-3">
-                <BBInputHandler icon="percentage" class="pr-1">
-                      <BBPriceInput :value="profitPercentage" v-model="profitPercentage" class="pl-8 rounded-lg" />
-                </BBInputHandler>
-                <div class="relative w-full text-start">
-                  <div class="absolute left-3 pt-11 -translate-y-1/2">
-                    <FontAwesomeIcon icon="calendar" class="text-md text-purple-400" />
-                  </div>
-                  <BBSelectInput :value="profitCalendarType" v-model="profitCalendarType" :options="profitCalendarTypeOptions" placeholder="Time Yield" class="mb-2 pl-9" />
+                  <BBPriceInput v-model="objetive" class="pl-8 rounded-lg" />
                 </div>
               </div>
               <!--SHORT DESCRIPTION -->
@@ -110,41 +98,32 @@ export default {
       description: '',
       investmentName: '',
       investmentType: '',
-      initialAport: 0,
-      nearestObjetive: 0,
+      aport: 0,
+      objetive: 0,
       investmentOptions: investmentsType,
-
-      profitPercentage: 0,
-      profitCalendarType: null,
-      profitCalendarTypeOptions: [
-          { value: 'months', label: 'Per Year' },
-          { value: 'years', label: 'Per Month' },
-      ],
-
     };
   },
   methods: {
     ...mapActions('modal', ['hideInputModal']),
     submitInput() {
       let data = {
+          name: this.investmentName,
+          subtitle: this.investmentType,
           description: this.description,
           icon: 'money-bill',
+          aport: BBMoney.toDouble(this.aport),
+          objective: BBMoney.toDouble(this.objetive),
           toAport: 1,
-          fromDate: PWUtils.getCurrentDate(),
-          title: this.investmentName,
-          subtitle: this.investmentType,
-
-          profitPercentage:  BBMoney.toDouble(this.profitPercentage),
-          profitCalendarType: this.profitCalendarType == null ? 'months' : this.profitCalendarType,
-
-          fromBudget: BBMoney.toDouble(this.initialAport),
-          toBudget: BBMoney.toDouble(this.nearestObjetive),
+          createdAt: PWUtils.getCurrentDate(),
+          updatedAt: PWUtils.getCurrentDate(),
         }
       //check if all fields are filled
-      if (this.description && this.investmentName && this.investmentType && this.initialAport && this.nearestObjetive && this.profitPercentage && this.profitCalendarType) {
+      if (this.description && this.investmentName && this.investmentType && this.aport && this.objetive) {
          //format a date to format 03/01/2023
-         this.$api.post('/investments', data).then((response) => {
-          this.$emit('newTask', response.data);
+         this.$api.post('/api/investment/create', data).then((response) => {
+          data.id = response.data.id;
+          data.id_investments = response.data.id_investments;
+          this.$emit('newTask', data);
           PWUtils.PWNotification("success", "Investment Tracked!")
           this.hideModal();
         }).catch(() => {
