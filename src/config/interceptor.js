@@ -28,24 +28,17 @@ apiClient.interceptors.response.use(response => {
     const token = store.state.auth.token;
     if (token) {
       try {
-        // Faça uma requisição para renovar o token usando o token
         const response = await axios.post(`${BASE_URL}/api/auth/refresh-token`, { token });
         const newToken = response.data.token;
-        // Atualize o token no store
         store.dispatch('auth/updateToken', newToken);
-        // Reenvie a requisição original com o novo token
         const originalRequest = error.config;
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return axios(originalRequest);
       } catch (refreshError) {
-        // Caso ocorra um erro ao renovar o token, faça o logout
         store.dispatch('auth/logout');
-        // Redirecione para a página de login ou realize outras ações necessárias
       }
     } else {
-      // Caso não haja refreshToken, faça o logout
       store.dispatch('auth/logout');
-      // Redirecione para a página de login ou realize outras ações necessárias
     }
   }
   return Promise.reject(error);

@@ -154,7 +154,6 @@
             } else {
                 //update this.banking_data.transactions adding response.payload
                 const response = await this.$api.get("/api/banking/user/transaction/list")
-                console.log(response)
                 if(response.data)
                     this.banking_data = response.data
                 // this.banking_data.current_incoming += response.value;
