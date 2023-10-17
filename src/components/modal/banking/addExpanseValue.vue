@@ -102,11 +102,13 @@ export default {
 
       if (this.monthInput && this.yearInput && this.inputValue && this.transactionName ) {
           const inputValue = BBMoney.toDouble(this.inputValue);
+          const referenceAt = PWUtils.toISO_8601(this.yearInput, this.monthInput, 1);
           try {
             let payload = {
               type_transaction: 'TRANSFER',
               type_payment: 'MONEY',
               name: this.transactionName,
+              referenceAt: referenceAt,
               amount: inputValue,
             }
             const response = await this.$api.post('api/banking/user/transaction/create', payload);

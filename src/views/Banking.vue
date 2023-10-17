@@ -38,7 +38,7 @@
                           {{ $t("banking.page.edit_account_balance") }}
                         </div>
                         <div class="text-xs font-light text-gray-500 mb-5 mt-1">
-                        {{ $t('banking.page.edit_account_balance_description') }}
+                          {{ $t('banking.page.edit_account_balance_description') }}
                         </div>
                         <div class="w-64">
                             <BasicButton @click="showModal(0)" active="true" :text="$t('banking.page.add_transaction')" icon="square-plus" />
@@ -73,18 +73,15 @@
                         :method="$t(item.type_transaction)"
                         :type="$t(item.type_payment)"
                         :typeF="item.type_transaction"
-                        :date="item.createdAt"
+                        :date="item.referenceAt"
                         :value="item.amount"
                     />
                 </div>
             </div>
        </div>
-       
      </div>
-     
-     <!-- PROFILE SETTINGS AREA -->
-
-      <!-- Modals-->
+    <!-- PROFILE SETTINGS AREA -->
+    <!-- Modals-->
     <BBModal>
           <addIncomingValue @update="updateIncoming" :banking_data="banking_data" v-if="this.currentModal == 0" />
           <addExpanseValue  @update="updateExpenses" :banking_data="banking_data" v-if="this.currentModal == 1" />

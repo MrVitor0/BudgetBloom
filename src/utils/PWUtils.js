@@ -10,7 +10,35 @@ class PWUtils {
         const hours = dateObject.getHours();
         const minutes = dateObject.getMinutes().toString().padStart(2, '0');
         return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year} ${hours}:${minutes}`;
+    }   
+
+
+    /**
+     * @description This method returns a custom date in ISO_8601 format
+     * @param {*} d_month 
+     * @param {*} d_year 
+     * @param {*} d_day 
+     * @returns 
+     */
+    static toISO_8601(d_year, d_month, d_day = 1, useTime = false){
+        try {
+            let date = new Date();
+            let month = date.getMonth() + 1;
+            let year = date.getFullYear();
+            if(month != d_month || year != d_year){
+              if(useTime){
+                date = new Date(d_year, d_month, d_day, date.getHours(), date.getMinutes(), date.getSeconds());
+              }else{
+                date = new Date(d_year, d_month, d_day);
+              }
+            }
+            return date.toISOString();
+        } catch (error) {
+            throw new Error('Invalid date');
+        }
     }
+
+
     static validateInvestmentObject(investmentObject) {
         if(investmentObject?.description && investmentObject?.name && investmentObject?.aport && investmentObject?.subtitle && investmentObject?.objective){
             return true;
