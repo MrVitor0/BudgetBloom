@@ -67,7 +67,7 @@
                     <hr class="h-px mx-3 bg-purple-200 border-0 mb-5" />
                     <!-- ITEM -->
                     <TransferItem
-                        v-for="(item, index) in banking_data.transactions.banking"
+                        v-for="(item, index) in bankingData"
                         :key="index"
                         :name="item.name"
                         :method="$t(item.type_transaction)"
@@ -186,6 +186,13 @@
        },
      },
      computed: {
+        bankingData() {
+            let data = this.banking_data?.transactions?.banking
+            if(!data ) return []
+            return  data.sort((a, b) => {
+                return new Date(b.referenceAt) - new Date(a.referenceAt);
+            });
+        },
         currentMonth() {
             const date = new Date();
             const month = date.toLocaleString('default', { month: 'long' });

@@ -1,6 +1,6 @@
 <template>
     <div class="rounded-lg bg-white shadow-md p-6">
-      <h2 class="text-xl font-semibold">{{ $t('credit.charts.title') }}</h2>
+      <h2 class="text-xl font-semibold">{{ $t('banking.charts.title') }}</h2>
       <h1 class="text-gray-500 mb-2"  v-if="billStatistics?.greater"> <font-awesome-icon icon="arrow-up" class="text-md pr-1 text-red-500" /> <b>{{ $t(billStatistics?.difference || '0%') }} {{ $t('credit.charts.info.comparisson') }}</b>  {{ $t('credit.charts.info.description') }}</h1>
        <h1 class="text-gray-500 mb-2" v-else > <font-awesome-icon icon="arrow-down" class="text-md pr-1 text-green-500" /> <b>{{ $t(billStatistics?.difference || '0%') }} {{ $t('credit.charts.info.comparisson_two') }}</b>  {{ $t('credit.charts.info.description') }}</h1>
       <canvas ref="chartCanvas"></canvas>
@@ -16,7 +16,7 @@
   export default {
   props: {
     cardTitle: String,
-    statements: {
+    bankingHistory: {
       type: Object,
     },
   },
@@ -25,7 +25,7 @@
   },
   setup(props) {
     const chartCanvas = ref(null);
-    let stockChart = null;
+    let barChart = null;
     let data = [0,0,0,0,0,0,0,0,0,0,0,0];
 
     /**
@@ -35,10 +35,12 @@
       let currentDate = PWUtils.getCurrentDate('credit');
       let lastMonthDate = PWUtils.getCurrentDate('credit-last');
       // Extract year and month from currentDate
-      const currentDateYearMonth = currentDate.slice(0, 7); // Assuming currentDate is in 'YYYY-MM-DD' format
-      const lastMonthYearMonth = lastMonthDate.slice(0, 7); // Assuming currentDate is in 'YYYY-MM-DD' format
-      let currentStatement = (props.statements.find(item => item.reference.slice(0, 7) === currentDateYearMonth))?.amount || 0
-      let lastMonthStatement = (props.statements.find(item => item.reference.slice(0, 7) === lastMonthYearMonth))?.amount || 0;
+      let currentDateYearMonth = currentDate.slice(0, 7); // Assuming currentDate is in 'YYYY-MM-DD' format
+      let lastMonthYearMonth = lastMonthDate.slice(0, 7); // Assuming currentDate is in 'YYYY-MM-DD' format
+
+      let currentStatement = (props.bankingHistory?.find(item => item.timestamp == currentDateYearMonth))?.balance || 0
+      let lastMonthStatement = (props.bankingHistory?.find(item => item.timestamp == lastMonthYearMonth))?.balance || 0;
+      
       if (lastMonthStatement === 0) {
         return {
           greater: false,
@@ -68,85 +70,88 @@
       if (month == index) {
         return true;
       }
-      
     };
-
 
     onMounted(() => {
       const ctx = chartCanvas.value.getContext('2d');
-      if(props?.statements){
-         data = filterData(props.statements)
+      if(props?.bankingHistory){
+         data = filterData(props.bankingHistory)
       }
       let monthLabel = getMonthLabels()
-      stockChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: monthLabel,
-          datasets: [
-            {
-              label: 'Bill',
-              data: data, 
-              borderColor: '#a855f7',
-              fill: true,
-              pointBackgroundColor: data.map((value,index) => isCurrentMonth(value, index) ? '#ca3167' : '#a855f7'), // Define a cor do ponto condicionalmente
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          plugins: {
-            legend: {
-              display: false,
-            },
-            tooltip: {
-              enabled: true,
-              callbacks: {
-                label: function (context) {
-                  const value = context.parsed.y;
-                  return `Fatura: R$${BBMoney.toCurrency(value)}`;
-                },
-                title: function (context) {
-                  const date = context[0].parsed.x;
-                  //get the month name from the index
-                  let monthName = new Date(0, date).toLocaleString(undefined, { month: 'long' });
-                  monthName = monthName.charAt(0).toUpperCase() + monthName.slice(1);
-                  return `${monthName}`;
+      barChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: monthLabel,
+            datasets: [
+              {
+                label: 'Bill',
+                data: data,
+                fill: true,
+                backgroundColor: data.map((value, index) =>
+                  isCurrentMonth(value, index) ? '#ca3167' : '#a855f7'
+                ),
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            borderRadius: 4,
+            skipNull: false,
+            plugins: {
+              legend: {
+                display: false,
+              },
+              tooltip: {
+                enabled: true,
+                callbacks: {
+                  label: function (context) {
+                    const value = context.parsed.y;
+                    if (value !== null) {
+                      return `Saldo Final: R$${BBMoney.toCurrency(value)}`;
+                    } else {
+                      return "Saldo: R$0";
+                    }
+                  },
+                  title: function (context) {
+                    const date = context[0].parsed.x;
+                    let monthName = new Date(0, date).toLocaleString(undefined, {
+                      month: 'long',
+                    });
+                    monthName =
+                      monthName.charAt(0).toUpperCase() + monthName.slice(1);
+                    return `${monthName}`;
+                  },
                 },
               },
             },
-          },
-          elements: {
-            line: {
-              borderWidth: 2,
-              tension: 0.3,
-              borderRadius: 10,
-            },
-            point: {
-              radius: 3,
-              hitRadius: 30,
+            scales: {
+              y: {
+                beginAtZero: true, 
+                suggestedMin: 0, 
+                suggestedMax: 1000, 
+              },
             },
           },
-        },
-      });
+        });
     });
     onBeforeUnmount(() => {
-      if (stockChart) {
-        stockChart.destroy();
+      if (barChart) {
+        barChart.destroy();
       }
     });
     //create a method
-    function filterData(statement) {
+    function filterData(historyBanking) {
       const filteredData = Array(12).fill(0);
-      statement.forEach((item) => {
-        const month = parseInt(item.reference.slice(5, 7), 10);
+      historyBanking.forEach((item) => {
+        const month = parseInt(item.timestamp.slice(5, 7), 10);
         if (!isNaN(month) && month >= 1 && month <= 12) {
-          // Verifique se o mês está dentro do intervalo válido (1 a 12)
-          filteredData[month - 1] = item.amount;
+          filteredData[month - 1] = item.balance;
+          if (item.balance < 1) {
+            filteredData[month - 1] = 0;
+          }
         }
       });
-
-      //console.log(filteredData);
       return filteredData;
     }
     function getMonthLabels() {
@@ -166,12 +171,12 @@
 
 
     // Watcher para atualizar os dados do gráfico quando statements mudar
-    watch(() => props.statements, (newStatements) => {
-     // console.log('statements changed', newStatements);
-      if (stockChart) {
+    watch(() => props.bankingHistory, (banking) => {
+     // console.log('statements changed', banking);
+      if (barChart) {
         //for each month, from 01 to 12 get the corresponding "amount" value, if doesn't exist, set to 0
-        stockChart.data.datasets[0].data = filterData(newStatements); 
-        stockChart.update();
+        barChart.data.datasets[0].data = filterData(banking); 
+        barChart.update();
       }
     }, { deep: true });
 

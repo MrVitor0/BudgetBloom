@@ -102,7 +102,7 @@ export default {
 
       if (this.monthInput && this.yearInput && this.inputValue && this.transactionName ) {
           const inputValue = BBMoney.toDouble(this.inputValue);
-          const referenceAt = PWUtils.toISO_8601(this.yearInput, this.monthInput, 1);
+          const referenceAt = PWUtils.toISO_8601(this.yearInput, this.monthInput, 0);
           try {
             let payload = {
               type_transaction: 'TRANSFER',

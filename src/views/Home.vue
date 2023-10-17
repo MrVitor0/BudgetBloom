@@ -4,16 +4,16 @@
         <price-card title="Saldo da Conta" :amount="transactions.account_balance" icon="bank" color="green" />
       </div>
       <div class="w-full md:w-1/4  px-4 mb-5">
-        <price-card title="Recebimentos Mensais" :amount="transactions.current_incoming"  icon="sack-dollar" color="blue" />
+        <price-card title="Recebimentos Mensais" :amount="month_earnings"  icon="sack-dollar" color="blue" />
       </div>
       <div class="w-full md:w-1/4  px-4 mb-5">
-        <price-card title="Gastos Mensais" :amount="transactions.current_expenses"  icon="piggy-bank" color="red" />
+        <price-card title="Gastos Mensais" :amount="month_expends"  icon="piggy-bank" color="red" />
       </div>
     </div>
       <!-- Graphics cards -->
       <div class="flex flex-wrap -mx-4 ">
         <div class="w-full md:w-1/2 lg:w-1/2 px-4 mb-5 ">
-          <InvestmentsChartCard :statements="statements" class="h-full"/>
+          <InvestmentsChartCard :bankingHistory="bankingHistory" class="h-full"/>
         </div>
       <div class="w-full md:w-1/2 lg:w-1/2 px-4 mb-5">
         <CreditCardChartCard :statements="statements" class="h-full" />
@@ -72,21 +72,32 @@ export default {
         maintainAspectRatio: false,
       },
 
-
+      month_earnings: 0,
+      month_expends: 0,
       transactions: {
         account_balance: 0,
         current_incoming: 0,
         current_expenses: 0,
         transactions: []
       },
-      statements: []
+      statements: [],
+      bankingHistory: [],
     };
   },
   async mounted() {
         const transactions = await this.$api.get("/api/banking/user/transaction/list")
         const creditcard = await this.$api.get("/api/credit/user/bill/list")
+        const bankingHistory = await this.$api.get("/api/banking/user/transaction/yearly/list")
         this.statements = creditcard?.data || []
+        this.bankingHistory = bankingHistory?.data || []
         this.transactions = transactions?.data || []
+
+        let currentMonth = new Date().getMonth() + 1
+        //find in the banking history the current month
+        let currentMonthHistory = bankingHistory?.data?.find(item => item.month == currentMonth)
+        //sum the balance from currentMonthHistory.earnings.amount
+        this.month_earnings = currentMonthHistory.earnings.map(item => item.amount).reduce((a, b) => a + b, 0)
+        this.month_expends = currentMonthHistory.expenses.map(item => item.amount).reduce((a, b) => a + b, 0)
   },
 }
 </script>

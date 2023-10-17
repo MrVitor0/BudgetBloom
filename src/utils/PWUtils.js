@@ -20,7 +20,7 @@ class PWUtils {
      * @param {*} d_day 
      * @returns 
      */
-    static toISO_8601(d_year, d_month, d_day = 1, useTime = false){
+    static toISO_8601(d_year, d_month, d_day = 0, useTime = false){
         try {
             let date = new Date();
             let month = date.getMonth() + 1;

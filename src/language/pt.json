@@ -36,6 +36,9 @@
             "expenses": "gastos",
             "undefined": ""
         },
+        "charts": {
+            "title": "Balanço da Conta"
+        },
         "incoming_card": {
             "title": "Adicionar Transação",
             "description": "Quanto e quando você recebeu?",
@@ -121,6 +124,7 @@
             "track_aport_description": "Fez um novo Aporte? Adicione ele aqui.",
             "add_aport": "Adicionar Aporte"
         },
+       
         "popup": {
             "title": "Adicionar Investmento",
             "description": "Preencha os campos abaixo para adicionar um novo investimento.",
